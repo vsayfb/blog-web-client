@@ -22,7 +22,7 @@ export default function ViaLocal() {
   const [accountDto, setAccountDto] = useState<CreateAccoundDto>({
     email: null,
     username: null,
-    display_name: null,
+    displayName: null,
     password: null,
     verification_code: null,
     image: null,
@@ -43,7 +43,7 @@ export default function ViaLocal() {
         <SecondStep
           setStep={setStep}
           email={accountDto.email || ""}
-          displayName={accountDto.display_name || ""}
+          displayName={accountDto.displayName || ""}
           username={accountDto.username || ""}
           password={accountDto.password || ""}
           setAccountDto={setAccountDto}
