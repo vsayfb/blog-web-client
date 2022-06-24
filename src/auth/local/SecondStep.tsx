@@ -66,7 +66,7 @@ export const SecondStep = ({
           onChangeEvent={(e) =>
             setAccountDto((prev) => ({
               ...prev,
-              display_name: e.target.value.toString(),
+              displayName: e.target.value.toString(),
             }))
           }
           value={displayName}
