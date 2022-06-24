@@ -10,7 +10,7 @@ import SignUp from "../../screens/SignUp";
 export type CreateAccoundDto = {
   email: string | null;
   username: string | null;
-  display_name: string | null;
+  displayName: string | null;
   password: string | null;
   verification_code: string | null;
   image: string | null;

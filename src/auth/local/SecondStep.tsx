@@ -21,7 +21,7 @@ export const SecondStep = ({
   displayName: string;
   username: string;
   password: string;
-  setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
+  setAccountDto: Dispatch<SetStateAction<CreateeAccoundDto>>;
 }) => {
   async function beginEmailVerification() {
     return await beginAccountVerification(email, username);
