@@ -44,6 +44,7 @@ export default function ViaLocal() {
           setStep={setStep}
           email={accountDto.email || ""}
           displayName={accountDto.display_name || ""}
+          username={accountDto.username || ""}
           password={accountDto.password || ""}
           setAccountDto={setAccountDto}
         />

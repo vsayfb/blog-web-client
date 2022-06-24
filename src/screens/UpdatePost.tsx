@@ -45,8 +45,6 @@ export const UpdatePost = () => {
     });
   }
 
-  async function nextStep() {}
-
   useEffect(() => {
     if (id) getUpdatePost(id);
   }, [id]);

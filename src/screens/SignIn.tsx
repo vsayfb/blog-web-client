@@ -18,8 +18,6 @@ export default function SignIn() {
     password: string;
   }>({ username: "", password: "" });
 
-  const [authError, setAuthError] = useState(false);
-
   async function makeLoginRequest() {
     try {
       const { access_token } = await localLogin(
@@ -31,7 +29,7 @@ export default function SignIn() {
 
       window.location.href = "/";
     } catch (error: any) {
-      dispatch(setError(error.response.data.message));
+      dispatch(setError("Invalid credentials."));
     }
   }
 
@@ -48,10 +46,6 @@ export default function SignIn() {
         <div className="mt-2">
           <AuthMiddle />
         </div>
-
-        {authError ? (
-          <p className="text-red-500 mt-2"> Invalid Credentials! </p>
-        ) : null}
 
         <div className="mt-4">
           <InputField

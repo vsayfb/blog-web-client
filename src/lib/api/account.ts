@@ -16,3 +16,22 @@ export async function uploadProfileImage(
     formData
   );
 }
+
+export async function isAvailableField(
+  field: "username" | "email",
+  value: string
+): Promise<boolean> {
+  const query = "is_available_" + field + "?" + field + "=" + value;
+
+  return await sendRequest(BASE_PARAM + query, "get", false);
+}
+
+export async function beginAccountVerification(
+  email: string,
+  username: string
+): Promise<{ message: string }> {
+  return await sendRequest(BASE_PARAM + "begin_verification", "post", false, {
+    email,
+    username,
+  });
+}

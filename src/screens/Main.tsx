@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { getPosts } from "../lib/api/post";
 import { PostViewDto } from "../lib/types/post";
 import { PostCard } from "../posts/components/PostCard";
 
@@ -7,9 +7,9 @@ export default function Main() {
   const [posts, setPosts] = useState<PostViewDto[]>([]);
 
   async function getAll() {
-    const { data } = await axios.get("http://localhost:5555/api/v1/posts");
+    const result = await getPosts();
 
-    setPosts(data);
+    setPosts(result);
   }
 
   useEffect(() => {

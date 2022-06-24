@@ -7,6 +7,7 @@ import { InputField } from "../../lib/components/InputField";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { setError } from "../../lib/slices/appSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
+import { isAvailableField } from "../../lib/api/account";
 
 export const FirstStep = ({
   setStep,
@@ -39,12 +40,8 @@ export const FirstStep = ({
   const dispatch = useDispatch();
 
   async function checkTakenFields(field: "username" | "email", value: string) {
-    const query = "is_available_" + field + "?" + field + "=" + value;
-
     try {
-      const { data: available } = await axios.get(
-        `http://localhost:5555/api/v1/accounts/${query}`
-      );
+      const available = await isAvailableField(field, value);
 
       setAccountDto((prev) => ({
         ...prev,

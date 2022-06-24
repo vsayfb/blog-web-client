@@ -6,6 +6,7 @@ import { setLocalStorageToken } from "../../lib/setLocalStorageToken";
 import { setMe } from "../../lib/slices/authSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
 import { register } from "../../lib/api/auth";
+import { MyButton } from "../../lib/components/Button";
 
 export const ThirdStep = ({
   setStep,
@@ -19,16 +20,6 @@ export const ThirdStep = ({
   const [verified, setVerified] = useState<boolean | string>(false);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const timeoutID = setTimeout(() => {
-      if (accountDto.verification_code?.length === 5) {
-        registerAccount();
-      }
-    }, 600);
-
-    return () => clearTimeout(timeoutID);
-  }, [accountDto.verification_code]);
 
   useEffect(() => {
     if (verified) setStep(4);
@@ -73,6 +64,10 @@ export const ThirdStep = ({
         }`}
         type="text"
       />
+
+      <div className="mt-4">
+        <MyButton buttonText="Verify" onClickEvent={registerAccount} />
+      </div>
     </div>
   );
 };

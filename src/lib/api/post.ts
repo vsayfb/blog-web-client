@@ -4,8 +4,12 @@ import { PostViewDto } from "../types/post";
 
 export const BASE_PARAM = "posts/";
 
-export async function getAPost(postUrl: string): Promise<PostViewDto> {
+export async function getPublicPost(postUrl: string): Promise<PostViewDto> {
   return await sendRequest(BASE_PARAM + postUrl, "get", false, {});
+}
+
+export async function getPosts(): Promise<PostViewDto[]> {
+  return await sendRequest(BASE_PARAM, "get", false);
 }
 
 export async function uploadPost(

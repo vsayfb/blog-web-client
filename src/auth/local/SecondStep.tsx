@@ -6,27 +6,25 @@ import { InputField } from "../../lib/components/InputField";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { setError } from "../../lib/slices/appSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
+import { beginAccountVerification } from "../../lib/api/account";
 
 export const SecondStep = ({
   setStep,
   email,
   displayName,
+  username,
   password,
   setAccountDto,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
   email: string;
   displayName: string;
+  username: string;
   password: string;
   setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
 }) => {
   async function beginEmailVerification() {
-    await axios.post(
-      "http://localhost:5555/api/v1/accounts/begin_verification",
-      {
-        email,
-      }
-    );
+    return await beginAccountVerification(email, username);
   }
 
   const dispatch = useDispatch();
@@ -35,7 +33,7 @@ export const SecondStep = ({
     if (displayName.length < 3) {
       dispatch(setError("Please fill the Display Name field."));
     } else if (password.length < 7) {
-      alert("Please fill the password field.");
+      dispatch(setError("Please fill the password field."));
     } else {
       try {
         await beginEmailVerification();
