@@ -4,28 +4,37 @@ import { MyButton } from "../../lib/components/Button";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { updatePost } from "../../lib/api/post";
 import { CreatePostDto } from "../../screens/WritePost";
-import { TagsData } from "../TagsData";
+import { TagsData } from "../../tags/TagsData";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { setError } from "../../lib/slices/appSlice";
+import { resetTags } from "../../tags/slices/tagsSlice";
 
 export const StepTwo = ({
-  postData,
   setStep,
-  setPostData,
 }: {
-  postData: CreatePostDto;
   setStep: React.Dispatch<SetStateAction<number>>;
-  setPostData: React.Dispatch<SetStateAction<CreatePostDto>>;
 }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { savedPost } = useSelector((state: RootState) => state.posts);
+  const { tags } = useSelector((state: RootState) => state.tags);
 
   async function complete() {
     try {
-      const result = await updatePost(postData.id, {
-        ...postData,
-        published: true,
-      });
-      navigate("/" + result.url);
-    } catch (error) {
-      console.log(error);
+      if (savedPost) {
+        const result = await updatePost(savedPost.id, {
+          ...savedPost,
+          tags,
+          published: true,
+        });
+
+        dispatch(resetTags());
+
+        navigate("/" + result.data.url);
+      }
+    } catch (error: any) {
+      dispatch(setError(error.message));
     }
   }
 
@@ -45,7 +54,7 @@ export const StepTwo = ({
         </p>
       </div>
 
-      <TagsData setPostData={setPostData} tagsData={postData.tags} />
+      <TagsData />
 
       <MyButton onClickEvent={complete} buttonText="PUBLISH" />
     </>

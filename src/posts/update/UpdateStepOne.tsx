@@ -17,16 +17,11 @@ export const UpdateStepOne = ({
 }) => {
   async function completeStep() {
     try {
-      const { id, title, content, published, titleImage, tags } =
-        await updatePost(updatePostData.id, updatePostData);
+      const result = await updatePost(updatePostData.id, updatePostData);
 
       setUpdatePost({
-        id,
-        title,
-        content,
-        published,
-        titleImage,
-        tags: tags.map((tag) => tag.name),
+        ...result.data,
+        tags: result.data.tags.map((tag) => tag.name),
       });
 
       setStep(2);

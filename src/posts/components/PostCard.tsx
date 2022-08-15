@@ -7,11 +7,11 @@ export const PostCard = ({ post }: { post: PostViewDto }) => {
   return (
     <div className="dark:bg-gray-800 dark:text-gray-50 mt-6 mb-6">
       <div className="container grid grid-cols-12 mx-auto dark:bg-gray-900">
-        {post.titleImage ? (
+        {post.title_image ? (
           <div
             className="bg-no-repeat bg-cover dark:bg-gray-700 col-span-full lg:col-span-4"
             style={{
-              backgroundImage: `url(${post.titleImage})`,
+              backgroundImage: `url(${post.title_image})`,
               backgroundPosition: "center center",
               backgroundBlendMode: "multiply",
               backgroundSize: "cover",

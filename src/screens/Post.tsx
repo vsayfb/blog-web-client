@@ -11,8 +11,8 @@ export const Post = () => {
   const { id } = useParams();
 
   async function get(postID: string) {
-    const data = await getPost(postID);
-    setPost(data);
+    const post = await getPost(postID);
+    setPost(post.data);
   }
 
   useEffect(() => {

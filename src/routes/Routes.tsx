@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "../screens/Main";
 import { ProtectedRoute } from "../lib/components/ProtectedRoute";
-import { Me } from "../lib/slices/authSlice";
+import { Me } from "../auth/slices/authSlice";
 import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import { PublicPost } from "../screens/PublicPost";

@@ -7,9 +7,9 @@ export default function Main() {
   const [posts, setPosts] = useState<PostViewDto[]>([]);
 
   async function getAll() {
-    const result = await getPosts();
+    const { data } = await getPosts();
 
-    setPosts(result);
+    setPosts(data);
   }
 
   useEffect(() => {

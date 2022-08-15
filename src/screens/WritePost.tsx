@@ -7,7 +7,7 @@ export type CreatePostDto = {
   id: string;
   title: string;
   content: string;
-  titleImage: string | null;
+  title_image: string | null;
   tags: string[];
 };
 
@@ -17,7 +17,7 @@ export const WritePost = () => {
     id: "",
     title: "",
     content: "",
-    titleImage: null,
+    title_image: null,
     tags: [],
   });
 
@@ -36,11 +36,7 @@ export const WritePost = () => {
           setStep={setStep}
         />
       ) : step === 2 ? (
-        <StepTwo
-          setStep={setStep}
-          postData={postData}
-          setPostData={setPostData}
-        />
+        <StepTwo setStep={setStep} />
       ) : null}
     </div>
   );

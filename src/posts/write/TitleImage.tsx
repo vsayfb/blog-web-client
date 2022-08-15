@@ -32,9 +32,9 @@ export const TitleImage = ({
       <p>Title image</p>
       <div className="mt-2 mb-6 cursor-pointer flex" onClick={handleFile}>
         <ImageSVG />
-        {postData.titleImage ? (
+        {postData.title_image ? (
           <a
-            href={postData.titleImage}
+            href={postData.title_image}
             className="ml-4 text-orange-700 items-center align-center"
             target="_blank"
           >

@@ -4,18 +4,17 @@ export type PostViewDto = {
   id: string;
   published: boolean;
   content: string;
-  tags: { id: string; name: string; createdAt: Date; updatedAt: Date }[];
+  tags: { id: string; name: string; created_at: Date; updated_at: Date }[];
   author: {
     id: string;
     displayName: string;
     username: string;
     image: string | null;
   };
-  titleImage: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  title_image: string | null;
+  created_at: Date;
+  updated_at: Date;
 };
-
 
 export type Auth = {
   account: {

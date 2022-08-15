@@ -1,38 +1,28 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { InputField } from "../lib/components/InputField";
+import { setError } from "../lib/slices/appSlice";
 import { DashSVG } from "../lib/svgs/DashSVG";
-import { Tag } from "../tags/Tag";
+import { RootState } from "../store";
+import { removeTag, setNewTag } from "./slices/tagsSlice";
+import { Tag } from "./Tag";
 
-export const TagsData = ({
-  tagsData,
-  setPostData,
-}: {
-  tagsData: string[];
-  setPostData: React.Dispatch<SetStateAction<any>>;
-}) => {
-  const [tags, setTags] = useState<string[]>(tagsData);
+export const TagsData = () => {
+  const { tags } = useSelector((state: RootState) => state.tags);
+
+  const dispatch = useDispatch();
 
   const [tagValue, setTagValue] = useState<string>("");
 
   function addNewTag(e: any) {
     e.preventDefault();
 
-    const newTags = [...tags, tagValue];
-
-    if (newTags.length <= 3) {
-      setTags(newTags);
-    } else alert("max tag");
+    if (tags.length < 3) {
+      dispatch(setNewTag(tagValue));
+    } else dispatch(setError("The number of tags must be 3 or less. "));
 
     setTagValue("");
   }
-
-  function removeTag(tagName: string) {
-    setTags(tags.filter((tag) => tag !== tagName));
-  }
-
-  useEffect(() => {
-    setPostData((prev: any) => ({ ...prev, tags }));
-  }, [tags]);
 
   return (
     <>
@@ -52,7 +42,7 @@ export const TagsData = ({
                 <Tag key={tag} name={tag} />
 
                 <div
-                  onClick={() => removeTag(tag)}
+                  onClick={() => dispatch(removeTag(tag))}
                   className="absolute cursor-pointer"
                   style={{ right: "5px", top: "-7px" }}
                 >

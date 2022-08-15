@@ -1,4 +1,4 @@
-import { Me, setMe } from "../../../lib/slices/authSlice";
+import { Me, setMe } from "../../../auth/slices/authSlice";
 import { detectImage } from "../../../lib/detectImage";
 import { useState } from "react";
 import { useDispatch } from "react-redux";

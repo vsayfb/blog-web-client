@@ -39,17 +39,17 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
                 <CreatedAtSVG />
               </div>
               <div className="ml-2 text-orange-200">
-                {new Date(post.createdAt).toLocaleDateString()}
+                {new Date(post.created_at).toLocaleDateString()}
               </div>
             </div>
           </div>
         </div>
-        {post.titleImage ? (
+        {post.title_image ? (
           <div className="relative -mx-6 mb-20">
             <div className="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 h-80 w-full bg-blue-300"></div>
             <img
               className="relative w-full h-96 px-6 object-cover"
-              src={post.titleImage}
+              src={post.title_image}
               alt="Title Image"
             />
           </div>

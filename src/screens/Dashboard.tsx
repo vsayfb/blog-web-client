@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Me } from "../lib/slices/authSlice";
+import { Me } from "../auth/slices/authSlice";
 import { changePostStatus, getMyPosts, removePost } from "../lib/api/post";
 import { DeleteModal } from "../lib/modals/DeleteModal";
 import { DeleteSVG } from "../lib/svgs/DeleteSVG";
@@ -17,7 +17,8 @@ export const Dashboard = ({ me }: { me: Me }) => {
   const [deleteModalSubject, setDeleteModalSubject] = useState("");
 
   async function getPosts() {
-    setMyPosts(await getMyPosts());
+    const posts = await getMyPosts();
+    setMyPosts(posts.data);
   }
 
   useEffect(() => {
@@ -121,10 +122,10 @@ export const Dashboard = ({ me }: { me: Me }) => {
                       <tr key={post.id}>
                         <td className="p-0">
                           <div className="flex items-center justify-start p-5 h-20 min-w-max border-b border-gray-100">
-                            {post.titleImage ? (
+                            {post.title_image ? (
                               <img
                                 className="mr-5 w-6 h-6"
-                                src={post.titleImage}
+                                src={post.title_image}
                                 alt=""
                               />
                             ) : null}
@@ -143,7 +144,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
                         <td className="p-0">
                           <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
                             <span className="text-darkBlueGray-400 font-heading">
-                              {new Date(post.updatedAt).toDateString()}
+                              {new Date(post.updated_at).toDateString()}
                             </span>
                           </div>
                         </td>

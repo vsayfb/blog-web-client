@@ -4,24 +4,29 @@ import { PostViewDto } from "../types/post";
 
 export const BASE_PARAM = "posts/";
 
-export async function getPublicPost(postUrl: string): Promise<PostViewDto> {
+export async function getPublicPost(
+  postUrl: string
+): Promise<{ data: PostViewDto }> {
   return await sendRequest(BASE_PARAM + postUrl, "get", false, {});
 }
 
-export async function getPosts(): Promise<PostViewDto[]> {
+export async function getPosts(): Promise<{ data: PostViewDto[] }> {
   return await sendRequest(BASE_PARAM, "get", false);
 }
 
 export async function uploadPost(
   data: CreatePostDto,
   published: boolean
-): Promise<PostViewDto> {
+): Promise<{ data: PostViewDto }> {
   const query = `${BASE_PARAM}${!published ? "?published=false" : ""}`;
 
   return await sendRequest(query, "post", true, data);
 }
 
-export async function updatePost(id: string, data: any): Promise<PostViewDto> {
+export async function updatePost(
+  id: string,
+  data: any
+): Promise<{ data: PostViewDto }> {
   return await sendRequest(BASE_PARAM + id, "patch", true, data);
 }
 
@@ -40,7 +45,7 @@ export async function uploadTitleImageForPost(
   );
 }
 
-export async function getMyPosts() {
+export async function getMyPosts(): Promise<{ data: PostViewDto[] }> {
   return await sendRequest(BASE_PARAM + "me", "get", true);
 }
 
@@ -60,7 +65,7 @@ export async function removePost(
   return await sendRequest(BASE_PARAM + id, "delete", true);
 }
 
-export async function getPost(id: string): Promise<PostViewDto> {
+export async function getPost(id: string): Promise<{ data: PostViewDto }> {
   const query = "id?id=" + id;
 
   return await sendRequest(BASE_PARAM + query, "get", true);

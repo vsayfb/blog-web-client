@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { AppLogo } from "../../../lib/components/AppLogo";
-import { Me } from "../../../lib/slices/authSlice";
+import { Me } from "../../../auth/slices/authSlice";
 
 export const NavbarLeft = ({ me, pending }: { me: Me; pending: boolean }) => {
   return (

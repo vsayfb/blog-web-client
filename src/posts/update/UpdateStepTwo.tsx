@@ -4,7 +4,7 @@ import { MyButton } from "../../lib/components/Button";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { updatePost } from "../../lib/api/post";
 import { UpdatePostState } from "../../screens/UpdatePost";
-import { TagsData } from "../TagsData";
+import { TagsData } from "../../tags/TagsData";
 
 export const UpdateStepTwo = ({
   updatePostData,
@@ -19,9 +19,9 @@ export const UpdateStepTwo = ({
 
   async function completeStep() {
     try {
-      const { url } = await updatePost(updatePostData.id, updatePostData);
+      const { data } = await updatePost(updatePostData.id, updatePostData);
 
-      navigate("/" + url);
+      navigate("/" + data.url);
     } catch (error) {}
   }
 
@@ -42,7 +42,7 @@ export const UpdateStepTwo = ({
             : "Update your post tags"}
         </p>
 
-        <TagsData setPostData={setUpdatePost} tagsData={updatePostData.tags} />
+        <TagsData />
 
         <MyButton buttonText="PUBLISH" onClickEvent={completeStep} />
       </div>

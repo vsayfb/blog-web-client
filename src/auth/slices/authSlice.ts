@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getMyCredentials } from "../api/account";
+import { getMyCredentials } from "../../lib/api/account";
 
 export type Me = {
   username: string;
@@ -11,10 +11,11 @@ const initialState: { me: Me; pending: boolean } = {
   pending: false,
 };
 
-export const getMe = createAsyncThunk(
-  "auth/me",
-  async () => await getMyCredentials()
-);
+export const getMe = createAsyncThunk("auth/me", async () => {
+  const data = await getMyCredentials();
+
+  return data;
+});
 
 export const authSlice = createSlice({
   name: "auth",

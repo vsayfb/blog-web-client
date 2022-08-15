@@ -30,7 +30,7 @@ export const DeleteModal = ({
             Delete <b className="text-red-800"> {section}</b>?
           </h3>
           <p className="mb-6 font-medium text-sm text-coolGray-500">
-            Are you sure you want to delete{" "}
+            Are you sure want to delete{" "}
             <b className="text-red-800">{section}</b>?
           </p>
           <div className="flex flex-wrap justify-end -m-2 ">

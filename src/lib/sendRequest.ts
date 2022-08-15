@@ -16,14 +16,14 @@ export async function sendRequest(
   try {
     let headers: AxiosRequestConfig<any> & AxiosRequestHeaders = {};
 
+    if (putToken)
+      headers["Authorization"] = localStorage.getItem("token") || "";
+
     if (Object.keys(headersOptions).length) {
       for (const key in headersOptions) {
         headers[key] = headersOptions[key];
       }
     }
-
-    if (putToken)
-      headers["Authorization"] = localStorage.getItem("token") || "";
 
     const parameters: {
       url: string;
@@ -39,6 +39,18 @@ export async function sendRequest(
       return new Promise(async (resolve, reject) => {
         try {
           const { data } = await axios.get(parameters.url, parameters.config);
+          resolve(data);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    } else if (method === "delete") {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const { data } = await axios[method](
+            parameters.url,
+            parameters.config
+          );
           resolve(data);
         } catch (error) {
           reject(error);

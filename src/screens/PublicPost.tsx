@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Me } from "../lib/slices/authSlice";
+import { Me } from "../auth/slices/authSlice";
 import { getPublicPost } from "../lib/api/post";
 import { PostViewDto } from "../lib/types/post";
 import Prism from "prismjs";
@@ -18,7 +18,7 @@ export const PublicPost = ({ me }: { me: Me }) => {
 
   async function get(postUrl: string) {
     try {
-      const data = await getPublicPost(postUrl);
+      const { data } = await getPublicPost(postUrl);
       setPost(data);
     } catch (error: any) {
       setNotFound(true);

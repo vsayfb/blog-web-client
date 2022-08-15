@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slices/appSlice";
-import { setPictureToMe } from "../slices/authSlice";
+import { setPictureToMe } from "../../auth/slices/authSlice";
 import { RootState } from "../../store";
 import { uploadProfileImage } from "../api/account";
 

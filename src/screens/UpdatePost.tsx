@@ -10,7 +10,7 @@ export type UpdatePostState = {
   title: string;
   content: string;
   published: boolean | undefined;
-  titleImage: string | null;
+  title_image: string | null;
   tags: string[];
 };
 
@@ -20,7 +20,7 @@ export const UpdatePost = () => {
     title: "",
     content: "",
     published: undefined,
-    titleImage: null,
+    title_image: null,
     tags: [],
   });
 
@@ -29,18 +29,12 @@ export const UpdatePost = () => {
   const [step, setStep] = useState(1);
 
   async function getUpdatePost(postID: string) {
-    const { id, title, content, published, titleImage, tags } = await getPost(
-      postID
-    );
+    const { data } = await getPost(postID);
 
-    const tagsArray = tags.length ? tags.map((tag) => tag.name) : [];
+    const tagsArray = data.tags.length ? data.tags.map((tag) => tag.name) : [];
 
     setUpdatePost({
-      id,
-      title,
-      content,
-      published,
-      titleImage,
+      ...data,
       tags: tagsArray,
     });
   }

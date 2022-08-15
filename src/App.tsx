@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store";
 import { LoadingWrapper } from "./lib/components/LoadingWrapper";
 import { useEffect } from "react";
-import { getMe } from "./lib/slices/authSlice";
+import { getMe } from "./auth/slices/authSlice";
 import { AppRoutes } from "./routes/Routes";
 import { ErrorAlert } from "./lib/components/ErrorAlert";
 

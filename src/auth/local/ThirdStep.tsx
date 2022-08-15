@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { InputField } from "../../lib/components/InputField";
 import { setError, setLoading } from "../../lib/slices/appSlice";
 import { setLocalStorageToken } from "../../lib/setLocalStorageToken";
-import { setMe } from "../../lib/slices/authSlice";
+import { setMe } from "../slices/authSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
 import { register } from "../../lib/api/auth";
 import { MyButton } from "../../lib/components/Button";

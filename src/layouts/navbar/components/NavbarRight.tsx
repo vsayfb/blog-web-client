@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Me } from "../../../lib/slices/authSlice";
+import { Me } from "../../../auth/slices/authSlice";
 import { DashboardSVG } from "../../../lib/svgs/DashboardSVG";
 import { NotitificationSVG } from "../../../lib/svgs/NotificationSVG";
 import { UserMenuArea } from "./UserMenuArea";
