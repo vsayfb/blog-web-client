@@ -1,18 +1,13 @@
-import { SetStateAction } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setError } from "../../lib/slices/appSlice";
 import { uploadTitleImageForPost } from "../../lib/api/post";
 import { handleFileArea } from "../../lib/handleFileArea";
 import { ImageSVG } from "../../lib/svgs/ImageSVG";
-import { CreatePostDto } from "../../screens/WritePost";
+import { addTitleImageToPost } from "../slices/postsSlice";
+import { RootState } from "../../store";
 
-export const TitleImage = ({
-  postData,
-  setPostData,
-}: {
-  postData: CreatePostDto;
-  setPostData: React.Dispatch<SetStateAction<any>>;
-}) => {
+export const TitleImage = () => {
+  const { savedPost } = useSelector((state: RootState) => state.posts);
   const dispatch = useDispatch();
 
   const handleFile = () => {
@@ -20,7 +15,7 @@ export const TitleImage = ({
       try {
         const titleImage = await uploadTitleImageForPost(files[0]);
 
-        setPostData((prev: any) => ({ ...prev, titleImage }));
+        dispatch(addTitleImageToPost(titleImage));
       } catch (error: any) {
         dispatch(setError(error.response.data.message));
       }
@@ -32,9 +27,9 @@ export const TitleImage = ({
       <p>Title image</p>
       <div className="mt-2 mb-6 cursor-pointer flex" onClick={handleFile}>
         <ImageSVG />
-        {postData.title_image ? (
+        {savedPost?.title_image ? (
           <a
-            href={postData.title_image}
+            href={savedPost.title_image}
             className="ml-4 text-orange-700 items-center align-center"
             target="_blank"
           >

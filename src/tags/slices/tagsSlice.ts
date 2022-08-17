@@ -1,23 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: { tags: string[] } = { tags: [] };
+const initialState: { tagNames: string[] } = {
+  tagNames: [],
+};
 
 export const tagsSlice = createSlice({
   name: "tags",
   initialState,
   reducers: {
     setNewTag: (state, action: { payload: string }) => {
-      state.tags.push(action.payload);
+      state.tagNames.push(action.payload);
+    },
+    setTags: (state, action: { payload: string[] }) => {
+      state.tagNames = action.payload;
     },
     removeTag: (state, action: { payload: string }) => {
-      state.tags = state.tags.filter((s) => s !== action.payload);
+      state.tagNames = state.tagNames.filter((s) => s !== action.payload);
     },
     resetTags: (state) => {
-      state.tags = [];
+      state.tagNames = [];
     },
   },
 });
 
-export const { setNewTag, removeTag, resetTags } = tagsSlice.actions;
+export const { setNewTag, removeTag, resetTags, setTags } = tagsSlice.actions;
 
 export default tagsSlice.reducer;

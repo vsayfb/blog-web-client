@@ -1,68 +1,45 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPost } from "../lib/api/post";
+import { setSavedPost } from "../posts/slices/postsSlice";
 import { UpdateStepOne } from "../posts/update/UpdateStepOne";
 import { UpdateStepTwo } from "../posts/update/UpdateStepTwo";
-
-export type UpdatePostState = {
-  id: string;
-  title: string;
-  content: string;
-  published: boolean | undefined;
-  title_image: string | null;
-  tags: string[];
-};
+import { PostViewDto } from "../lib/types/post";
+import { RootState } from "../store";
 
 export const UpdatePost = () => {
-  const [updatePostData, setUpdatePost] = useState<UpdatePostState>({
-    id: "",
-    title: "",
-    content: "",
-    published: undefined,
-    title_image: null,
-    tags: [],
-  });
-
   const { id } = useParams();
 
+  const { savedPost } = useSelector((state: RootState) => state.posts);
+
   const [step, setStep] = useState(1);
+
+  const dispatch = useDispatch();
 
   async function getUpdatePost(postID: string) {
     const { data } = await getPost(postID);
 
-    const tagsArray = data.tags.length ? data.tags.map((tag) => tag.name) : [];
-
-    setUpdatePost({
-      ...data,
-      tags: tagsArray,
-    });
+    dispatch(setSavedPost(data || null));
   }
 
   useEffect(() => {
     if (id) getUpdatePost(id);
   }, [id]);
 
-  if (!updatePostData.id) return null;
+  if (!savedPost) return null;
 
   return (
     <div className="mr-20 ml-20 pt-16 pb-16">
       <Helmet>
-        <title>Udate {updatePostData.title}</title>
+        <title>Udate {savedPost.title}</title>
       </Helmet>
 
       {step === 1 ? (
-        <UpdateStepOne
-          setUpdatePost={setUpdatePost}
-          updatePostData={updatePostData}
-          setStep={setStep}
-        />
+        <UpdateStepOne savedPost={savedPost} setStep={setStep} />
       ) : (
-        <UpdateStepTwo
-          setUpdatePost={setUpdatePost}
-          updatePostData={updatePostData}
-          setStep={setStep}
-        />
+        <UpdateStepTwo savedPost={savedPost} setStep={setStep} />
       )}
     </div>
   );

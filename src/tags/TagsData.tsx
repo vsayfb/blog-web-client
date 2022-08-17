@@ -8,7 +8,7 @@ import { removeTag, setNewTag } from "./slices/tagsSlice";
 import { Tag } from "./Tag";
 
 export const TagsData = () => {
-  const { tags } = useSelector((state: RootState) => state.tags);
+  const { tagNames } = useSelector((state: RootState) => state.tags);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export const TagsData = () => {
   function addNewTag(e: any) {
     e.preventDefault();
 
-    if (tags.length < 3) {
+    if (tagNames.length < 3) {
       dispatch(setNewTag(tagValue));
     } else dispatch(setError("The number of tags must be 3 or less. "));
 
@@ -36,13 +36,13 @@ export const TagsData = () => {
       </form>
 
       <div className="mt-6 mb-6 flex">
-        {tags.length
-          ? tags.map((tag) => (
-              <div key={tag} className="relative">
-                <Tag key={tag} name={tag} />
+        {tagNames.length
+          ? tagNames.map((name) => (
+              <div key={name} className="relative">
+                <Tag key={name} name={name} />
 
                 <div
-                  onClick={() => dispatch(removeTag(tag))}
+                  onClick={() => dispatch(removeTag(name))}
                   className="absolute cursor-pointer"
                   style={{ right: "5px", top: "-7px" }}
                 >

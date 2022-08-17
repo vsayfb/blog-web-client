@@ -8,17 +8,13 @@ export async function localLogin(
   usernameOrEmail: string,
   password: string
 ): Promise<{ access_token: string }> {
-  const data: { access_token: string } = await sendRequest(
-    BASE_PARAM + "login",
-    "post",
-    false,
-    {
+  const result: { data: { access_token: string; message: string } } =
+    await sendRequest(BASE_PARAM + "login", "post", false, {
       username: usernameOrEmail,
       password,
-    }
-  );
+    });
 
-  return { access_token: "Bearer " + data.access_token };
+  return { access_token: "Bearer " + result.data.access_token };
 }
 
 export async function googleAuth(access_token: string): Promise<Auth> {

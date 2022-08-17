@@ -3,26 +3,29 @@ import { MyButton } from "../../lib/components/Button";
 import { Editor } from "../../lib/components/Editor";
 import { InputField } from "../../lib/components/InputField";
 import { updatePost } from "../../lib/api/post";
-import { UpdatePostState } from "../../screens/UpdatePost";
 import { TitleImage } from "../write/TitleImage";
+import { useDispatch } from "react-redux";
+import { PostViewDto } from "../../lib/types/post";
+import { setSavedPost, updateSavedPost } from "../slices/postsSlice";
 
 export const UpdateStepOne = ({
-  updatePostData,
-  setUpdatePost,
+  savedPost,
   setStep,
 }: {
-  updatePostData: UpdatePostState;
-  setUpdatePost: React.Dispatch<SetStateAction<UpdatePostState>>;
+  savedPost: PostViewDto;
   setStep: React.Dispatch<SetStateAction<number>>;
 }) => {
+  const dispatch = useDispatch();
+
   async function completeStep() {
     try {
-      const result = await updatePost(updatePostData.id, updatePostData);
-
-      setUpdatePost({
-        ...result.data,
-        tags: result.data.tags.map((tag) => tag.name),
+      const result = await updatePost(savedPost.id, {
+        ...savedPost,
+        // do not update tags it is job of second step
+        tags: undefined,
       });
+
+      dispatch(setSavedPost(result.data));
 
       setStep(2);
     } catch (error) {}
@@ -33,23 +36,18 @@ export const UpdateStepOne = ({
       <InputField
         labelText="New Title"
         onChangeEvent={(e) =>
-          setUpdatePost((prev) => ({
-            ...prev,
-            title: e.target.value,
-          }))
+          dispatch(updateSavedPost({ title: e.target.value }))
         }
-        value={updatePostData.title}
+        value={savedPost.title}
       />
 
-      <TitleImage postData={updatePostData} setPostData={setUpdatePost} />
+      <TitleImage />
 
       <div className="mt-6">
         <p className="mb-4 text-sm">Content</p>
         <Editor
-          content={updatePostData.content}
-          getEditorContent={(content) =>
-            setUpdatePost((prev) => ({ ...prev, content }))
-          }
+          content={savedPost.content}
+          getEditorContent={(content) => dispatch(updateSavedPost({ content }))}
         />
       </div>
 

@@ -4,7 +4,6 @@ import { StepOne } from "../posts/write/StepOne";
 import { StepTwo } from "../posts/write/StepTwo";
 
 export type CreatePostDto = {
-  id: string;
   title: string;
   content: string;
   title_image: string | null;
@@ -14,7 +13,6 @@ export type CreatePostDto = {
 export const WritePost = () => {
   const [postData, setPostData] = useState<CreatePostDto>({
     // id field is for updating the post after it has been saved
-    id: "",
     title: "",
     content: "",
     title_image: null,

@@ -88,7 +88,7 @@ export const StepOne = ({
         />
       </div>
 
-      <TitleImage postData={postData} setPostData={setPostData} />
+      <TitleImage />
 
       <p className="mb-5"> Content</p>
 

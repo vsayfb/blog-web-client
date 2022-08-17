@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyButton } from "../../lib/components/Button";
 import { BackSVG } from "../../lib/svgs/BackSVG";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setError } from "../../lib/slices/appSlice";
 import { resetTags } from "../../tags/slices/tagsSlice";
+import { resetSavedPost } from "../slices/postsSlice";
 
 export const StepTwo = ({
   setStep,
@@ -18,18 +19,20 @@ export const StepTwo = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { savedPost } = useSelector((state: RootState) => state.posts);
-  const { tags } = useSelector((state: RootState) => state.tags);
+  const { tagNames } = useSelector((state: RootState) => state.tags);
 
   async function complete() {
     try {
       if (savedPost) {
         const result = await updatePost(savedPost.id, {
           ...savedPost,
-          tags,
+          tags: tagNames,
           published: true,
         });
 
         dispatch(resetTags());
+
+        dispatch(resetSavedPost());
 
         navigate("/" + result.data.url);
       }
