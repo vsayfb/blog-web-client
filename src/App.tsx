@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getMe } from "./auth/slices/authSlice";
 import { AppRoutes } from "./routes/Routes";
 import { ErrorAlert } from "./lib/components/ErrorAlert";
+import { Sockets } from "./sockets/Sockets";
 
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
@@ -15,10 +16,10 @@ function App() {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(getMe());
-    }
+    if (token) dispatch(getMe());
   }, []);
 
   return (
@@ -27,6 +28,8 @@ function App() {
         "1030114530292-3dh19g79549kt9p1lkp5j486himaofe3.apps.googleusercontent.com"
       }
     >
+      <Sockets />
+
       <Navbar />
 
       <ErrorAlert />

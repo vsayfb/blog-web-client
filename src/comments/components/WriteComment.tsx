@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
+import { RootState } from "../../store";
 import { addNewComment } from "../slices/commentsSlice";
 
 export const WriteComment = ({ postID }: { postID: string }) => {
   const [commentValue, setCommentValue] = useState("");
+  const { me } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -19,6 +21,8 @@ export const WriteComment = ({ postID }: { postID: string }) => {
           content: commentValue,
         }
       );
+
+      data.author = me;
 
       dispatch(addNewComment(data));
     } catch (error: any) {

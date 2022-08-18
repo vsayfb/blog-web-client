@@ -1,10 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
-import { useDispatch } from "react-redux";
-import { setError } from "./slices/appSlice";
-import { store } from "../store";
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const BASE_URL = process.env.REACT_APP_BASE_URL + "/api/v1/";
 
 export async function sendRequest(
   path: string,
