@@ -4,10 +4,23 @@ import { getMyCredentials } from "../../lib/api/account";
 export type Me = {
   username: string;
   image: string;
+  display_name: string;
+  sub: string;
+  role: string;
+  iat: number;
+  exp: number;
 };
 
 const initialState: { me: Me; pending: boolean } = {
-  me: { username: "", image: "" },
+  me: {
+    username: "",
+    image: "",
+    display_name: "",
+    sub: "",
+    role: "user",
+    iat: 0,
+    exp: 0,
+  },
   pending: false,
 };
 

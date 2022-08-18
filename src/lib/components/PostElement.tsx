@@ -2,13 +2,14 @@ import { detectImage } from "../detectImage";
 import { CreatedAtSVG } from "../svgs/CreatedAtSVG";
 import { PostViewDto } from "../types/post";
 import { Tag } from "../../tags/Tag";
+import { CommentArea } from "../../comments/components/CommentArea";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
   return (
-    <article className="relative pt-20 md:pt-40 pb-20 bg-zinc-900 overflow-x-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-6xl md:text-7xl font-bold font-heading text-white">
+    <div className="relative pt-20 md:pt-40 pb-20 bg-zinc-900 overflow-x-hidden">
+      <div className="container px-4 max-w-3xl mx-auto">
+        <div className=" text-center">
+          <h2 className="text-6xl md:text-7xl font-bold font-heading text-white break-words">
             {post.title}
           </h2>
           <div className="inline-flex pt-14 mb-14 items-center">
@@ -55,11 +56,15 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
           </div>
         ) : null}
 
-        <div
-          className="max-w-3xl mx-auto light-content-tiny"
+        <article
+          className="light-content-tiny"
           dangerouslySetInnerHTML={{ __html: post.content }}
-        ></div>
+        ></article>
+
+        <section id="comments">
+          <CommentArea />
+        </section>
       </div>
-    </article>
+    </div>
   );
 };
