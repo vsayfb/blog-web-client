@@ -62,7 +62,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
         ></article>
 
         <section id="comments">
-          <CommentArea />
+          <CommentArea postID={post.id} />
         </section>
       </div>
     </div>
