@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Me } from "../../../auth/slices/authSlice";
 import { DashboardSVG } from "../../../lib/svgs/DashboardSVG";
+import { InboxSVG } from "../../../lib/svgs/InboxSVG";
 import { NotitificationSVG } from "../../../lib/svgs/NotificationSVG";
 import { UserMenuArea } from "./UserMenuArea";
 
@@ -37,6 +38,10 @@ export const NavbarRight = ({ me, pending }: { me: Me; pending: boolean }) => {
 
         <div className="cursor-pointer">
           <NotitificationSVG />
+        </div>
+
+        <div className="cursor-pointer">
+          <InboxSVG />
         </div>
 
         <div>
