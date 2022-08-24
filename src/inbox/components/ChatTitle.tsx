@@ -1,13 +1,20 @@
-export const ChatTitle = () => {
+export const ChatTitle = ({
+  image,
+  title,
+}: {
+  image: string;
+  title: string;
+}) => {
+  
   return (
     <div className="flex items-center border-b border-orange-200 pl-3 py-3">
       <img
         className="h-10 w-10 rounded-full object-cover"
-        src="https://upload.wikimedia.org/wikipedia/tr/0/03/Walter_White_S5B.png"
+        src={image}
         alt="username"
       />
       <span className="block ml-2 font-bold text-base text-orange-200">
-        Walter White
+        {title}
       </span>
       <span className="connected text-green-500 ml-2">
         <svg width="6" height="6">

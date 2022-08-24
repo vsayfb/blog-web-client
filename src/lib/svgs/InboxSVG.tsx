@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { toggleInboxVisibility } from "../../chats/slices/chatsSlice";
+import { toggleInboxVisibility } from "../../inbox/slices/inboxSlice";
 
 export const InboxSVG = () => {
   const dispatch = useDispatch();

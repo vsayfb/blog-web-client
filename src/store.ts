@@ -4,7 +4,7 @@ import authSlice from "./auth/slices/authSlice";
 import postsSlice from "./posts/slices/postsSlice";
 import tagsSlice from "./tags/slices/tagsSlice";
 import commentsSlice from "./comments/slices/commentsSlice";
-import chatsSlice from "./chats/slices/chatsSlice";
+import inboxSlice from "./inbox/slices/inboxSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
     posts: postsSlice,
     tags: tagsSlice,
     comments: commentsSlice,
-    chats: chatsSlice,
+    inbox: inboxSlice,
   },
 });
 

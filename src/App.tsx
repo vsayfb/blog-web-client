@@ -8,7 +8,7 @@ import { getMe } from "./auth/slices/authSlice";
 import { AppRoutes } from "./routes/Routes";
 import { ErrorAlert } from "./lib/components/ErrorAlert";
 import { Sockets } from "./sockets/Sockets";
-import { Inbox } from "./chats/components/Inbox";
+import { Inbox } from "./inbox/components/Inbox";
 
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
@@ -33,7 +33,7 @@ function App() {
 
       <Navbar />
 
-      <Inbox />
+      {me.username ? <Inbox /> : null}
 
       <ErrorAlert />
 
