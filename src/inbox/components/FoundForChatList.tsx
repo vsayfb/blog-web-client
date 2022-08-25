@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
-import { resetChat, resetChatID, setFoundUser } from "../slices/inboxSlice";
+import { resetOpenedChat, resetOpenedChatID, setFoundUser } from "../slices/inboxSlice";
 
 export const FoundForChatList = ({
   accounts,
@@ -17,8 +17,8 @@ export const FoundForChatList = ({
         <li
           key={a.id}
           onClick={() => {
-            dispatch(resetChatID());
-            dispatch(resetChat());
+            dispatch(resetOpenedChatID());
+            dispatch(resetOpenedChat());
 
             dispatch(setFoundUser(a));
           }}

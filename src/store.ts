@@ -15,6 +15,8 @@ export const store = configureStore({
     comments: commentsSlice,
     inbox: inboxSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -5,8 +5,7 @@ import { sendRequest } from "../../lib/sendRequest";
 import {
   addNewChat,
   resetFoundUser,
-  setChat,
-  setChatID,
+  setOpenedChatID,
   setSearchingUsersForChat,
 } from "../slices/inboxSlice";
 import { ChatImageSvg } from "../svgs/ChatImageSvg";
@@ -40,7 +39,7 @@ export const InitiliazeChat = ({
       }
     );
 
-    dispatch(setChatID(data.id));
+    dispatch(setOpenedChatID(data.id));
 
     dispatch(addNewChat(data));
 

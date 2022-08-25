@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
-import { addMessageToChat } from "../slices/inboxSlice";
 import { ChatImageSvg } from "../svgs/ChatImageSvg";
 import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
-import { ChatMessageViewDto } from "../types/chat-message-view.dto";
 
 export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
   const dispatch = useDispatch();
@@ -14,14 +12,7 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
 
   async function sendMessageToChat() {
     try {
-      const { data: message }: { data: ChatMessageViewDto } = await sendRequest(
-        `messages/to/${chatID}`,
-        "post",
-        true,
-        { content }
-      );
-
-      dispatch(addMessageToChat(message));
+      await sendRequest(`messages/to/${chatID}`, "post", true, { content });
 
       setContent("");
     } catch (error: any) {

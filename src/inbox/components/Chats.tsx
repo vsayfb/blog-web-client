@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
-import { setChats, setChatID } from "../slices/inboxSlice";
+import { setChats, setOpenedChatID } from "../slices/inboxSlice";
 import { ChatViewDto } from "../types/chat-view-dto";
 
 export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
@@ -37,7 +37,7 @@ export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
         const targetUser = c.members.find((m) => m.id !== me.sub);
 
         return (
-          <li key={c.id} onClick={() => dispatch(setChatID(c.id))}>
+          <li key={c.id} onClick={() => dispatch(setOpenedChatID(c.id))}>
             <a className="hover:bg-orange-200 hover:text-black text-white border-b border-orange-200 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-orange-200 transition duration-150 ease-in-out">
               <img
                 className="h-10 w-10 rounded-full object-cover"

@@ -12,8 +12,8 @@ export type InboxState = {
   inboxVisibility: boolean;
   foundForChat: AccountViewDto[];
   foundUser: AccountViewDto | null;
-  chat: ChatViewDto | null;
-  chatID: string;
+  openedChat: ChatViewDto | null;
+  openedChatID: string;
   chats: ChatViewDto[];
   searchingUsersForChat: boolean;
 };
@@ -22,8 +22,8 @@ const initialState: InboxState = {
   inboxVisibility: false,
   foundForChat: [],
   foundUser: null,
-  chat: null,
-  chatID: "",
+  openedChat: null,
+  openedChatID: "",
   chats: [],
   searchingUsersForChat: false,
 };
@@ -35,11 +35,14 @@ export const inboxSlice = createSlice({
     toggleInboxVisibility: (state) => {
       state.inboxVisibility = !state.inboxVisibility;
     },
-    resetChat: (state) => {
-      state.chat = null;
+    setOpenedChat: (state, action: { payload: ChatViewDto }) => {
+      state.openedChat = action.payload;
     },
-    resetChatID: (state) => {
-      state.chatID = "";
+    resetOpenedChat: (state) => {
+      state.openedChat = null;
+    },
+    resetOpenedChatID: (state) => {
+      state.openedChatID = "";
     },
     setSearchingUsersForChat: (state, action: { payload: boolean }) => {
       state.searchingUsersForChat = action.payload;
@@ -47,17 +50,26 @@ export const inboxSlice = createSlice({
     addNewChat: (state, action: { payload: ChatViewDto }) => {
       state.chats.unshift(action.payload);
     },
-    setChat: (state, action: { payload: ChatViewDto }) => {
-      state.chat = action.payload;
-    },
-    setChatID: (state, action: { payload: string }) => {
-      state.chatID = action.payload;
+    setOpenedChatID: (state, action: { payload: string }) => {
+      state.openedChatID = action.payload;
     },
     setChats: (state, action) => {
       state.chats = action.payload;
     },
-    addMessageToChat: (state, action: { payload: ChatMessageViewDto }) => {
-      state.chat?.messages.push(action.payload);
+    addMessageToOpenedChat: (state, action: { payload: ChatMessageViewDto }) => {
+      state.openedChat?.messages.push(action.payload);
+    },
+    addMessageToSpecificChat: (
+      state,
+      action: { payload: { chatID: string; message: ChatMessageViewDto } }
+    ) => {
+      state.chats.map((c) => {
+        if (c.id === action.payload.chatID) {
+          c.messages.push(action.payload.message);
+        }
+
+        return c;
+      });
     },
     resetFoundUser: (state) => {
       state.foundUser = null;
@@ -76,14 +88,14 @@ export const inboxSlice = createSlice({
 
 export const {
   toggleInboxVisibility,
-  setChat,
-  resetChat,
+  setOpenedChat,
+  resetOpenedChat,
   setSearchingUsersForChat,
-  resetChatID,
+  resetOpenedChatID,
   addNewChat,
-  setChatID,
+  setOpenedChatID,
   setChats,
-  addMessageToChat,
+  addMessageToOpenedChat,
   resetFoundUser,
   resetFoundUsers,
   setFoundUsers,

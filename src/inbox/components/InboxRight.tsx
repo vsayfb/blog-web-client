@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import { MessageSVG } from "../../lib/svgs/MessageSVG";
 import { RootState } from "../../store";
-import { Chat } from "./Chat";
+import { OpenedChat } from "./OpenedChat";
 import { InitiliazeChat } from "./InitializeChat";
 
 export const InboxRight = () => {
-  const { chats, chatID, foundUser } = useSelector(
+  const { chats, openedChatID, foundUser } = useSelector(
     (state: RootState) => state.inbox
   );
 
-  if (chatID) return <Chat chatID={chatID} />;
+  if (openedChatID) return <OpenedChat chatID={openedChatID} />;
   else if (foundUser) return <InitiliazeChat targetUser={foundUser} />;
   else if (!chats.length)
     return (
@@ -20,5 +20,5 @@ export const InboxRight = () => {
         <h3 className="text-white text-center">No messages.</h3>
       </div>
     );
-  else return <Chat chatID={chats[0].id} />;
+  else return <OpenedChat chatID={chats[0].id} />;
 };

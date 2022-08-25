@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { RootState } from "../../store";
 import { ChatMessageViewDto } from "../types/chat-message-view.dto";
 import { ChatMessage } from "./ChatMessage";
