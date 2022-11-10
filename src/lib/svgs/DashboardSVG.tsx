@@ -1,11 +1,10 @@
-export const DashboardSVG = () => {
+export const DashboardSVG = ({ fill }: { fill: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      fill="#fed7aa"
-      className="bi bi-fingerprint"
+      className="bi bi-fingerprint "
       viewBox="0 0 16 16"
     >
       <path d="M8.06 6.5a.5.5 0 0 1 .5.5v.776a11.5 11.5 0 0 1-.552 3.519l-1.331 4.14a.5.5 0 0 1-.952-.305l1.33-4.141a10.5 10.5 0 0 0 .504-3.213V7a.5.5 0 0 1 .5-.5Z" />

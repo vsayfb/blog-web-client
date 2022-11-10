@@ -3,13 +3,27 @@ import { CreatedAtSVG } from "../svgs/CreatedAtSVG";
 import { PostViewDto } from "../types/post";
 import { Tag } from "../../tags/Tag";
 import { CommentArea } from "../../comments/components/CommentArea";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
+  const { colors, theme } = useSelector((root: RootState) => root.app);
+
   return (
-    <div className="relative pt-20 md:pt-40 pb-20 bg-zinc-900 overflow-x-hidden">
+    <div
+      className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden ${
+        theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
+      }`}
+    >
       <div className="container px-4 max-w-3xl mx-auto">
         <div className=" text-center">
-          <h2 className="text-6xl md:text-7xl font-bold font-heading text-white break-words">
+          <h2
+            className={`text-6xl md:text-7xl font-bold font-heading break-words ${
+              theme === "dark"
+                ? "text-" + colors.zinc50
+                : "text-" + colors.zinc900
+            }`}
+          >
             {post.title}
           </h2>
           <div className="inline-flex pt-14 mb-14 items-center">
@@ -19,7 +33,13 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
               alt=""
             />
             <div className="text-left">
-              <h4 className="mb-1 text-2xl font-bold font-heading text-white">
+              <h4
+                className={`mb-1 text-2xl font-bold font-heading ${
+                  theme === "dark"
+                    ? "text-" + colors.zinc50
+                    : "text-" + colors.zinc900
+                }`}
+              >
                 {post.author.username}
               </h4>
               <p className="text-gray-500">14 June, 5:00 am</p>
@@ -36,10 +56,22 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
             ) : null}
 
             <div className="flex justify-center items-center mt-8">
-              <div className="ml-2 text-orange-200">
+              <div
+                className={`${
+                  theme === "dark"
+                    ? "text-" + colors.zinc50
+                    : "text-" + colors.zinc900
+                } ml-2`}
+              >
                 <CreatedAtSVG />
               </div>
-              <div className="ml-2 text-orange-200">
+              <div
+                className={`${
+                  theme === "dark"
+                    ? "text-" + colors.zinc50
+                    : "text-" + colors.zinc900
+                } ml-2`}
+              >
                 {new Date(post.created_at).toLocaleDateString()}
               </div>
             </div>
@@ -57,7 +89,9 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
         ) : null}
 
         <article
-          className="light-content-tiny"
+          className={`${
+            theme === "dark" ? "light-content-tiny" : "dark-content-tiny"
+          }`}
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></article>
 

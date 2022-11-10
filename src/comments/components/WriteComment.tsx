@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
-import { setError } from "../../lib/slices/appSlice";
+import { AppColors, setError } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import { addNewComment } from "../slices/commentsSlice";
 
-export const WriteComment = ({ postID }: { postID: string }) => {
+export const WriteComment = ({
+  postID,
+  colors,
+  theme,
+}: {
+  postID: string;
+  colors: AppColors;
+  theme: string;
+}) => {
   const [commentValue, setCommentValue] = useState("");
   const { me } = useSelector((state: RootState) => state.auth);
 
@@ -35,7 +43,13 @@ export const WriteComment = ({ postID }: { postID: string }) => {
       <div>
         <div className="flex justify-between w-full">
           <div className="mb-4">
-            <span className="rounded-md font-semibold cursor-pointer p-2 text-orange-200">
+            <span
+              className={`rounded-md font-semibold cursor-pointer p-2 ${
+                theme === "dark"
+                  ? "text-" + colors.zinc50
+                  : "text-" + colors.zinc900
+              }`}
+            >
               Write
             </span>
             <span className="bg-transparent font-semibold text-[#7E8490] cursor-pointer p-2">
@@ -95,7 +109,11 @@ export const WriteComment = ({ postID }: { postID: string }) => {
         ></textarea>
         <div className="flex justify-start">
           <button
-            className="text-sm font-semibold absolute  w-fit bg-orange-200 text-zinc-900 py-2 rounded px-3"
+            className={`text-sm font-semibold absolute  w-fit py-2 rounded px-3 ${
+              theme === "dark"
+                ? "text-" + colors.zinc900 + " bg-" + colors.zinc50
+                : "text-" + colors.zinc50 + " bg-" + colors.zinc900
+            }`}
             onClick={createComment}
           >
             Send

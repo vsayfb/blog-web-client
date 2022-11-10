@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { toggleInboxVisibility } from "../../inbox/slices/inboxSlice";
 
-export const InboxSVG = () => {
+export const InboxSVG = ({ fill }: { fill: string }) => {
   const dispatch = useDispatch();
 
   return (
@@ -10,7 +10,6 @@ export const InboxSVG = () => {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      fill="#fed7aa"
       className="bi bi-inbox ml-4 mr-2"
       viewBox="0 0 16 16"
     >

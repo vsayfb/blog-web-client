@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { sendRequest } from "../../lib/sendRequest";
+import { AppColors } from "../../lib/slices/appSlice";
 import {
   addNewChat,
   resetFoundUser,
@@ -15,8 +16,12 @@ import { ChatTitle } from "./ChatTitle";
 
 export const InitiliazeChat = ({
   targetUser,
+  colors,
+  theme,
 }: {
   targetUser: AccountViewDto;
+  colors: AppColors;
+  theme: string;
 }) => {
   const dispatch = useDispatch();
 
@@ -47,18 +52,28 @@ export const InitiliazeChat = ({
   }
 
   return (
-    <div className="col-span-2 bg-zinc-900">
+    <div
+      className={`col-span-2 ${
+        theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
+      }`}
+    >
       <div className="w-full">
         <ChatTitle
           image={targetUser.image || ""}
           title={targetUser.display_name}
+          colors={colors}
+          theme={theme}
         />
 
         {/* SPACE  */}
 
         <div className="pb-14 pt-14"> </div>
 
-        <div className="w-full py-3 px-3 flex items-center justify-between border-t border-orange-200">
+        <div
+          className={`w-full py-3 px-3 flex items-center justify-between border-t ${
+            theme === "dark" ? "border-orange-200" : "border-blue-600"
+          }`}
+        >
           <ChatImageSvg />
 
           <input
@@ -72,7 +87,9 @@ export const InitiliazeChat = ({
           />
 
           <button onClick={() => initializeChat()}>
-            <ChatSendMessageSvg />
+            <ChatSendMessageSvg
+              fill={theme === "dark" ? "#fed7aa" : "#2563eb"}
+            />
           </button>
         </div>
       </div>

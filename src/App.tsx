@@ -13,7 +13,9 @@ import { Inbox } from "./inbox/components/Inbox";
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
 
-  const { loading } = useSelector((state: RootState) => state.app);
+  const { loading, theme, colors } = useSelector(
+    (state: RootState) => state.app
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,9 +33,9 @@ function App() {
     >
       <Sockets />
 
-      <Navbar />
+      <Navbar colors={colors} theme={theme} />
 
-      {me.username ? <Inbox /> : null}
+      {me.username ? <Inbox colors={colors} theme={theme} /> : null}
 
       <ErrorAlert />
 

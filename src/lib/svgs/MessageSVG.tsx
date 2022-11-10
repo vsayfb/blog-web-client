@@ -1,10 +1,18 @@
-export const MessageSVG = ({ w, h }: { w?: number; h?: number }) => {
+export const MessageSVG = ({
+  w,
+  h,
+  fill,
+}: {
+  w?: number;
+  h?: number;
+  fill?: string;
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={w || 20}
       height={h || 20}
-      fill="#fed7aa"
+      fill={fill || ""}
       className="bi bi-envelope"
       viewBox="0 0 16 16"
     >

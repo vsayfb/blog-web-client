@@ -25,8 +25,8 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
   }
 
   return (
-    <div className="w-full py-3 px-3 flex items-center justify-between border-t border-orange-200">
-      <ChatImageSvg />
+    <div className="w-full py-3 px-3 flex items-center justify-between border-t ">
+      {/* <ChatImageSvg /> */}
 
       <input
         placeholder="Send message"
@@ -39,7 +39,7 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
       />
 
       <button onClick={() => sendMessage()}>
-        <ChatSendMessageSvg />
+        <ChatSendMessageSvg fill={"#2563eb"} />
       </button>
     </div>
   );

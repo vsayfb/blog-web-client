@@ -1,11 +1,20 @@
 import { useDispatch } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
-import { resetOpenedChat, resetOpenedChatID, setFoundUser } from "../slices/inboxSlice";
+import { AppColors } from "../../lib/slices/appSlice";
+import {
+  resetOpenedChat,
+  resetOpenedChatID,
+  setFoundUser,
+} from "../slices/inboxSlice";
 
 export const FoundForChatList = ({
   accounts,
+  colors,
+  theme,
 }: {
   accounts: AccountViewDto[];
+  colors: AppColors;
+  theme: string;
 }) => {
   const dispatch = useDispatch();
 
@@ -16,6 +25,7 @@ export const FoundForChatList = ({
       {accounts.map((a) => (
         <li
           key={a.id}
+          className="list-none"
           onClick={() => {
             dispatch(resetOpenedChatID());
             dispatch(resetOpenedChat());
@@ -23,7 +33,27 @@ export const FoundForChatList = ({
             dispatch(setFoundUser(a));
           }}
         >
-          <a className="hover:bg-orange-200 hover:text-black text-white border-b border-orange-200 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-orange-200 transition duration-150 ease-in-out">
+          <a
+            className={`border-b px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none transition duration-150 ease-in-out  ${
+              theme === "dark"
+                ? "text-" +
+                  colors.zinc900 +
+                  " border-" +
+                  colors.orange200 +
+                  " hover:bg-" +
+                  colors.orange200 +
+                  " hover:text-" +
+                  colors.zinc900
+                : "text-" +
+                  colors.zinc900 +
+                  " border-" +
+                  colors.zinc900 +
+                  " hover:bg-" +
+                  colors.blue400 +
+                  " hover:text-" +
+                  colors.zinc50
+            }`}
+          >
             <img
               className="h-10 w-10 rounded-full object-cover"
               src={a.image || ""}

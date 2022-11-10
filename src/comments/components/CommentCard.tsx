@@ -1,14 +1,27 @@
 import { Link } from "react-router-dom";
+import { AppColors } from "../../lib/slices/appSlice";
 import { CommentViewDto } from "../types/comment-view.dto";
 import { RemoveComment } from "./DeleteComment";
 
-export const CommentCard = ({ comment }: { comment: CommentViewDto }) => {
+export const CommentCard = ({
+  comment,
+  colors,
+  theme,
+}: {
+  comment: CommentViewDto;
+  colors: AppColors;
+  theme: string;
+}) => {
   return (
-    <div className="space-y-4 mt-12">
+    <div className="space-y-4 mt-20">
       <div className="flex">
         <div className="flex-shrink-0 mr-3">
           <img
-            className="mt-2 rounded-full border-2 border-orange-200"
+            className={`mt-2 rounded-full border-2 ${
+              theme === "dark"
+                ? "border-" + colors.zinc50
+                : "border-" + colors.zinc900
+            }`}
             width={60}
             alt="profile_img"
             src={comment.author.image || ""}
@@ -18,9 +31,21 @@ export const CommentCard = ({ comment }: { comment: CommentViewDto }) => {
             Like Dislike
           </div>
         </div>
-        <div className="flex-1 border-2 border-orange-200 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+        <div
+          className={`flex-1 border-2 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed ${
+            theme === "dark"
+              ? "border-" + colors.zinc50
+              : "border-" + colors.zinc900
+          }`}
+        >
           <Link to={`/profile/${comment.author.username}`}>
-            <strong className="text-orange-200">
+            <strong
+              className={`${
+                theme === "dark"
+                  ? "border-" + colors.zinc50
+                  : "border-" + colors.zinc900
+              }`}
+            >
               {comment.author.display_name}
             </strong>
           </Link>

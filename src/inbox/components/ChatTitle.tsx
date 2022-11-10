@@ -1,19 +1,36 @@
+import { AppColors } from "../../lib/slices/appSlice";
+
 export const ChatTitle = ({
   image,
   title,
+  colors,
+  theme,
 }: {
   image: string;
   title: string;
+  colors: AppColors;
+  theme: string;
 }) => {
-  
   return (
-    <div className="flex items-center border-b border-orange-200 pl-3 py-3">
+    <div
+      className={`flex items-center border-b pl-3 py-3 ${
+        theme === "dark"
+          ? "border-" + colors.orange200
+          : "border-" + colors.blue400
+      }`}
+    >
       <img
         className="h-10 w-10 rounded-full object-cover"
         src={image}
         alt="username"
       />
-      <span className="block ml-2 font-bold text-base text-orange-200">
+      <span
+        className={`block ml-2 font-bold text-base ${
+          theme === "dark"
+            ? "text-" + colors.orange200
+            : "text-" + colors.blue400
+        } `}
+      >
         {title}
       </span>
       <span className="connected text-green-500 ml-2">

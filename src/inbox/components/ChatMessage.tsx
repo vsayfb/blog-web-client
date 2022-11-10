@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import { RootState } from "../../store";
 
 export const ChatMessage = ({
   position,
@@ -11,6 +13,8 @@ export const ChatMessage = ({
   created_at: string;
   sender?: AccountViewDto;
 }) => {
+  const { colors, theme } = useSelector((state: RootState) => state.app);
+
   if (position === "left" && sender) {
     return (
       <div className="w-full flex justify-start items-center">
@@ -23,11 +27,19 @@ export const ChatMessage = ({
         </span>
 
         <div
-          className="ml-4 bg-gray-100 rounded py-1 my-2 text-gray-700 relative"
+          className="ml-4 rounded py-1 my-2 relative"
           style={{ minWidth: "100px", maxWidth: "300px" }}
         >
-          <div className="text-left px-2">{content}</div>
-          <div className="text-xs px-2 text-right">{created_at}</div>
+          <div
+            className={`${
+              theme === "dark"
+                ? "text-" + colors.zinc50
+                : "text-" + colors.zinc900
+            }`}
+          >
+            {content}
+          </div>
+          {/* <div className="text-xs px-2 text-right">{created_at}</div> */}
         </div>
       </div>
     );
@@ -36,11 +48,21 @@ export const ChatMessage = ({
   return (
     <div className="w-full flex justify-end">
       <div
-        className="ml-4 bg-orange-200 rounded py-1 my-2 text-zinc-900 relative"
+        className={`"ml-4 ${
+          theme === "dark" ? "bg-" + colors.orange200 : "bg-" + colors.blue400
+        }  rounded py-1 my-2  relative"`}
         style={{ minWidth: "100px", maxWidth: "300px" }}
       >
-        <div className="text-left px-2">{content}</div>
-        <div className="text-xs px-2 text-right">{created_at}</div>
+        <div
+          className={`text-left px-2 ${
+            theme === "dark"
+              ? "text-" + colors.zinc900
+              : "text-" + colors.zinc50
+          }`}
+        >
+          {content}
+        </div>
+        {/* <div className="text-xs px-2 text-right">{created_at}</div> */}
       </div>
     </div>
   );

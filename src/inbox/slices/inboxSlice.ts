@@ -56,7 +56,10 @@ export const inboxSlice = createSlice({
     setChats: (state, action) => {
       state.chats = action.payload;
     },
-    addMessageToOpenedChat: (state, action: { payload: ChatMessageViewDto }) => {
+    addMessageToOpenedChat: (
+      state,
+      action: { payload: ChatMessageViewDto }
+    ) => {
       state.openedChat?.messages.push(action.payload);
     },
     addMessageToSpecificChat: (
