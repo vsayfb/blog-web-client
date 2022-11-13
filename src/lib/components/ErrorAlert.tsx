@@ -26,7 +26,7 @@ export const ErrorAlert = () => {
     <div className="flex justify-center ">
       <div
         className="p-5 fixed bg-red-50 border-l-4 border-red-500 rounded-r-lg"
-        style={{ top: "0px" }}
+        style={{ bottom: "20px", right: "20px" }}
       >
         <div className="flex ">
           <svg

@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import { OpenedChat } from "./OpenedChat";
 import { InitiliazeChat } from "./InitializeChat";
 import { AppColors } from "../../lib/slices/appSlice";
+import { useRef } from "react";
 
 export const InboxRight = ({
   colors,

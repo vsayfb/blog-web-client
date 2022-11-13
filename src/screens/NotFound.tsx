@@ -2,11 +2,17 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { AppLogo } from "../lib/components/AppLogo";
 
-export const NotFound = () => {
+export const NotFound = ({
+  message,
+  pageTitle,
+}: {
+  message?: string;
+  pageTitle?: string;
+}) => {
   return (
     <section className="flex items-center h-full ">
       <Helmet>
-        <title>404 - NOT FOUND</title>
+        <title>{pageTitle ? pageTitle : "404 - PAGE NOT FOUND"}</title>
       </Helmet>
 
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
@@ -17,7 +23,8 @@ export const NotFound = () => {
             <span className="sr-only">Error</span>404
           </h1>
           <p className="text-2xl font-semibold md:text-3xl">
-            Sorry, we couldn't find this page.
+            Sorry,{" "}
+            {message ? message.toLowerCase() : "  we couldn't find this page."}
           </p>
           <p className="mt-4 mb-8 ">
             But dont worry, you can find plenty of other things on our homepage.

@@ -2,6 +2,7 @@ import { Me, setMe } from "../../../auth/slices/authSlice";
 import { detectImage } from "../../../lib/detectImage";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const UserMenuArea = ({ me }: { me: Me }) => {
   const [userMenuVisibility, setUserMenuVisibility] = useState(false);
@@ -33,15 +34,16 @@ export const UserMenuArea = ({ me }: { me: Me }) => {
           aria-labelledby="user-menu-button"
           tabIndex={-1}
         >
-          <a
-            href="#"
+          <Link
+            to={`/profile/${me.username}`}
+            onClick={() => setUserMenuVisibility(false)}
             className="block px-4 py-2 text-sm text-gray-700"
             role="menuitem"
             tabIndex={-1}
             id="user-menu-item-0"
           >
             Your Profile
-          </a>
+          </Link>
 
           <a
             href="#"

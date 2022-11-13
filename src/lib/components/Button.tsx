@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
 export const MyButton = ({
   onClickEvent,
   buttonText,
@@ -9,14 +12,22 @@ export const MyButton = ({
   classProperties?: string;
   role?: React.AriaRole | undefined;
 }) => {
-  const BUTTON_CLASS =
-    "focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full";
+  const { theme, colors } = useSelector((state: RootState) => state.app);
+
+  const buttonBg = "bg-" + (theme === "dark" ? colors.zinc50 : colors.zinc900);
+
+  const buttonTextColor =
+    "text-" + (theme === "dark" ? colors.zinc900 : "white");
+
+  const BUTTON_CLASS = `
+    text-sm font-semibold focus:outline-none 
+    ${buttonBg} ${buttonTextColor} rounded py-4 w-full`;
 
   return (
     <button
       onClick={onClickEvent}
       role={role}
-      className={`${BUTTON_CLASS} ${classProperties}`}
+      className={`${BUTTON_CLASS} ${classProperties} `}
     >
       {buttonText}
     </button>

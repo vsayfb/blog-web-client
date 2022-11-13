@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { detectImage } from "../../lib/detectImage";
 import { AppColors } from "../../lib/slices/appSlice";
 import { CommentViewDto } from "../types/comment-view.dto";
 import { RemoveComment } from "./DeleteComment";
@@ -13,7 +14,7 @@ export const CommentCard = ({
   theme: string;
 }) => {
   return (
-    <div className="space-y-4 mt-20">
+    <div className="space-y-4 mt-20" id={comment.id}>
       <div className="flex">
         <div className="flex-shrink-0 mr-3">
           <img
@@ -24,7 +25,7 @@ export const CommentCard = ({
             }`}
             width={60}
             alt="profile_img"
-            src={comment.author.image || ""}
+            src={detectImage(comment.author.image)}
           />
 
           <div className="flex items-center justify-evenly pt-2 pb-2">

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: { tagNames: string[] } = {
-  tagNames: [],
+const initialState: { postTagNames: string[]; tags: [] } = {
+  postTagNames: [],
+  tags: [],
 };
 
 export const tagsSlice = createSlice({
@@ -9,16 +10,18 @@ export const tagsSlice = createSlice({
   initialState,
   reducers: {
     setNewTag: (state, action: { payload: string }) => {
-      state.tagNames.push(action.payload);
+      state.postTagNames.push(action.payload);
     },
     setTags: (state, action: { payload: string[] }) => {
-      state.tagNames = action.payload;
+      state.postTagNames = action.payload;
     },
     removeTag: (state, action: { payload: string }) => {
-      state.tagNames = state.tagNames.filter((s) => s !== action.payload);
+      state.postTagNames = state.postTagNames.filter(
+        (s) => s !== action.payload
+      );
     },
     resetTags: (state) => {
-      state.tagNames = [];
+      state.postTagNames = [];
     },
   },
 });

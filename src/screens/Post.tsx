@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PostElement } from "../lib/components/PostElement";
 import { getPost } from "../lib/api/post";
-import { PostViewDto } from "../lib/types/post";
+import { PostViewDto } from "../posts/types/post-view.dto";
 
 export const Post = () => {
   const [post, setPost] = useState<PostViewDto>();

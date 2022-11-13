@@ -2,43 +2,55 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Me } from "../auth/slices/authSlice";
 import { getPublicPost } from "../lib/api/post";
-import { PostViewDto } from "../lib/types/post";
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
 import { PostElement } from "../lib/components/PostElement";
 import { Helmet } from "react-helmet";
 import { NotFound } from "./NotFound";
+import { PostViewDto } from "../posts/types/post-view.dto";
+import Spinner from "../lib/components/Spinner";
 
 export const PublicPost = ({ me }: { me: Me }) => {
-  const [post, setPost] = useState<PostViewDto>();
+  const [post, setPost] = useState<PostViewDto | null>(null);
 
-  const [notFound, setNotFound] = useState(false);
+  const [postLoading, setPostLoading] = useState(true);
 
   const { url } = useParams();
 
-  async function get(postUrl: string) {
-    try {
-      const { data } = await getPublicPost(postUrl);
-      setPost(data);
-    } catch (error: any) {
-      setNotFound(true);
-    }
+  async function getPost(postUrl: string) {
+    const result = await getPublicPost(postUrl);
+    return result.data;
   }
 
   useEffect(() => {
-    if (url) get(url);
+    setPostLoading(true);
+
+    getPost(url as string)
+      .then((p) => {
+        setPost(p);
+      })
+      .finally(() => {
+        setPostLoading(false);
+      });
   }, [url]);
 
   useEffect(() => {
     if (post && post.id) Prism.highlightAll();
   }, [post]);
 
-  if (notFound) return <NotFound />;
-
-  if (!post) return null;
+  if (!post) {
+    if (postLoading) {
+      return (
+        <div className="flex justify-center items-center  h-screen pb-10 ">
+          <Spinner w={90} h={90} />
+        </div>
+      );
+    }
+    return <NotFound />;
+  }
 
   return (
-    <div>
+    <div className="">
       <Helmet>
         <title> {post.title}</title>
 

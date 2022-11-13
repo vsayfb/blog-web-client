@@ -5,8 +5,8 @@ import { InputField } from "../../lib/components/InputField";
 import { updatePost } from "../../lib/api/post";
 import { TitleImage } from "../write/TitleImage";
 import { useDispatch } from "react-redux";
-import { PostViewDto } from "../../lib/types/post";
 import { setSavedPost, updateSavedPost } from "../slices/postsSlice";
+import { PostViewDto } from "../types/post-view.dto";
 
 export const UpdateStepOne = ({
   savedPost,

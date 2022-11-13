@@ -5,6 +5,7 @@ import AuthHeader, { AuthType } from "../auth/components/AuthHeader";
 import { AuthMiddle } from "../auth/components/AuthMiddle";
 import ViaGoogle from "../auth/via/ViaGoogle";
 import ViaLocal from "../auth/via/ViaLocal";
+import { MyButton } from "../lib/components/Button";
 
 export default function SignUp() {
   const [viaLocal, setViaLocal] = useState(false);
@@ -22,13 +23,10 @@ export default function SignUp() {
             <ViaGoogle />
             <AuthMiddle />
 
-            <button
-              role="button"
-              onClick={() => setViaLocal(true)}
-              className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
-            >
-              {"CONTINUE WITH EMAIL"}
-            </button>
+            <MyButton
+              onClickEvent={() => setViaLocal(true)}
+              buttonText="CONTINUE WITH EMAIL"
+            />
           </>
         ) : (
           <ViaLocal />

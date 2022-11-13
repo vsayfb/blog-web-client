@@ -5,9 +5,9 @@ import { changePostStatus, getMyPosts, removePost } from "../lib/api/post";
 import { DeleteModal } from "../lib/modals/DeleteModal";
 import { DeleteSVG } from "../lib/svgs/DeleteSVG";
 import { UpdateSVG } from "../lib/svgs/UpdateSVG";
-import { PostViewDto } from "../lib/types/post";
-import { Tag } from "../tags/Tag";
+import { TagBox } from "../tags/TagBox";
 import { Helmet } from "react-helmet";
+import { PostViewDto } from "../posts/types/post-view.dto";
 
 export const Dashboard = ({ me }: { me: Me }) => {
   const [myPosts, setMyPosts] = useState<PostViewDto[]>([]);
@@ -37,8 +37,8 @@ export const Dashboard = ({ me }: { me: Me }) => {
     const result = await changePostStatus(id);
 
     const newState = myPosts.map((post) => {
-      if (post.id === result.id) {
-        post.published = result.published;
+      if (post.id === result.data.id) {
+        post.published = result.data.published;
       }
       return post;
     });
@@ -166,7 +166,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
                             <span className="text-darkBlueGray-400 font-heading">
                               {post.tags.length ? (
                                 post.tags.map((tag) => (
-                                  <Tag key={tag.id} name={tag.name} />
+                                  <TagBox key={tag.id} name={tag.name} />
                                 ))
                               ) : (
                                 <b>NO</b>

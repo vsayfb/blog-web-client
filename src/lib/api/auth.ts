@@ -1,6 +1,6 @@
 import { CreateAccoundDto } from "../../auth/via/ViaLocal";
 import { sendRequest } from "../sendRequest";
-import { Auth } from "../types/post";
+import { Auth } from "../../auth/types/auth-view.dto";
 
 export const BASE_PARAM = "auth/";
 

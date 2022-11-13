@@ -1,10 +1,11 @@
 import { detectImage } from "../detectImage";
 import { CreatedAtSVG } from "../svgs/CreatedAtSVG";
-import { PostViewDto } from "../types/post";
-import { Tag } from "../../tags/Tag";
+import { TagBox } from "../../tags/TagBox";
 import { CommentArea } from "../../comments/components/CommentArea";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { PostViewDto } from "../../posts/types/post-view.dto";
+import { Link } from "react-router-dom";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
   const { colors, theme } = useSelector((root: RootState) => root.app);
@@ -33,7 +34,8 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
               alt=""
             />
             <div className="text-left">
-              <h4
+              <Link
+                to={`/profile/${post.author.username}`}
                 className={`mb-1 text-2xl font-bold font-heading ${
                   theme === "dark"
                     ? "text-" + colors.zinc50
@@ -41,8 +43,8 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
                 }`}
               >
                 {post.author.username}
-              </h4>
-              <p className="text-gray-500">14 June, 5:00 am</p>
+              </Link>
+              <p className="text-gray-500 mt-2">14 June, 5:00 am</p>
             </div>
           </div>
 
@@ -50,7 +52,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
             {post.tags.length ? (
               <div className="mt-6 ">
                 {post.tags.map((tag) => (
-                  <Tag key={tag.id} name={tag.name} size="px-8" />
+                  <TagBox key={tag.id} name={tag.name} size="px-8" />
                 ))}
               </div>
             ) : null}

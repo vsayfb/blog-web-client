@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PostViewDto } from "../../lib/types/post";
+import { PostViewDto } from "../types/post-view.dto";
 
 const initialState: { savedPost: PostViewDto | null } = {
   savedPost: null,

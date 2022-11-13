@@ -1,7 +1,7 @@
 const { REACT_APP_DEFAULT_AVATAR } = process.env;
 
-export function detectImage(imageUrl: string | null) {
+export function detectImage(imageUrl: string | null): string {
   if (imageUrl) return imageUrl;
 
-  return REACT_APP_DEFAULT_AVATAR;
+  return REACT_APP_DEFAULT_AVATAR as string;
 }

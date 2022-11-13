@@ -4,7 +4,7 @@ export type PostViewDto = {
   id: string;
   published: boolean;
   content: string;
-  tags: { id: string; name: string; created_at: Date; updated_at: Date }[];
+  tags: { id: string; name: string; created_at: string; updated_at: string }[];
   author: {
     id: string;
     displayName: string;
@@ -12,15 +12,8 @@ export type PostViewDto = {
     image: string | null;
   };
   title_image: string | null;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 };
 
-export type Auth = {
-  account: {
-    username: string;
-    image: string | null;
-    id: string;
-  };
-  access_token: string;
-};
+

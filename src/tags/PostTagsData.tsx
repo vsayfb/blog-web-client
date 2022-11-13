@@ -5,10 +5,10 @@ import { setError } from "../lib/slices/appSlice";
 import { DashSVG } from "../lib/svgs/DashSVG";
 import { RootState } from "../store";
 import { removeTag, setNewTag } from "./slices/tagsSlice";
-import { Tag } from "./Tag";
+import { TagBox } from "./TagBox";
 
-export const TagsData = () => {
-  const { tagNames } = useSelector((state: RootState) => state.tags);
+export const PostTagsData = () => {
+  const { postTagNames } = useSelector((state: RootState) => state.tags);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export const TagsData = () => {
   function addNewTag(e: any) {
     e.preventDefault();
 
-    if (tagNames.length < 3) {
+    if (postTagNames.length < 3) {
       dispatch(setNewTag(tagValue));
     } else dispatch(setError("The number of tags must be 3 or less. "));
 
@@ -36,10 +36,10 @@ export const TagsData = () => {
       </form>
 
       <div className="mt-6 mb-6 flex">
-        {tagNames.length
-          ? tagNames.map((name) => (
+        {postTagNames.length
+          ? postTagNames.map((name) => (
               <div key={name} className="relative">
-                <Tag key={name} name={name} />
+                <TagBox key={name} name={name} />
 
                 <div
                   onClick={() => dispatch(removeTag(name))}

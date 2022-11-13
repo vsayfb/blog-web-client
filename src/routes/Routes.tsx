@@ -10,6 +10,9 @@ import { Dashboard } from "../screens/Dashboard";
 import { UpdatePost } from "../screens/UpdatePost";
 import { Post } from "../screens/Post";
 import { NotFound } from "../screens/NotFound";
+import { Profile } from "../profile/components/Profile";
+import { Tag } from "../tags/Tag";
+import { Tags } from "../tags/Tags";
 
 export const AppRoutes = ({ me }: { me: Me }) => {
   return (
@@ -35,6 +38,12 @@ export const AppRoutes = ({ me }: { me: Me }) => {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/tags" element={<Tags />} />
+
+      <Route path="/tag/:name" element={<Tag />} />
+
+      <Route path="/profile/:username" element={<Profile />} />
 
       <Route
         path="post/:id"

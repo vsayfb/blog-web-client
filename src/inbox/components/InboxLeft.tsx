@@ -14,13 +14,7 @@ export const InboxLeft = ({
   theme: string;
 }) => {
   return (
-    <div
-      className={`col-span-1  border-r border ${
-        theme === "dark"
-          ? "border-" + colors.orange200
-          : "border-" + colors.blue400
-      }`}
-    >
+    <div>
       <SearchForChat colors={colors} theme={theme} />
 
       {inbox.searchingUsersForChat ? (

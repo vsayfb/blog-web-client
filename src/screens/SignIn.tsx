@@ -29,7 +29,7 @@ export default function SignIn() {
 
       window.location.href = "/";
     } catch (error: any) {
-      dispatch(setError(error.message));
+      dispatch(setError("Invalid credentials."));
     }
   }
 

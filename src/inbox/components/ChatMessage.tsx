@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import { detectImage } from "../../lib/detectImage";
 import { RootState } from "../../store";
 
 export const ChatMessage = ({
@@ -21,7 +22,7 @@ export const ChatMessage = ({
         <span>
           <img
             className="h-8 w-8 rounded-full object-cover"
-            src={sender.image || ""}
+            src={detectImage(sender.image)}
             alt="username"
           />
         </span>
@@ -55,9 +56,7 @@ export const ChatMessage = ({
       >
         <div
           className={`text-left px-2 ${
-            theme === "dark"
-              ? "text-" + colors.zinc900
-              : "text-" + colors.zinc50
+            theme === "dark" ? "text-" + "black" : "text-" + "white"
           }`}
         >
           {content}

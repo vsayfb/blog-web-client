@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
@@ -8,7 +8,13 @@ import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
 export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
   const dispatch = useDispatch();
 
+  const messagesEndRef = useRef(null);
+
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   async function sendMessageToChat() {
     try {
@@ -16,16 +22,28 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
 
       setContent("");
     } catch (error: any) {
-      dispatch(setError(error.message));
+      dispatch(setError(error.response.data.message));
     }
   }
 
-  async function sendMessage() {
+  const scrollToBottom = () => {
+    //@ts-ignore
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    console.log(messagesEndRef);
+  };
+
+  async function sendMessage(e: any) {
+    e.preventDefault();
     await sendMessageToChat();
+    scrollToBottom();
   }
 
   return (
-    <div className="w-full py-3 px-3 flex items-center justify-between border-t ">
+    <form
+      className="w-full py-3 px-3 flex items-center justify-between border-t "
+      onSubmit={sendMessage}
+    >
       {/* <ChatImageSvg /> */}
 
       <input
@@ -38,9 +56,9 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
         required
       />
 
-      <button onClick={() => sendMessage()}>
-        <ChatSendMessageSvg fill={"#2563eb"} />
+      <button ref={messagesEndRef} type="submit">
+        <ChatSendMessageSvg fill={"current"} />
       </button>
-    </div>
+    </form>
   );
 };

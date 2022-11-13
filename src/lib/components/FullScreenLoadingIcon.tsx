@@ -1,6 +1,4 @@
-export const LoadingWrapper = ({ loading }: { loading: boolean }) => {
-  if (!loading) return null;
-
+export const FullScreenLoadingIcon = () => {
   return (
     <div
       className={`fixed pt-12 left-0 top-0 bottom-0 flex justify-center align-middle items-center min-h-screen min-w-full overflow-y-auto`}

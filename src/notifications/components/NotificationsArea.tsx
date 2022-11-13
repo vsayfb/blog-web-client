@@ -1,0 +1,85 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendRequest } from "../../lib/sendRequest";
+
+import { RootState } from "../../store";
+import { NotificationT, setNotifications } from "../slices/notificationSlice";
+import { CommentNotification } from "./CommentNotification";
+import { FollowedYouNotification } from "./FollowedYouNotification";
+
+export const NotificationsArea = () => {
+  const { notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
+
+  const dispatch = useDispatch();
+
+  async function getNotifications(): Promise<{
+    data: NotificationT[];
+    message: string;
+  }> {
+    return await sendRequest("notifications/me", "get", true);
+  }
+
+  useEffect(() => {
+    getNotifications().then((n) => {
+      dispatch(setNotifications(n.data));
+    });
+  }, []);
+
+  if (!notifications.length)
+    return (
+      <div>
+        <div
+          className="absolute z-20 border-l-4 border-r-4 border-b-4  top-16 rounded-md"
+          style={{ right: "11%" }}
+        >
+          <h4>There are no notifications to show.</h4>
+        </div>
+      </div>
+    );
+
+  return (
+    <div className="relative">
+      {true ? (
+        <div
+          className="absolute z-20 border-l-4 border-r-4 border-b-4  top-16 rounded-md"
+          style={{ right: "11%" }}
+        >
+          <div
+            className=" bg-gray-100 rounded-md shadow-lg overflow-hidden z-20"
+            style={{ width: "24rem" }}
+          >
+            {
+              notifications.length ? (
+                notifications.map((noti) => {
+                  if (noti.action === "commented on your post") {
+                    return (
+                      <CommentNotification notification={noti} key={noti.id} />
+                    );
+                  } else if (noti.action === "followed you") {
+                    return (
+                      <FollowedYouNotification
+                        notification={noti}
+                        key={noti.id}
+                      />
+                    );
+                  } else return null;
+                })
+              ) : (
+                <>
+                  <div className="p-6 flex justify-center items-center ">
+                    There are no notifications to show.
+                  </div>
+                </>
+              )
+              /* <a className="block bg-gray-800 text-white text-center font-bold py-2">
+          See all notifications
+        </a> */
+            }
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+};

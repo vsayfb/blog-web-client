@@ -6,7 +6,6 @@ import { getPost } from "../lib/api/post";
 import { setSavedPost } from "../posts/slices/postsSlice";
 import { UpdateStepOne } from "../posts/update/UpdateStepOne";
 import { UpdateStepTwo } from "../posts/update/UpdateStepTwo";
-import { PostViewDto } from "../lib/types/post";
 import { RootState } from "../store";
 
 export const UpdatePost = () => {

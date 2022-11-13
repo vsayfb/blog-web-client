@@ -4,7 +4,7 @@ import { MyButton } from "../../lib/components/Button";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { updatePost } from "../../lib/api/post";
 import { CreatePostDto } from "../../screens/WritePost";
-import { TagsData } from "../../tags/TagsData";
+import { PostTagsData } from "../../tags/PostTagsData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setError } from "../../lib/slices/appSlice";
@@ -19,14 +19,14 @@ export const StepTwo = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { savedPost } = useSelector((state: RootState) => state.posts);
-  const { tagNames } = useSelector((state: RootState) => state.tags);
+  const { postTagNames } = useSelector((state: RootState) => state.tags);
 
   async function complete() {
     try {
       if (savedPost) {
         const result = await updatePost(savedPost.id, {
           ...savedPost,
-          tags: tagNames,
+          tags: postTagNames,
           published: true,
         });
 
@@ -57,7 +57,7 @@ export const StepTwo = ({
         </p>
       </div>
 
-      <TagsData />
+      <PostTagsData />
 
       <MyButton onClickEvent={complete} buttonText="PUBLISH" />
     </>

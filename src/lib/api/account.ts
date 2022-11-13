@@ -30,7 +30,7 @@ export async function beginAccountVerification(
   email: string,
   username: string
 ): Promise<{ message: string }> {
-  return await sendRequest(BASE_PARAM + "begin_verification", "post", false, {
+  return await sendRequest("auth/begin_email_verification", "post", false, {
     email,
     username,
   });

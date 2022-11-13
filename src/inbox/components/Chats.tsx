@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { detectImage } from "../../lib/detectImage";
 import { sendRequest } from "../../lib/sendRequest";
 import { AppColors, setError } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import { setChats, setOpenedChatID } from "../slices/inboxSlice";
 import { ChatViewDto } from "../types/chat-view-dto";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
 
 export const Chats = ({
   chats,
@@ -50,7 +52,9 @@ export const Chats = ({
       </h2>
 
       {chats.map((c) => {
-        const targetUser = c.members.find((m) => m.id !== me.sub);
+        const targetUser = c.members.find(
+          (m) => m.id !== me.sub
+        ) as AccountViewDto;
 
         return (
           <li key={c.id} onClick={() => dispatch(setOpenedChatID(c.id))}>
@@ -77,13 +81,13 @@ export const Chats = ({
             >
               <img
                 className="h-10 w-10 rounded-full object-cover"
-                src={targetUser?.image || ""}
+                src={detectImage(targetUser.image)}
                 alt="username"
               />
               <div className="w-full pb-2">
                 <div className="flex justify-between">
                   <span className="block pl-2 ml-2 font-semibold text-base">
-                    {targetUser?.display_name}
+                    {targetUser.display_name}
                   </span>
                   <span className="block ml-2 text-sm ">
                     {new Date(c.updated_at).toLocaleDateString()}

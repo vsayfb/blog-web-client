@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Me } from "../../../auth/slices/authSlice";
 import { AppColors } from "../../../lib/slices/appSlice";
 import { DashboardSVG } from "../../../lib/svgs/DashboardSVG";
 import { InboxSVG } from "../../../lib/svgs/InboxSVG";
 import { NotitificationSVG } from "../../../lib/svgs/NotificationSVG";
-import { RootState } from "../../../store";
+import { toggleNotificationAreaVisibility } from "../../../notifications/slices/notificationSlice";
 import { UserMenuArea } from "./UserMenuArea";
 
 export const NavbarRight = ({
@@ -19,6 +19,12 @@ export const NavbarRight = ({
   theme: string;
   colors: AppColors;
 }) => {
+  const dispatch = useDispatch();
+
+  const openNotificationArea = () => {
+    dispatch(toggleNotificationAreaVisibility());
+  };
+
   if (pending)
     return (
       <div className="w-6 h-6 border-4 border-dashed rounded-full animate-spin "></div>
@@ -30,20 +36,20 @@ export const NavbarRight = ({
         <Link
           to={"/signIn"}
           className={`self-center px-6 py-2 font-semibold rounded mr-4 ${
-            theme === "dark"
-              ? "bg-orange-200 text-orange-800"
-              : "bg-blue-600 text-white"
-          } `}
+            theme === "dark" ? "bg-" + colors.zinc50 : "bg-" + colors.zinc900
+          }  ${
+            theme === "dark" ? "text-" + colors.zinc900 : "text-" + "white"
+          }`}
         >
           Sign in
         </Link>
         <Link
           to={"/signUp"}
-          className={`self-center px-6 py-2 font-semibold rounded ${
-            theme === "dark"
-              ? "bg-orange-200 text-orange-800"
-              : "bg-blue-600 text-white"
-          } `}
+          className={`self-center px-6 py-2 font-semibold rounded mr-4 ${
+            theme === "dark" ? "bg-" + colors.zinc50 : "bg-" + colors.zinc900
+          }  ${
+            theme === "dark" ? "text-" + colors.zinc900 : "text-" + "white"
+          }`}
         >
           Sign up
         </Link>
@@ -57,7 +63,7 @@ export const NavbarRight = ({
           <DashboardSVG fill={theme === "dark" ? "#fed7aa" : "#2563eb"} />
         </Link>
 
-        <div className="cursor-pointer">
+        <div className="cursor-pointer" onClick={openNotificationArea}>
           <NotitificationSVG fill={theme === "dark" ? "#fed7aa" : "#2563eb"} />
         </div>
 

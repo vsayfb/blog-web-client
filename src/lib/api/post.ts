@@ -1,6 +1,6 @@
+import { PostViewDto } from "../../posts/types/post-view.dto";
 import { CreatePostDto } from "../../screens/WritePost";
 import { sendRequest } from "../sendRequest";
-import { PostViewDto } from "../types/post";
 
 export const BASE_PARAM = "posts/";
 
@@ -51,7 +51,7 @@ export async function getMyPosts(): Promise<{ data: PostViewDto[] }> {
 
 export async function changePostStatus(
   postID: string
-): Promise<{ id: string; published: boolean }> {
+): Promise<{ data: { id: string; published: boolean } }> {
   return await sendRequest(
     BASE_PARAM + "change_post_status/" + postID,
     "put",
@@ -66,7 +66,7 @@ export async function removePost(
 }
 
 export async function getPost(id: string): Promise<{ data: PostViewDto }> {
-  const query = "id?id=" + id;
+  const query = "id/" + id;
 
   return await sendRequest(BASE_PARAM + query, "get", true);
 }

@@ -9,8 +9,8 @@ import { setError } from "../../lib/slices/appSlice";
 import { TitleImage } from "./TitleImage";
 import { RootState } from "../../store";
 import { setSavedPost } from "../slices/postsSlice";
-import { PostViewDto } from "../../lib/types/post";
 import { YesOrNoModal } from "../../lib/modals/YesOrNoModal";
+import { PostViewDto } from "../types/post-view.dto";
 
 export const StepOne = ({
   postData,
