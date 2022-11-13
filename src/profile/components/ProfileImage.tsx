@@ -5,7 +5,9 @@ export const ProfileImage = ({ url }: { url: string | null }) => {
     <img
       src={detectImage(url)}
       alt="profile_image"
-      className="w-32 h-32 mx-auto rounded-full aspect-square border-4 border-emerald-500"
+      width={175}
+      height={150}
+      className="mx-auto rounded-full aspect-square  border-emerald-500"
     />
   );
 };

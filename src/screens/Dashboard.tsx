@@ -5,7 +5,7 @@ import { changePostStatus, getMyPosts, removePost } from "../lib/api/post";
 import { DeleteModal } from "../lib/modals/DeleteModal";
 import { DeleteSVG } from "../lib/svgs/DeleteSVG";
 import { UpdateSVG } from "../lib/svgs/UpdateSVG";
-import { TagBox } from "../tags/TagBox";
+import { TagBox } from "../tags/components/TagBox";
 import { Helmet } from "react-helmet";
 import { PostViewDto } from "../posts/types/post-view.dto";
 

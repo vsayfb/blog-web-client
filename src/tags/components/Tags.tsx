@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AccountViewDto } from "../accounts/types/account-view-dto";
-import Spinner from "../lib/components/Spinner";
-import { sendRequest } from "../lib/sendRequest";
-import { TagSVG } from "./svgs/TagSVG";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import Spinner from "../../lib/components/Spinner";
+import { sendRequest } from "../../lib/sendRequest";
+import { TagSVG } from "../svgs/TagSVG";
 import { TagCreatedBy } from "./TagCreatedBy";
 
 export const Tags = () => {

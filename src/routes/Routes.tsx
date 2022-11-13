@@ -11,8 +11,9 @@ import { UpdatePost } from "../screens/UpdatePost";
 import { Post } from "../screens/Post";
 import { NotFound } from "../screens/NotFound";
 import { Profile } from "../profile/components/Profile";
-import { Tag } from "../tags/Tag";
-import { Tags } from "../tags/Tags";
+import { Settings } from "../accounts/settings/components/Settings";
+import { Tags } from "../tags/components/Tags";
+import { Tag } from "../tags/components/Tag";
 
 export const AppRoutes = ({ me }: { me: Me }) => {
   return (
@@ -35,6 +36,15 @@ export const AppRoutes = ({ me }: { me: Me }) => {
         element={
           <ProtectedRoute ifReturn={Boolean(me.username)}>
             <WritePost />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="settings"
+        element={
+          <ProtectedRoute ifReturn={Boolean(me.username)}>
+            <Settings />
           </ProtectedRoute>
         }
       />

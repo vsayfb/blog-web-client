@@ -11,7 +11,15 @@ export type Me = {
   exp: number;
 };
 
-const initialState: { me: Me; pending: boolean } = {
+const initialState: {
+  me: Me;
+  updatedMe: {
+    username: string;
+    display_name: string;
+    validationError: boolean;
+  };
+  pending: boolean;
+} = {
   me: {
     username: "",
     image: "",
@@ -21,6 +29,13 @@ const initialState: { me: Me; pending: boolean } = {
     iat: 0,
     exp: 0,
   },
+
+  updatedMe: {
+    username: "",
+    display_name: "",
+    validationError: true,
+  },
+
   pending: false,
 };
 
@@ -36,6 +51,9 @@ export const authSlice = createSlice({
   reducers: {
     setMe: (state, action) => {
       state.me = { ...state.me, ...action.payload };
+    },
+    setUpdatedMe: (state, action: { payload: Record<string, any> }) => {
+      state.updatedMe = { ...state.updatedMe, ...action.payload };
     },
     setPictureToMe: (state, action) => {
       state.me.image = action.payload;
@@ -57,6 +75,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMe, setPictureToMe } = authSlice.actions;
+export const { setMe, setUpdatedMe, setPictureToMe } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -6,11 +6,13 @@ export const MyButton = ({
   buttonText,
   classProperties = "",
   role = "button",
+  disabled,
 }: {
   onClickEvent: React.MouseEventHandler<HTMLButtonElement> | undefined;
   buttonText: string;
   classProperties?: string;
   role?: React.AriaRole | undefined;
+  disabled?: boolean;
 }) => {
   const { theme, colors } = useSelector((state: RootState) => state.app);
 
@@ -28,6 +30,7 @@ export const MyButton = ({
       onClick={onClickEvent}
       role={role}
       className={`${BUTTON_CLASS} ${classProperties} `}
+      disabled={disabled ? true : false}
     >
       {buttonText}
     </button>

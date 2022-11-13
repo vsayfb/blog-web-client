@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { InputField } from "../lib/components/InputField";
-import { setError } from "../lib/slices/appSlice";
-import { DashSVG } from "../lib/svgs/DashSVG";
-import { RootState } from "../store";
-import { removeTag, setNewTag } from "./slices/tagsSlice";
+import { InputField } from "../../lib/components/InputField";
+import { setError } from "../../lib/slices/appSlice";
+import { DashSVG } from "../../lib/svgs/DashSVG";
+import { RootState } from "../../store";
+import { removeTag, setNewTag } from "../slices/tagsSlice";
 import { TagBox } from "./TagBox";
 
 export const PostTagsData = () => {

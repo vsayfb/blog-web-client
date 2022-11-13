@@ -14,10 +14,6 @@ export const Inbox = ({
 }) => {
   const inbox = useSelector((state: RootState) => state.inbox);
 
-  useEffect(() => {}, [
-    document.getElementById("root")?.classList.add("overflow-hidden"),
-  ]);
-
   if (!inbox.inboxVisibility) return null;
 
   return (

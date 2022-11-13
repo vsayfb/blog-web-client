@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MyButton } from "../../lib/components/Button";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { updatePost } from "../../lib/api/post";
-import { PostTagsData } from "../../tags/PostTagsData";
+import { PostTagsData } from "../../tags/components/PostTagsData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { resetTags, setTags } from "../../tags/slices/tagsSlice";

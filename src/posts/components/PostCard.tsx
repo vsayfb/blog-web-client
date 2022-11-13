@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detectImage } from "../../lib/detectImage";
 import { RootState } from "../../store";
-import { TagBox } from "../../tags/TagBox";
+import { TagBox } from "../../tags/components/TagBox";
 import { PostViewDto } from "../types/post-view.dto";
 
 export const PostCard = ({ post }: { post: PostViewDto }) => {

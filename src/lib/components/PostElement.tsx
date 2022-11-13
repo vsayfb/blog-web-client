@@ -1,6 +1,6 @@
 import { detectImage } from "../detectImage";
 import { CreatedAtSVG } from "../svgs/CreatedAtSVG";
-import { TagBox } from "../../tags/TagBox";
+import { TagBox } from "../../tags/components/TagBox";
 import { CommentArea } from "../../comments/components/CommentArea";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { AccountViewDto } from "../accounts/types/account-view-dto";
-import { detectImage } from "../lib/detectImage";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import { detectImage } from "../../lib/detectImage";
 
 export const TagCreatedBy = ({
   account,

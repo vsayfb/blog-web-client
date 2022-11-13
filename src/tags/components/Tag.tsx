@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
-import { AccountViewDto } from "../accounts/types/account-view-dto";
-import Spinner from "../lib/components/Spinner";
-import { sendRequest } from "../lib/sendRequest";
-import { PostCard } from "../posts/components/PostCard";
-import { NotFound } from "../screens/NotFound";
-import { TagSVG } from "./svgs/TagSVG";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import Spinner from "../../lib/components/Spinner";
+import { sendRequest } from "../../lib/sendRequest";
+import { PostCard } from "../../posts/components/PostCard";
+import { NotFound } from "../../screens/NotFound";
+import { TagSVG } from "../svgs/TagSVG";
 import { TagCreatedBy } from "./TagCreatedBy";
 
 type TagPostsDto = {
