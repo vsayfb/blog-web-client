@@ -9,8 +9,8 @@ export const FollowedYouNotification = ({
   notification: NotificationT;
 }) => {
   return (
-    <div key={notification.id} className="py-2 border-b border-black ">
-      <div className="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+    <div key={notification.id} className="py-2 ">
+      <div className="flex items-center px-4 py-3 -mx-2">
         <img
           className="h-8 w-8 rounded-full object-cover mx-1"
           src={detectImage(notification.sender.image)}
@@ -23,7 +23,7 @@ export const FollowedYouNotification = ({
           >
             {notification.sender.display_name}
           </Link>
-          <span className="ml-2 text-emerald-500 underline ">
+          <span className="ml-2 text-black underline ">
             {notification.action}
           </span>
         </p>

@@ -1,41 +1,67 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setError } from "../../lib/slices/appSlice";
-import { uploadTitleImageForPost } from "../../lib/api/post";
-import { handleFileArea } from "../../lib/handleFileArea";
 import { ImageSVG } from "../../lib/svgs/ImageSVG";
-import { addTitleImageToPost } from "../slices/postsSlice";
+
 import { RootState } from "../../store";
+import { SetStateAction, useEffect, useRef, useState } from "react";
+import { CreatePostDto } from "../../screens/WritePost";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
-export const TitleImage = () => {
+export const TitleImage = ({
+  setTitleImage,
+}: {
+  setTitleImage:
+    | React.Dispatch<SetStateAction<any>>
+    | ActionCreatorWithPayload<any>;
+}) => {
   const { savedPost } = useSelector((state: RootState) => state.posts);
-  const dispatch = useDispatch();
 
-  const handleFile = () => {
-    handleFileArea(async (files: Blob[]) => {
-      try {
-        const titleImage = await uploadTitleImageForPost(files[0]);
+  const inputFile = useRef<any>(null);
 
-        dispatch(addTitleImageToPost(titleImage));
-      } catch (error: any) {
-        dispatch(setError(error.response.data.message));
-      }
-    });
-  };
+  const [file, setFile] = useState<File | null>(null);
+
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+
+    if (files?.length) {
+      setFile(files[0]);
+    }
+  }
+
+  useEffect(() => {
+    if (file) {
+      setTitleImage(file);
+    }
+  }, [file]);
+
+  function onButtonClick() {
+    inputFile.current.click();
+  }
 
   return (
     <>
-      <p>Title image</p>
-      <div className="mt-2 mb-6 cursor-pointer flex" onClick={handleFile}>
-        <ImageSVG />
-        {savedPost?.title_image ? (
-          <a
-            href={savedPost.title_image}
-            className="ml-4 text-orange-700 items-center align-center"
-            target="_blank"
-          >
-            Current Image
-          </a>
-        ) : null}
+      <p>
+        Title image{" "}
+        {`${
+          file
+            ? " - " + file.name
+            : savedPost?.title_image
+            ? " - " + savedPost.title_image
+            : ""
+        }`}
+      </p>
+      <div className="mt-2 mb-6 flex">
+        <span className="cursor-pointer" onClick={onButtonClick}>
+          <input
+            type="file"
+            id="file"
+            onChange={handleFile}
+            ref={inputFile}
+            style={{ display: "none" }}
+          />
+
+          <ImageSVG />
+        </span>
       </div>
     </>
   );

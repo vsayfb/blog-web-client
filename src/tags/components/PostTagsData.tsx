@@ -18,7 +18,9 @@ export const PostTagsData = () => {
     e.preventDefault();
 
     if (postTagNames.length < 3) {
-      dispatch(setNewTag(tagValue));
+      if (postTagNames.find((t) => t == tagValue)) {
+        dispatch(setError("The tag already exist. "));
+      } else dispatch(setNewTag(tagValue));
     } else dispatch(setError("The number of tags must be 3 or less. "));
 
     setTagValue("");

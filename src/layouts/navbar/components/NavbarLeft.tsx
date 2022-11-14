@@ -23,7 +23,7 @@ export const NavbarLeft = ({
 
       <Link className="flex justify-center items-center ml-7" to={"/tags"}>
         <TagSVG />
-        <span className="text-sm text-orange-400 ml-1">Tags</span>
+        <span className="text-sm text-black ml-1">Tags</span>
       </Link>
 
       {pending ? (

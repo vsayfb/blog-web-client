@@ -12,7 +12,7 @@ export const UpdateDisplayName = () => {
   const [displayName, setDisplayName] = useState(me.display_name);
 
   const [displayNameProps, setdisplayNameProps] = useState({
-    classAttributes: " border-b border-zinc-900",
+    classAttributes: "",
     labelText: "Display name",
     error: false,
   });
@@ -22,7 +22,7 @@ export const UpdateDisplayName = () => {
       updateDisplayName(displayName);
     } else {
       setdisplayNameProps({
-        classAttributes: " border-b border-zinc-900",
+        classAttributes: "",
         labelText: "Display name",
         error: false,
       });

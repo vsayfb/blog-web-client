@@ -6,13 +6,12 @@ import { StepTwo } from "../posts/write/StepTwo";
 export type CreatePostDto = {
   title: string;
   content: string;
-  title_image: string | null;
+  title_image: File | null;
   tags: string[];
 };
 
 export const WritePost = () => {
   const [postData, setPostData] = useState<CreatePostDto>({
-    // id field is for updating the post after it has been saved
     title: "",
     content: "",
     title_image: null,
@@ -22,7 +21,7 @@ export const WritePost = () => {
   const [step, setStep] = useState(1);
 
   return (
-    <div className="mr-20 ml-20 pt-16 pb-16">
+    <div className="mr-20 ml-20 pt-16 pb-16 ">
       <Helmet>
         <title>Write a post</title>
       </Helmet>

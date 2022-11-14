@@ -1,7 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PostViewDto } from "../types/post-view.dto";
 
-const initialState: { savedPost: PostViewDto | null } = {
+export type SavedPost = {
+  title: string;
+  url: string;
+  id: string;
+  published: boolean;
+  content: string;
+  tags: { id: string; name: string; created_at: string; updated_at: string }[];
+  author: {
+    id: string;
+    displayName: string;
+    username: string;
+    image: string | null;
+  };
+  title_image: File | string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+const initialState: {
+  savedPost: SavedPost | null;
+} = {
   savedPost: null,
 };
 
@@ -12,7 +32,10 @@ export const postsSlice = createSlice({
     setSavedPost: (state, action: { payload: PostViewDto | null }) => {
       state.savedPost = action.payload;
     },
-    addTitleImageToPost: (state, action: { payload: string }) => {
+    addTitleImageToSavedPost: (
+      state,
+      action: { payload: File | string | null }
+    ) => {
       if (state.savedPost) {
         state.savedPost.title_image = action.payload;
       }
@@ -29,7 +52,7 @@ export const postsSlice = createSlice({
 
 export const {
   setSavedPost,
-  addTitleImageToPost,
+  addTitleImageToSavedPost,
   updateSavedPost,
   resetSavedPost,
 } = postsSlice.actions;

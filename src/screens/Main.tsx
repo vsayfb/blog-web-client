@@ -16,11 +16,14 @@ export default function Main() {
     getAll();
   }, []);
 
-  if (!posts.length) return null;
+  if (!posts.length)
+    return (
+      <div className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 h-screen"></div>
+    );
 
   return (
-    <div className="">
-      <main className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700">
+      <main className="  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section className="py-16 ">
           <div className="px-6 mx-auto">
             <div className="flex flex-wrap -mx-4">

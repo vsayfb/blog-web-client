@@ -35,21 +35,13 @@ export const NavbarRight = ({
       <div className="flex items-center">
         <Link
           to={"/signIn"}
-          className={`self-center px-6 py-2 font-semibold rounded mr-4 ${
-            theme === "dark" ? "bg-" + colors.zinc50 : "bg-" + colors.zinc900
-          }  ${
-            theme === "dark" ? "text-" + colors.zinc900 : "text-" + "white"
-          }`}
+          className={`self-center px-6 py-2 font-semibold rounded mr-4 bg-zinc-900 text-white`}
         >
           Sign in
         </Link>
         <Link
           to={"/signUp"}
-          className={`self-center px-6 py-2 font-semibold rounded mr-4 ${
-            theme === "dark" ? "bg-" + colors.zinc50 : "bg-" + colors.zinc900
-          }  ${
-            theme === "dark" ? "text-" + colors.zinc900 : "text-" + "white"
-          }`}
+          className={`self-center px-6 py-2 font-semibold rounded mr-4 bg-zinc-900 text-white`}
         >
           Sign up
         </Link>
@@ -60,15 +52,15 @@ export const NavbarRight = ({
     <div className="md:block ">
       <div className="ml-4 flex items-center  md:ml-6">
         <Link to={"/dashboard"} className="mr-4 cursor-pointer">
-          <DashboardSVG fill={theme === "dark" ? "#fed7aa" : "#2563eb"} />
+          <DashboardSVG fill={"#000000"} />
         </Link>
 
         <div className="cursor-pointer" onClick={openNotificationArea}>
-          <NotitificationSVG fill={theme === "dark" ? "#fed7aa" : "#2563eb"} />
+          <NotitificationSVG fill={"#000000"} />
         </div>
 
         <div className="cursor-pointer">
-          <InboxSVG fill={theme === "dark" ? "#fed7aa" : "#2563eb"} />
+          <InboxSVG fill={"#000000"} />
         </div>
 
         <div>

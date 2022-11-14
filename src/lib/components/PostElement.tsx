@@ -12,7 +12,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
 
   return (
     <div
-      className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden ${
+      className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 ${
         theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
       }`}
     >

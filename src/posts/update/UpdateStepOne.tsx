@@ -1,18 +1,24 @@
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useEffect } from "react";
 import { MyButton } from "../../lib/components/Button";
 import { Editor } from "../../lib/components/Editor";
 import { InputField } from "../../lib/components/InputField";
 import { updatePost } from "../../lib/api/post";
 import { TitleImage } from "../write/TitleImage";
 import { useDispatch } from "react-redux";
-import { setSavedPost, updateSavedPost } from "../slices/postsSlice";
-import { PostViewDto } from "../types/post-view.dto";
+import {
+  addTitleImageToSavedPost,
+  SavedPost,
+  setSavedPost,
+  updateSavedPost,
+} from "../slices/postsSlice";
+import { sendRequest } from "../../lib/sendRequest";
+import { setError, setLoading } from "../../lib/slices/appSlice";
 
 export const UpdateStepOne = ({
   savedPost,
   setStep,
 }: {
-  savedPost: PostViewDto;
+  savedPost: SavedPost;
   setStep: React.Dispatch<SetStateAction<number>>;
 }) => {
   const dispatch = useDispatch();
@@ -21,7 +27,7 @@ export const UpdateStepOne = ({
     try {
       const result = await updatePost(savedPost.id, {
         ...savedPost,
-        // do not update tags it is job of second step
+        // do not update tags, it is job of second step
         tags: undefined,
       });
 
@@ -30,6 +36,37 @@ export const UpdateStepOne = ({
       setStep(2);
     } catch (error) {}
   }
+
+  async function updatePostImage(image: File) {
+    const formData = new FormData();
+
+    formData.set("titleImage", image);
+
+    return await sendRequest(
+      `posts/update_title_image/${savedPost.id}`,
+      "put",
+      true,
+      formData
+    );
+  }
+
+  useEffect(() => {
+    //@ts-ignore  that means it is a file
+    if (savedPost?.title_image?.name) {
+      dispatch(setLoading());
+
+      updatePostImage(savedPost.title_image as File)
+        .then((file) => {
+          dispatch(addTitleImageToSavedPost(file.data));
+        })
+        .catch((reason) => {
+          dispatch(setError(reason.response.data.message));
+        })
+        .finally(() => {
+          dispatch(setLoading());
+        });
+    }
+  }, [savedPost.title_image]);
 
   return (
     <>
@@ -41,7 +78,11 @@ export const UpdateStepOne = ({
         value={savedPost.title}
       />
 
-      <TitleImage />
+      <TitleImage
+        setTitleImage={(file) => {
+          dispatch(addTitleImageToSavedPost(file));
+        }}
+      />
 
       <div className="mt-6">
         <p className="mb-4 text-sm">Content</p>

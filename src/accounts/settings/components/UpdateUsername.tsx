@@ -13,7 +13,7 @@ export const UpdateUsername = () => {
   const [username, setUsername] = useState(me.username);
 
   const [usernameProps, setUsernameProps] = useState({
-    classAttributes: "border-b border-zinc-900",
+    classAttributes: "",
     labelText: "Username",
     error: false,
   });
@@ -59,7 +59,7 @@ export const UpdateUsername = () => {
         });
     } else {
       setUsernameProps({
-        classAttributes: "border-b border-zinc-900",
+        classAttributes: "",
         labelText: "Username",
         error: false,
       });

@@ -11,6 +11,7 @@ import { RootState } from "../../store";
 import { setSavedPost } from "../slices/postsSlice";
 import { YesOrNoModal } from "../../lib/modals/YesOrNoModal";
 import { PostViewDto } from "../types/post-view.dto";
+import Spinner from "../../lib/components/Spinner";
 
 export const StepOne = ({
   postData,
@@ -27,7 +28,10 @@ export const StepOne = ({
   });
   const [yesOrNoVisibility, setYesOrNoVisibility] = useState(false);
 
+  const [postUploading, setPostUploading] = useState(false);
+
   async function completeStep() {
+    setPostUploading(true);
     try {
       let result: PostViewDto;
 
@@ -36,14 +40,14 @@ export const StepOne = ({
 
         setYesOrNoVisibility(true);
       } else {
-        // user went to the second step and came back and nothing changed just go second step do not request
+        // user went to the second step and came back and nothing changed just go second step, do not request
 
         if (
           savedPost.title === postData.title &&
           savedPost.content === postData.content &&
           savedPost.title_image === postData.title_image
         ) {
-          result = savedPost;
+          result = savedPost as PostViewDto;
           setStep(2);
         } else {
           result = (await updatePost(savedPost.id, postData)).data;
@@ -54,6 +58,8 @@ export const StepOne = ({
       dispatch(setSavedPost(result));
     } catch (error: any) {
       dispatch(setError(error.response.data.message));
+    } finally {
+      setPostUploading(false);
     }
   }
 
@@ -88,7 +94,11 @@ export const StepOne = ({
         />
       </div>
 
-      <TitleImage />
+      <TitleImage
+        setTitleImage={(title_image) =>
+          setPostData((p) => ({ ...p, title_image }))
+        }
+      />
 
       <p className="mb-5"> Content</p>
 
@@ -99,8 +109,14 @@ export const StepOne = ({
         content={postData.content}
       />
 
-      <div className="mt-5">
-        <MyButton buttonText="SAVE" onClickEvent={completeStep} />
+      <div className="mt-12">
+        {postUploading ? (
+          <div className="flex justify-center">
+            <Spinner w={40} h={40} />
+          </div>
+        ) : (
+          <MyButton buttonText="SAVE" onClickEvent={completeStep} />
+        )}
       </div>
     </>
   );

@@ -4,6 +4,7 @@ export const DashboardSVG = ({ fill }: { fill: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
+      fill={fill}
       className="bi bi-fingerprint "
       viewBox="0 0 16 16"
     >

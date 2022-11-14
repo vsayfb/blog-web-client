@@ -20,13 +20,28 @@ export async function uploadPost(
 ): Promise<{ data: PostViewDto }> {
   const query = `${BASE_PARAM}${!published ? "?published=false" : ""}`;
 
-  return await sendRequest(query, "post", true, data);
+  if (data.title_image) {
+    const formData = new FormData();
+
+    formData.set("titleImage", data.title_image);
+    formData.set("title", data.title);
+    formData.set("tags", JSON.stringify(data.tags));
+    formData.set("content", data.content);
+
+    return await sendRequest(query, "post", true, formData);
+  } else {
+    return await sendRequest(query, "post", true, data);
+  }
 }
 
 export async function updatePost(
   id: string,
   data: any
 ): Promise<{ data: PostViewDto }> {
+
+
+
+  
   return await sendRequest(BASE_PARAM + id, "patch", true, data);
 }
 

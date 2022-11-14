@@ -15,7 +15,7 @@ export function Navbar({
 
   return (
     <nav
-      className={` min-h-full ${
+      className={`bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 min-h-full ${
         theme === "dark"
           ? `bg-${colors.zinc900} border-${colors.orange200}`
           : `bg-${colors.zinc50} border-${colors.blue400}`

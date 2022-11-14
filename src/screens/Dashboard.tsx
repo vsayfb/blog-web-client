@@ -53,7 +53,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
   }
 
   return (
-    <>
+    <div className="h-screen bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700">
       {deleteModalSubject ? (
         <DeleteModal
           section={
@@ -63,53 +63,53 @@ export const Dashboard = ({ me }: { me: Me }) => {
           setAnswer={setDeleteModalAnswer}
         />
       ) : null}
-      <section className="py-8 bg-white">
+      <section className="py-8  ">
         <Helmet>
           <title>Dashboard</title>
         </Helmet>
 
-        <div className="container px-4 mx-auto overflow-hidden">
+        <div className="container px-4 mx-auto overflow-hidden ">
           <img
             className="ml-11 w-1/2 sm:w-auto h-1 sm:h-auto"
             src="uinel-assets/elements/dashboard-tables/line.svg"
             alt=""
           />
-          <div className="mb-16 bg-white border border-gray-100 overflow-hidden rounded-5xl">
+          <div className="mb-16 overflow-hidden rounded-5xl">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full overflow-hidden">
                 <table className="table-auto w-full">
                   <thead>
-                    <tr className="bg-gray-50">
+                    <tr className="">
                       <td className="p-0">
-                        <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                        <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                           <span className="text-sm font-heading font-semibold uppercase">
                             Title
                           </span>
                         </div>
                       </td>
                       <td className="p-0">
-                        <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                        <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                           <span className="text-sm font-heading font-semibold uppercase">
                             Last Update
                           </span>
                         </div>
                       </td>
                       <td className="p-0">
-                        <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                        <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                           <span className="text-sm font-heading font-semibold uppercase">
                             Status
                           </span>
                         </div>
                       </td>
                       <td className="p-0">
-                        <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                        <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                           <span className="text-sm font-heading font-semibold uppercase">
                             Tags
                           </span>
                         </div>
                       </td>
                       <td className="p-0">
-                        <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                        <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                           <span className="text-sm font-heading font-semibold uppercase">
                             Action
                           </span>
@@ -121,7 +121,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
                     {myPosts.map((post) => (
                       <tr key={post.id}>
                         <td className="p-0">
-                          <div className="flex items-center justify-start p-5 h-20 min-w-max border-b border-gray-100">
+                          <div className="flex items-center justify-start p-5 h-20 min-w-max  ">
                             {post.title_image ? (
                               <img
                                 className="mr-5 w-6 h-6"
@@ -142,14 +142,14 @@ export const Dashboard = ({ me }: { me: Me }) => {
                           </div>
                         </td>
                         <td className="p-0">
-                          <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                          <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                             <span className="text-darkBlueGray-400 font-heading">
                               {new Date(post.updated_at).toDateString()}
                             </span>
                           </div>
                         </td>
                         <td className="p-0">
-                          <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                          <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                             <span
                               onClick={() => changeStatus(post.id)}
                               className={`cursor-pointer py-1 px-3 text-sm text-black font-heading font-medium 
@@ -162,7 +162,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
                           </div>
                         </td>
                         <td className="p-0">
-                          <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                          <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                             <span className="text-darkBlueGray-400 font-heading">
                               {post.tags.length ? (
                                 post.tags.map((tag) => (
@@ -175,7 +175,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
                           </div>
                         </td>
                         <td className="p-0">
-                          <div className="flex items-center justify-center p-5 h-20 min-w-max border-b border-gray-100">
+                          <div className="flex items-center justify-center p-5 h-20 min-w-max  ">
                             <Link to={"/update/" + post.id}>
                               <UpdateSVG />
                             </Link>
@@ -197,6 +197,6 @@ export const Dashboard = ({ me }: { me: Me }) => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };

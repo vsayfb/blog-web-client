@@ -31,8 +31,8 @@ export const CommentNotification = ({
   const noti: CommentNotification = notification;
 
   return (
-    <div key={noti.id} className="py-2 border-b border-black ">
-      <div className="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+    <div key={noti.id} className="py-2 ">
+      <div className="flex items-center px-4 py-3 -mx-2">
         <img
           className="h-8 w-8 rounded-full object-cover mx-1"
           src={detectImage(noti.sender.image)}
@@ -46,7 +46,7 @@ export const CommentNotification = ({
             smooth={true}
             elementId={`${noti.comment.id}`}
             to={`${noti.post.url}`}
-            className="ml-2 text-emerald-500 underline "
+            className="ml-2 text-black underline "
           >
             {noti.action}
           </HashLink>

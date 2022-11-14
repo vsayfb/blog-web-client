@@ -50,7 +50,7 @@ export const PublicPost = ({ me }: { me: Me }) => {
   }
 
   return (
-    <div className="">
+    <div className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700">
       <Helmet>
         <title> {post.title}</title>
 

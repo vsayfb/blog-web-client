@@ -7,14 +7,13 @@ import { PostTagsData } from "../../tags/components/PostTagsData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { resetTags, setTags } from "../../tags/slices/tagsSlice";
-import { resetSavedPost } from "../slices/postsSlice";
-import { PostViewDto } from "../types/post-view.dto";
+import { resetSavedPost, SavedPost } from "../slices/postsSlice";
 
 export const UpdateStepTwo = ({
   savedPost,
   setStep,
 }: {
-  savedPost: PostViewDto;
+  savedPost: SavedPost;
   setStep: React.Dispatch<SetStateAction<number>>;
 }) => {
   const { postTagNames } = useSelector((state: RootState) => state.tags);
@@ -44,7 +43,7 @@ export const UpdateStepTwo = ({
   }
 
   return (
-    <>
+    <div className="h-screen">
       <div
         className="cursor-pointer"
         style={{ width: "24px" }}
@@ -64,6 +63,6 @@ export const UpdateStepTwo = ({
 
         <MyButton buttonText="PUBLISH" onClickEvent={completeStep} />
       </div>
-    </>
+    </div>
   );
 };
