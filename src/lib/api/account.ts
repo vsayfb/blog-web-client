@@ -8,10 +8,10 @@ export async function getMyCredentials(): Promise<any> {
 
 export async function uploadProfileImage(
   formData: FormData
-): Promise<{ newImage: string }> {
+): Promise<{ data: string }> {
   return await sendRequest(
     BASE_PARAM + "upload_profile_image",
-    "post",
+    "patch",
     true,
     formData
   );

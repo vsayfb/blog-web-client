@@ -1,10 +1,16 @@
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch } from "react-redux";
 import { MyButton } from "../../lib/components/Button";
 import { InputField } from "../../lib/components/InputField";
 import { BackSVG } from "../../lib/svgs/BackSVG";
-import { setError } from "../../lib/slices/appSlice";
+import { setError, setWarn } from "../../lib/slices/appSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
 import { beginAccountVerification } from "../../lib/api/account";
 
@@ -23,25 +29,68 @@ export const SecondStep = ({
   password: string;
   setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
 }) => {
-  async function beginEmailVerification() {
-    return await beginAccountVerification(email, username);
-  }
-
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
+  const [displayNameError, setDisplayNameError] = useState(false);
+
+  const [displayNameSuccess, setDisplayNameSuccess] = useState(false);
+
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+
+  useEffect(() => {
+    if (displayName.length) {
+      if (displayName.length < 2 || displayName.length > 16) {
+        setDisplayNameError(true);
+        setDisplayNameSuccess(false);
+      } else {
+        setDisplayNameError(false);
+        setDisplayNameSuccess(true);
+      }
+    }
+  }, [displayName]);
+
+  useEffect(() => {
+    if (password.length) {
+      if (password.length < 7) {
+        setPasswordError(true);
+        setPasswordSuccess(false);
+      } else {
+        setPasswordError(false);
+        setPasswordSuccess(true);
+      }
+    }
+  }, [password]);
+
   async function nextStep() {
-    if (displayName.length < 3) {
-      dispatch(setError("Please fill the Display Name field."));
-    } else if (password.length < 7) {
-      dispatch(setError("Please fill the password field."));
-    } else {
+    const valuesGiven = displayName.length && password.length;
+
+    const valuesAccepted = !displayNameError && !passwordError;
+
+    if (valuesGiven && valuesAccepted) {
+      setLoading(true);
+
       try {
-        await beginEmailVerification();
+        await beginAccountVerification(email, username);
 
         setStep(3);
       } catch (error: any) {
-        dispatch(setError(error.response.data.message));
+        if (error.response.data.statusCode === 400) {
+          dispatch(setWarn(error.response.data.message));
+          setStep(3);
+        } else {
+          dispatch(setError(error.response.data.message));
+        }
+      } finally {
+        setLoading(false);
       }
+
+      dispatch(setError(""));
+    } else {
+      dispatch(setError("Please fill the form."));
     }
   }
 
@@ -61,21 +110,45 @@ export const SecondStep = ({
 
       <div>
         <InputField
-          labelText="Display name"
+          labelText={`${
+            displayNameError
+              ? "Display name length must be between 2-16."
+              : "Display name"
+          }`}
+          labelAttributes={`${displayNameError ? "text-red-500" : ""}`}
+          inputAttributes={`${
+            displayNameError
+              ? "border-b border-red-500"
+              : displayNameSuccess
+              ? "border-b border-emerald-500"
+              : ""
+          }`}
           type={"text"}
-          onChangeEvent={(e) =>
+          onChangeEvent={(e) => {
             setAccountDto((prev) => ({
               ...prev,
-              displayName: e.target.value.toString(),
-            }))
-          }
+              display_name: e.target.value.toString(),
+            }));
+          }}
           value={displayName}
         />
       </div>
 
       <div>
         <InputField
-          labelText="Password"
+          labelText={`${
+            passwordError
+              ? "Password length must be greater than 6."
+              : "Password"
+          }`}
+          labelAttributes={`${passwordError ? "text-red-500" : ""}`}
+          inputAttributes={`${
+            passwordError
+              ? "border-b border-red-500"
+              : passwordSuccess
+              ? "border-b border-emerald-500"
+              : ""
+          }`}
           type={"password"}
           onChangeEvent={(e) =>
             setAccountDto((prev) => ({
@@ -88,7 +161,11 @@ export const SecondStep = ({
       </div>
 
       <div className="mt-4">
-        <MyButton buttonText="CONTINUE" onClickEvent={() => nextStep()} />
+        <MyButton
+          buttonText="CONTINUE"
+          onClickEvent={() => nextStep()}
+          disabled={loading}
+        />
       </div>
     </>
   );

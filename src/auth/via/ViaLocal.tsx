@@ -3,14 +3,13 @@ import { SecondStep } from "../local/SecondStep";
 import { FirstStep } from "../local/FirstStep";
 import { ThirdStep } from "../local/ThirdStep";
 import { UploadProfileImage } from "../../lib/components/UploadProfileImage";
-import { MyButton } from "../../lib/components/Button";
 import { useNavigate } from "react-router-dom";
-import SignUp from "../../screens/SignUp";
+import { NextSVG } from "../../lib/svgs/NextSVG";
 
 export type CreateAccoundDto = {
   email: string | null;
   username: string | null;
-  displayName: string | null;
+  display_name: string | null;
   password: string | null;
   verification_code: string | null;
   image: string | null;
@@ -22,7 +21,7 @@ export default function ViaLocal() {
   const [accountDto, setAccountDto] = useState<CreateAccoundDto>({
     email: null,
     username: null,
-    displayName: null,
+    display_name: null,
     password: null,
     verification_code: null,
     image: null,
@@ -43,7 +42,7 @@ export default function ViaLocal() {
         <SecondStep
           setStep={setStep}
           email={accountDto.email || ""}
-          displayName={accountDto.displayName || ""}
+          displayName={accountDto.display_name || ""}
           username={accountDto.username || ""}
           password={accountDto.password || ""}
           setAccountDto={setAccountDto}
@@ -57,11 +56,10 @@ export default function ViaLocal() {
       ) : step === 4 ? (
         <>
           <UploadProfileImage />
-          <div className="mt-4">
-            <MyButton
-              buttonText="COMPLETE"
-              onClickEvent={() => navigate("/")}
-            />
+          <div className="mt-6 flex justify-center ">
+            <span className="cursor-pointer" onClick={() => navigate("/")}>
+              <NextSVG w="40" h="40" />
+            </span>
           </div>
         </>
       ) : null}

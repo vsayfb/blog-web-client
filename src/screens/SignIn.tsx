@@ -41,7 +41,7 @@ export default function SignIn() {
         </Helmet>
 
         <AuthHeader type={AuthType.SingIn} />
-        <ViaGoogle />
+        <ViaGoogle type="login" />
 
         <div className="mt-2">
           <AuthMiddle />

@@ -59,25 +59,7 @@ export const Chats = ({
         return (
           <li key={c.id} onClick={() => dispatch(setOpenedChatID(c.id))}>
             <a
-              className={`border-b px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none transition duration-150 ease-in-out  ${
-                theme === "dark"
-                  ? "text-" +
-                    colors.zinc900 +
-                    " border-" +
-                    colors.orange200 +
-                    " hover:bg-" +
-                    colors.orange200 +
-                    " hover:text-" +
-                    colors.zinc900
-                  : "text-" +
-                    colors.zinc900 +
-                    " border-" +
-                    colors.zinc900 +
-                    " hover:bg-" +
-                    colors.blue400 +
-                    " hover:text-" +
-                    colors.zinc50
-              }`}
+              className={`border-b px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none transition duration-150 ease-in-out`}
             >
               <img
                 className="h-10 w-10 rounded-full object-cover"

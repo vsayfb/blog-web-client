@@ -4,7 +4,6 @@ import { RootState } from "../../store";
 import { OpenedChat } from "./OpenedChat";
 import { InitiliazeChat } from "./InitializeChat";
 import { AppColors } from "../../lib/slices/appSlice";
-import { useRef } from "react";
 
 export const InboxRight = ({
   colors,
@@ -27,11 +26,7 @@ export const InboxRight = ({
     return (
       <div className="p-28 col-span-2">
         <div className="flex justify-center">
-          <MessageSVG
-            w={54}
-            h={54}
-            fill={theme === "dark" ? "#fed7aa" : "#0284c7"}
-          />
+          <MessageSVG w={54} h={54} />
         </div>
         <h3
           className={`${

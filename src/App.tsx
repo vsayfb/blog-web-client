@@ -11,6 +11,7 @@ import { NewNotification } from "./notifications/components/NewNotification";
 import { useEffect } from "react";
 import { getMe } from "./auth/slices/authSlice";
 import { FullScreenLoadingIcon } from "./lib/components/FullScreenLoadingIcon";
+import { WarnAlert } from "./lib/components/WarnAlert";
 
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
@@ -34,7 +35,7 @@ function App() {
   return (
     <GoogleOAuthProvider
       clientId={
-        "1030114530292-3dh19g79549kt9p1lkp5j486himaofe3.apps.googleusercontent.com"
+        "118335956263-gq5734b78mouab5msqtsva74r6g17gg4.apps.googleusercontent.com"
       }
     >
       <Sockets />
@@ -52,6 +53,8 @@ function App() {
       {me.username ? <Inbox colors={colors} theme={theme} /> : null}
 
       <ErrorAlert />
+
+      <WarnAlert />
 
       {loading ? <FullScreenLoadingIcon /> : null}
 

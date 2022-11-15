@@ -7,16 +7,21 @@ import { TagSVG } from "../svgs/TagSVG";
 import { TagCreatedBy } from "./TagCreatedBy";
 
 export const Tags = () => {
-  const [tagsLoading, setTagsLoading] = useState([]);
+  const [tagsLoading, setTagsLoading] = useState(false);
 
   const [tags, setTags] = useState<
     { id: string; name: string; author: AccountViewDto }[]
   >([]);
 
   useEffect(() => {
-    sendRequest("tags", "get", false).then((tags) => {
-      setTags(tags.data);
-    });
+    setTagsLoading(true);
+    sendRequest("tags", "get", false)
+      .then((tags) => {
+        setTags(tags.data);
+      })
+      .finally(() => {
+        setTagsLoading(false);
+      });
   }, []);
 
   if (!tags.length) {
@@ -27,7 +32,17 @@ export const Tags = () => {
         </div>
       );
 
-    return null;
+    return (
+      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-screen ">
+        <div className="flex items-center mt-16">
+          <TagSVG />
+
+          <div className="ml-4">
+            <h3 className="text-2xl">There are no tags to show.</h3>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

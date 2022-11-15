@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import Spinner from "./Spinner";
 
 export const MyButton = ({
   onClickEvent,
@@ -23,16 +24,21 @@ export const MyButton = ({
 
   const BUTTON_CLASS = `
     text-sm font-semibold focus:outline-none 
-    ${buttonBg} ${buttonTextColor} rounded py-4 w-full`;
+    ${buttonBg} ${buttonTextColor} rounded py-4 w-full flex justify-center items-center`;
 
   return (
     <button
+      type="button"
       onClick={onClickEvent}
       role={role}
-      className={`${BUTTON_CLASS} ${classProperties} `}
+      className={
+        disabled
+          ? `${BUTTON_CLASS} ${classProperties} bg-zinc-400`
+          : `${BUTTON_CLASS} ${classProperties} `
+      }
       disabled={disabled ? true : false}
     >
-      {buttonText}
+      {disabled ? <Spinner w={22} h={22} /> : buttonText}
     </button>
   );
 };

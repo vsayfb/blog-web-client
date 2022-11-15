@@ -98,10 +98,10 @@ export const FirstStep = ({
 
   function nextStep() {
     if (!username.length || !email.length) {
-      dispatch(setError("Fill the form."));
+      dispatch(setError("Please fill the form."));
     } else if (areaProps.email.error || areaProps.username.error) {
-      const error = areaProps.email.error ? "Email" : "Username";
-      dispatch(setError("Fill the" + error + "field."));
+      const error = areaProps.email.error ? " email" : " username";
+      dispatch(setError("Please fill the" + error + " field."));
     } else {
       setStep(2);
     }

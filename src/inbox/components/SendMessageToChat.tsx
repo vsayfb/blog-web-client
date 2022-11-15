@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
+import { addMessageToOpenedChat } from "../slices/inboxSlice";
 import { ChatImageSvg } from "../svgs/ChatImageSvg";
 import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
 
@@ -18,7 +19,9 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
 
   async function sendMessageToChat() {
     try {
-      await sendRequest(`messages/to/${chatID}`, "post", true, { content });
+      await sendRequest(`messages/to/${chatID}`, "post", true, {
+        content,
+      });
 
       setContent("");
     } catch (error: any) {
@@ -29,8 +32,6 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
   const scrollToBottom = () => {
     //@ts-ignore
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-
-    console.log(messagesEndRef);
   };
 
   async function sendMessage(e: any) {
@@ -53,7 +54,8 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
         name="message"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        required
+        autoFocus={true}
+        required={true}
       />
 
       <button ref={messagesEndRef} type="submit">

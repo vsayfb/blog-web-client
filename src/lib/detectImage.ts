@@ -3,5 +3,8 @@ const { REACT_APP_DEFAULT_AVATAR } = process.env;
 export function detectImage(imageUrl: string | null): string {
   if (imageUrl) return imageUrl;
 
-  return REACT_APP_DEFAULT_AVATAR as string;
+  return (
+    REACT_APP_DEFAULT_AVATAR ||
+    "https://res.cloudinary.com/dmrziugzr/image/upload/v1668549301/img_264570_s6flms.png"
+  );
 }

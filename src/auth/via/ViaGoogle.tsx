@@ -2,11 +2,24 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../lib/slices/appSlice";
-import { googleAuth } from "../../lib/api/auth";
+import { googleLogin, googleRegister } from "../../lib/api/auth";
 import { setLocalStorageToken } from "../../lib/setLocalStorageToken";
+import { useLocation } from "react-router-dom";
+import { setMe } from "../slices/authSlice";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
 
-export default function ViaGoogle() {
+export type GoogleResponseData = {
+  data: {
+    account: AccountViewDto;
+    access_token: string;
+  };
+  message: string;
+};
+
+export default function ViaGoogle({ type }: { type: "register" | "login" }) {
   const [redirect, setRedirect] = useState(false);
+
+  const location = useLocation();
 
   useEffect(() => {
     if (redirect) window.location.href = "/";
@@ -18,9 +31,15 @@ export default function ViaGoogle() {
     dispatch(setLoading());
 
     try {
-      const data = await googleAuth(access_token);
+      let result: GoogleResponseData;
 
-      setLocalStorageToken(data.access_token);
+      if (type === "login") {
+        result = await googleLogin(access_token);
+      } else {
+        result = await googleRegister(access_token);
+      }
+
+      setLocalStorageToken(result.data.access_token);
 
       setRedirect(true);
     } catch (error) {

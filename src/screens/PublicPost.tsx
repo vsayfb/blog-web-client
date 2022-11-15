@@ -31,6 +31,7 @@ export const PublicPost = ({ me }: { me: Me }) => {
       })
       .finally(() => {
         setPostLoading(false);
+        window.scrollTo(0, 0);
       });
   }, [url]);
 

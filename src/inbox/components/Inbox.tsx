@@ -24,7 +24,7 @@ export const Inbox = ({
         zIndex: "999999",
       }}
     >
-      <div className="fixed right-2 border-r border-l border-b border-collapse  shadow-lg shadow-zinc-600">
+      <div className="fixed right-2 900 border-2 border-zinc-900">
         <div
           className={`relative w-50 z-50 ${
             theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50

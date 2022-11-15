@@ -13,6 +13,7 @@ import { ChatImageSvg } from "../svgs/ChatImageSvg";
 import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
 import { ChatViewDto } from "../types/chat-view-dto";
 import { ChatTitle } from "./ChatTitle";
+import { SendMessageToChat } from "./SendMessageToChat";
 
 export const InitiliazeChat = ({
   targetUser,
@@ -33,7 +34,9 @@ export const InitiliazeChat = ({
     };
   }, []);
 
-  async function initializeChat() {
+  async function initializeChat(e: any) {
+    e.preventDefault();
+
     const { data }: { data: ChatViewDto } = await sendRequest(
       "chats/",
       "post",
@@ -56,6 +59,7 @@ export const InitiliazeChat = ({
       className={`col-span-2 ${
         theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
       }`}
+      style={{ height: "500px" }}
     >
       <div className="w-full">
         <ChatTitle
@@ -67,14 +71,15 @@ export const InitiliazeChat = ({
 
         {/* SPACE  */}
 
-        <div className="pb-14 pt-14"> </div>
+        <div className="" style={{ paddingTop: "13rem" }}>
+          {" "}
+        </div>
 
-        <div
-          className={`w-full py-3 px-3 flex items-center justify-between border-t ${
-            theme === "dark" ? "border-orange-200" : "border-blue-600"
-          }`}
+        <form
+          className="w-full py-3 px-3 flex items-center justify-between border-t  "
+          onSubmit={initializeChat}
         >
-          <ChatImageSvg />
+          {/* <ChatImageSvg /> */}
 
           <input
             placeholder="Send message"
@@ -83,15 +88,14 @@ export const InitiliazeChat = ({
             name="message"
             value={firstMessage}
             onChange={(e) => setFirstMessage(e.target.value)}
-            required
+            autoFocus={true}
+            required={true}
           />
 
-          <button onClick={() => initializeChat()}>
-            <ChatSendMessageSvg
-              fill={theme === "dark" ? "#fed7aa" : "#2563eb"}
-            />
+          <button type="submit">
+            <ChatSendMessageSvg fill={"current"} />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

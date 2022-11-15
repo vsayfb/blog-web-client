@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
+import { detectImage } from "../../lib/detectImage";
 import { AppColors } from "../../lib/slices/appSlice";
 import {
   resetOpenedChat,
@@ -18,7 +19,8 @@ export const FoundForChatList = ({
 }) => {
   const dispatch = useDispatch();
 
-  if (!accounts.length) return null;
+  if (!accounts.length)
+    return <h3 className="ml-4">Could not find an account.</h3>;
 
   return (
     <>
@@ -29,7 +31,6 @@ export const FoundForChatList = ({
           onClick={() => {
             dispatch(resetOpenedChatID());
             dispatch(resetOpenedChat());
-
             dispatch(setFoundUser(a));
           }}
         >
@@ -56,7 +57,7 @@ export const FoundForChatList = ({
           >
             <img
               className="h-10 w-10 rounded-full object-cover"
-              src={a.image || ""}
+              src={detectImage(a.image)}
               alt="username"
             />
             <div className="w-full pb-2">

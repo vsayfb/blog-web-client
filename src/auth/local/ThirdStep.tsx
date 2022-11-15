@@ -22,37 +22,39 @@ export const ThirdStep = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (verified) setStep(4);
+    if (verified === true) setStep(4);
   }, [verified]);
 
   async function registerAccount() {
-    dispatch(setLoading());
+    if (accountDto.verification_code?.length) {
+      try {
+        const { data } = await register(accountDto);
 
-    try {
-      const { access_token, account } = await register(accountDto);
+        setVerified(true);
 
-      setVerified(true);
+        dispatch(setMe(data.account));
 
-      dispatch(setMe(account));
-
-      setLocalStorageToken(access_token);
-    } catch (error: any) {
-      setVerified("rejected");
-      dispatch(setError(error.response.data.message));
-    } finally {
-      dispatch(setLoading());
+        setLocalStorageToken(data.access_token);
+      } catch (error: any) {
+        setVerified("rejected");
+        // dispatch(setError(error.response.data.message));
+        dispatch(setError("Invalid code."));
+      } finally {
+      }
+    } else {
+      dispatch(setError("Please write the code."));
     }
   }
 
   return (
     <div>
       <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800 mb-2 mt-2">
-        We sent a code to you.
+        We sent a code to your email.
       </p>
 
       <InputField
         value={accountDto.verification_code || ""}
-        labelText="Enter Code to below"
+        labelText="It will be expired after two minutes."
         onChangeEvent={(e) =>
           setAccountDto((prev) => ({
             ...prev,

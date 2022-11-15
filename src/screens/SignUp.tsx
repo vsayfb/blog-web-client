@@ -20,7 +20,7 @@ export default function SignUp() {
         {!viaLocal ? (
           <>
             <AuthHeader type={AuthType.SignUp} />
-            <ViaGoogle />
+            <ViaGoogle type="register" />
             <AuthMiddle />
 
             <MyButton

@@ -17,7 +17,7 @@ import { io, Socket } from "socket.io-client";
 import { ChatMessageViewDto } from "../types/chat-message-view.dto";
 import { detectImage } from "../../lib/detectImage";
 
-const socket = io(`${process.env.REACT_APP_BASE_URL}/chats`, {
+const socket = io(`${process.env.REACT_APP_HOST}/chats`, {
   auth: { token: localStorage.getItem("token") },
 });
 

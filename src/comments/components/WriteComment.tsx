@@ -109,11 +109,7 @@ export const WriteComment = ({
         ></textarea>
         <div className="flex justify-start">
           <button
-            className={`text-sm font-semibold absolute  w-fit py-2 rounded px-3 ${
-              theme === "dark"
-                ? "text-" + colors.zinc900 + " bg-" + colors.zinc50
-                : "text-" + colors.zinc50 + " bg-" + colors.zinc900
-            }`}
+            className={`text-sm font-semibold absolute  w-fit py-2 rounded px-3 bg-zinc-900 text-white`}
             onClick={createComment}
           >
             Send

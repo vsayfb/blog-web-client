@@ -14,6 +14,7 @@ const initialState: {
   colors: AppColors;
   notificationsSocket?: Socket;
   error: { message: string; createdAt: number };
+  warn: { message: string; createdAt: number };
 } = {
   loading: false,
   theme: "light",
@@ -25,6 +26,10 @@ const initialState: {
   },
 
   error: { message: "", createdAt: Date.now() },
+  warn: {
+    message: "",
+    createdAt: Date.now(),
+  },
 };
 
 const appSlice = createSlice({
@@ -52,13 +57,28 @@ const appSlice = createSlice({
         createdAt: Date.now(),
       };
     },
+    setWarn: (state, action: { payload: string }) => {
+      state.warn = {
+        message: action.payload,
+        createdAt: Date.now(),
+      };
+    },
     resetError: (state) => {
       state.error = { message: "", createdAt: Date.now() };
+    },
+    resetWarn: (state) => {
+      state.warn = { message: "", createdAt: Date.now() };
     },
   },
 });
 
-export const { setLoading, setError, resetError, setNotificationSocket } =
-  appSlice.actions;
+export const {
+  setLoading,
+  setError,
+  resetError,
+  setWarn,
+  resetWarn,
+  setNotificationSocket,
+} = appSlice.actions;
 
 export default appSlice.reducer;
