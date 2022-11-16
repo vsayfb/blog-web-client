@@ -44,7 +44,7 @@ const appSlice = createSlice({
 
       if (token) {
         state.notificationsSocket = io(
-          `${process.env.REACT_APP_BASE_URL}/notifications`,
+          `${process.env.REACT_APP_HOST}/notifications`,
           {
             auth: { token: localStorage.getItem("token") },
           }
