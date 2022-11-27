@@ -20,7 +20,7 @@ export const FoundForChatList = ({
   const dispatch = useDispatch();
 
   if (!accounts.length)
-    return <h3 className="ml-4">Could not find an account.</h3>;
+    return <b className="ml-4">Could not find an account.</b>;
 
   return (
     <>

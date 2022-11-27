@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { getMe } from "./auth/slices/authSlice";
 import { FullScreenLoadingIcon } from "./lib/components/FullScreenLoadingIcon";
 import { WarnAlert } from "./lib/components/WarnAlert";
+import { Footer } from "./lib/components/Footer";
 
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
@@ -59,6 +60,8 @@ function App() {
       {loading ? <FullScreenLoadingIcon /> : null}
 
       {<AppRoutes me={me} />}
+
+      <Footer />
     </GoogleOAuthProvider>
   );
 }

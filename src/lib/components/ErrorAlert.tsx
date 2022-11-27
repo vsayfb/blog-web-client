@@ -23,10 +23,10 @@ export const ErrorAlert = () => {
   if (!error.message) return null;
 
   return (
-    <div className="flex justify-center ">
+    <div className="relative flex justify-center ">
       <div
         className="p-5 fixed bg-red-50 border-l-4 border-red-500 rounded-r-lg"
-        style={{ bottom: "20px", right: "20px" }}
+        style={{ top: "80px", zIndex: "500000" }}
       >
         <div className="flex ">
           <svg

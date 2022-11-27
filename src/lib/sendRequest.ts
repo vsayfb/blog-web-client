@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 
-export const BASE_URL = process.env.REACT_APP_HOST + "/api/" || "/api/";
+export const BASE_URL = process.env.REACT_APP_HOST
+  ? process.env.REACT_APP_HOST + "/api/"
+  : "/api/";
 
 export async function sendRequest(
   path: string,

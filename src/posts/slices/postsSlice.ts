@@ -10,9 +10,9 @@ export type SavedPost = {
   tags: { id: string; name: string; created_at: string; updated_at: string }[];
   author: {
     id: string;
-    displayName: string;
+    display_name: string;
     username: string;
-    image: string | null;
+    image: string;
   };
   title_image: File | string | null;
   created_at: string;

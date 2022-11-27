@@ -1,3 +1,4 @@
+import { AllPostViewDto } from "../../posts/types/all-post-view.dto";
 import { PostViewDto } from "../../posts/types/post-view.dto";
 import { CreatePostDto } from "../../screens/WritePost";
 import { sendRequest } from "../sendRequest";
@@ -7,10 +8,10 @@ export const BASE_PARAM = "posts/";
 export async function getPublicPost(
   postUrl: string
 ): Promise<{ data: PostViewDto }> {
-  return await sendRequest(BASE_PARAM + postUrl, "get", false, {});
+  return await sendRequest(BASE_PARAM + postUrl, "get", true);
 }
 
-export async function getPosts(): Promise<{ data: PostViewDto[] }> {
+export async function getPosts(): Promise<{ data: AllPostViewDto }> {
   return await sendRequest(BASE_PARAM, "get", false);
 }
 
@@ -38,11 +39,7 @@ export async function updatePost(
   id: string,
   data: any
 ): Promise<{ data: PostViewDto }> {
-
-
-
-  
-  return await sendRequest(BASE_PARAM + id, "patch", true, data);
+  return await sendRequest(BASE_PARAM + id, "put", true, data);
 }
 
 export async function uploadTitleImageForPost(
@@ -69,7 +66,7 @@ export async function changePostStatus(
 ): Promise<{ data: { id: string; published: boolean } }> {
   return await sendRequest(
     BASE_PARAM + "change_post_status/" + postID,
-    "put",
+    "patch",
     true
   );
 }

@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Me } from "../auth/slices/authSlice";
-import { changePostStatus, getMyPosts, removePost } from "../lib/api/post";
-import { DeleteModal } from "../lib/modals/DeleteModal";
-import { DeleteSVG } from "../lib/svgs/DeleteSVG";
-import { UpdateSVG } from "../lib/svgs/UpdateSVG";
-import { TagBox } from "../tags/components/TagBox";
+import { changePostStatus, getMyPosts, removePost } from "../../lib/api/post";
+import { DeleteModal } from "../../lib/modals/DeleteModal";
+import { DeleteSVG } from "../../lib/svgs/DeleteSVG";
+import { UpdateSVG } from "../../lib/svgs/UpdateSVG";
+import { TagBox } from "../../tags/components/TagBox";
 import { Helmet } from "react-helmet";
-import { PostViewDto } from "../posts/types/post-view.dto";
+import { PostViewDto } from "../../posts/types/post-view.dto";
 
-export const Dashboard = ({ me }: { me: Me }) => {
+export const DashboardPosts = () => {
   const [myPosts, setMyPosts] = useState<PostViewDto[]>([]);
 
   const [deleteModalAnswer, setDeleteModalAnswer] = useState<boolean>();
@@ -53,7 +52,7 @@ export const Dashboard = ({ me }: { me: Me }) => {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700">
+    <div className="bg-gradient-to-r mt-8 from-yellow-200 via-yellow-400 to-yellow-700">
       {deleteModalSubject ? (
         <DeleteModal
           section={
@@ -153,9 +152,9 @@ export const Dashboard = ({ me }: { me: Me }) => {
                             <span
                               onClick={() => changeStatus(post.id)}
                               className={`cursor-pointer py-1 px-3 text-sm text-black font-heading font-medium 
-                            ${
-                              post.published ? "bg-green-300" : "bg-red-300"
-                            } rounded-full`}
+                              ${
+                                post.published ? "bg-green-300" : "bg-red-300"
+                              } rounded-full`}
                             >
                               {post.published ? "PUBLIC" : "PRIVATE"}
                             </span>

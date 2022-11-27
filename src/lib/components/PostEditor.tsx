@@ -1,7 +1,7 @@
 import { Editor as TinyMCE } from "@tinymce/tinymce-react";
 import imagesUploadHandler from "../imagesUploadHandler";
 
-export const Editor = ({
+export const PostEditor = ({
   content,
   getEditorContent,
 }: {

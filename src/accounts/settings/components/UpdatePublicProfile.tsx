@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMe, setMe } from "../../../auth/slices/authSlice";
+import { setMe } from "../../../auth/slices/authSlice";
 import { MyButton } from "../../../lib/components/Button";
 import { sendRequest } from "../../../lib/sendRequest";
 import { setError, setLoading } from "../../../lib/slices/appSlice";
@@ -75,12 +75,16 @@ export const UpdatePublicProfile = () => {
       </div>
 
       <div className="mt-5">
-        <MyButton
-          buttonText="Update Profile"
-          onClickEvent={() => updateProfile()}
-          classProperties={`w-48 ${buttonDisabled ? disabledButtonColor : ""}`}
+        <button
+          className={`text-white rounded px-4 py-4 flex justify-center items-center w-96 text-sm font-semibold focus:outline-none ${
+            buttonDisabled ? "bg-zinc-400" : "bg-zinc-900 "
+          }`}
+          type="button"
+          onClick={updateProfile}
           disabled={buttonDisabled}
-        />
+        >
+          UPDATE PROFILE
+        </button>
       </div>
     </>
   );

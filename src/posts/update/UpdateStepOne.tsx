@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect } from "react";
 import { MyButton } from "../../lib/components/Button";
-import { Editor } from "../../lib/components/Editor";
+import { PostEditor } from "../../lib/components/PostEditor";
 import { InputField } from "../../lib/components/InputField";
 import { updatePost } from "../../lib/api/post";
 import { TitleImage } from "../write/TitleImage";
@@ -86,7 +86,7 @@ export const UpdateStepOne = ({
 
       <div className="mt-6">
         <p className="mb-4 text-sm">Content</p>
-        <Editor
+        <PostEditor
           content={savedPost.content}
           getEditorContent={(content) => dispatch(updateSavedPost({ content }))}
         />

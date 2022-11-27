@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { resetTags, setTags } from "../../tags/slices/tagsSlice";
 import { resetSavedPost, SavedPost } from "../slices/postsSlice";
+import { setError } from "../../lib/slices/appSlice";
 
 export const UpdateStepTwo = ({
   savedPost,
@@ -39,7 +40,9 @@ export const UpdateStepTwo = ({
 
       dispatch(resetTags());
       dispatch(resetSavedPost());
-    } catch (error) {}
+    } catch (error: any) {
+      dispatch(setError(error.response.data.message[0]));
+    }
   }
 
   return (
@@ -61,7 +64,7 @@ export const UpdateStepTwo = ({
 
         <PostTagsData />
 
-        <MyButton buttonText="PUBLISH" onClickEvent={completeStep} />
+        <MyButton buttonText="SAVE" onClickEvent={completeStep} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Editor } from "../../lib/components/Editor";
+import { PostEditor } from "../../lib/components/PostEditor";
 import { SetStateAction, useState } from "react";
 import { MyButton } from "../../lib/components/Button";
 import { InputField } from "../../lib/components/InputField";
@@ -102,7 +102,7 @@ export const StepOne = ({
 
       <p className="mb-5"> Content</p>
 
-      <Editor
+      <PostEditor
         getEditorContent={(content: string) =>
           setPostData((prev) => ({ ...prev, content }))
         }

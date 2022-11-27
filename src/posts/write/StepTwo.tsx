@@ -37,7 +37,7 @@ export const StepTwo = ({
         navigate("/" + result.data.url);
       }
     } catch (error: any) {
-      dispatch(setError(error.message));
+      dispatch(setError(error.response.data.message[0]));
     }
   }
 

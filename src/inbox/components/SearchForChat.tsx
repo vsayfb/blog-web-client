@@ -42,31 +42,28 @@ export const SearchForChat = ({
       dispatch(setSearchingUsersForChat(false));
     }
 
-    if (typeof username === "string" && username.length >= 2) {
-      searchUser()
-        .then((foundUsers) => {
-          dispatch(setSearchingUsersForChat(true));
+    if (typeof username === "string" && username.length >= 1) {
+      searchUser().then((foundUsers) => {
+        dispatch(setSearchingUsersForChat(true));
 
-          let members: AccountViewDto[] = [];
+        let members: AccountViewDto[] = [];
 
-          // bi-directional chats
-          const twoMembersChats = chats.filter((c) => c.members.length == 2);
+        // bi-directional chats
+        const twoMembersChats = chats.filter((c) => c.members.length == 2);
 
-          twoMembersChats.map((c) =>
-            c.members.map((m) => {
-              if (m.id !== me.sub) members.push(m);
-            })
-          );
+        twoMembersChats.map((c) =>
+          c.members.map((m) => {
+            if (m.id !== me.sub) members.push(m);
+          })
+        );
 
-          const filteredFoundUsers = foundUsers.filter(
-            (user) => !members.some((member) => member.id === user.id)
-          );
+        // show only non-chatted users
+        const filteredFoundUsers = foundUsers
+          .filter((user) => !members.some((member) => member.id === user.id))
+          .filter((u) => u.username !== me.username);
 
-          dispatch(setFoundUsers(filteredFoundUsers));
-        })
-        .catch((err) => {
-          dispatch(setError(err.message));
-        });
+        dispatch(setFoundUsers(filteredFoundUsers));
+      });
     }
   }, [username]);
 

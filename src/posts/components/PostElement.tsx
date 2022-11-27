@@ -1,14 +1,27 @@
-import { detectImage } from "../detectImage";
-import { CreatedAtSVG } from "../svgs/CreatedAtSVG";
+import { detectImage } from "../../lib/detectImage";
+import { CreatedAtSVG } from "../../lib/svgs/CreatedAtSVG";
 import { TagBox } from "../../tags/components/TagBox";
 import { CommentArea } from "../../comments/components/CommentArea";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { PostViewDto } from "../../posts/types/post-view.dto";
+import { PostViewDto } from "../types/post-view.dto";
 import { Link } from "react-router-dom";
+import { PostStats } from "./PostStats";
+import moment from "moment";
+import { calculateReadTime } from "../../lib/calculateReadTime";
+import { BookSVG } from "../../lib/svgs/BookSVG";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
   const { colors, theme } = useSelector((root: RootState) => root.app);
+
+  const {
+    bookmark_count,
+    like_count,
+    dislike_count,
+    bookmarked_by,
+    liked_by,
+    disliked_by,
+  } = post;
 
   return (
     <div
@@ -16,6 +29,22 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
         theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
       }`}
     >
+      {post.published ? (
+        <div className="p-4 fixed top-40">
+          <PostStats
+            postID={post.id}
+            stats={{
+              bookmark_count,
+              like_count,
+              dislike_count,
+              bookmarked_by,
+              liked_by,
+              disliked_by,
+            }}
+          />
+        </div>
+      ) : null}
+
       <div className="container px-4 max-w-3xl mx-auto">
         <div className=" text-center">
           <h2
@@ -42,9 +71,11 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
                     : "text-" + colors.zinc900
                 }`}
               >
-                {post.author.username}
+                {post.author.display_name}
               </Link>
-              <p className="text-gray-500 mt-2">14 June, 5:00 am</p>
+              <p className="text-gray-500 mt-2">
+                joined {moment(post.author.created_at).fromNow()}
+              </p>
             </div>
           </div>
 
@@ -57,24 +88,20 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
               </div>
             ) : null}
 
-            <div className="flex justify-center items-center mt-8">
+            <div className="flex justify-center items-center mt-12">
               <div
-                className={`${
-                  theme === "dark"
-                    ? "text-" + colors.zinc50
-                    : "text-" + colors.zinc900
-                } ml-2`}
+                className="flex items-center"
+                style={{ marginRight: "3rem" }}
               >
                 <CreatedAtSVG />
+                <b className="ml-2">
+                  {new Date(post.created_at).toLocaleDateString()}
+                </b>
               </div>
-              <div
-                className={`${
-                  theme === "dark"
-                    ? "text-" + colors.zinc50
-                    : "text-" + colors.zinc900
-                } ml-2`}
-              >
-                {new Date(post.created_at).toLocaleDateString()}
+
+              <div className="ml-6 flex items-center">
+                <BookSVG h={17} w={17} />
+                <b className="ml-2">{calculateReadTime(post.content)}</b>
               </div>
             </div>
           </div>
@@ -97,9 +124,11 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></article>
 
-        <section id="comments">
-          <CommentArea postID={post.id} />
-        </section>
+        {post.published ? (
+          <section id="comments">
+            <CommentArea postID={post.id} />
+          </section>
+        ) : null}
       </div>
     </div>
   );

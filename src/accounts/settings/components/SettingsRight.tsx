@@ -1,19 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setMe } from "../../../auth/slices/authSlice";
-import { InputField } from "../../../lib/components/InputField";
-import { RootState } from "../../../store";
-import { UpdateDisplayName } from "./UpdateDisplayName";
+import { useState } from "react";
 import { UpdatePassword } from "./UpdatePassword";
 import { UpdatePublicProfile } from "./UpdatePublicProfile";
-import { UpdateUsername } from "./UpdateUsername";
 
 export const SettingsRight = () => {
-  const dispatch = useDispatch();
-
   const [tab, setTab] = useState<"public" | "security">("public");
-
-  const { me } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="relative col-span-12  space-y-6 sm:col-span-9">

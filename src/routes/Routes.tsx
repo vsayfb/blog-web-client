@@ -6,7 +6,7 @@ import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import { PublicPost } from "../screens/PublicPost";
 import { WritePost } from "../screens/WritePost";
-import { Dashboard } from "../screens/Dashboard";
+import { Dashboard } from "../dashboard/components/Dashboard";
 import { UpdatePost } from "../screens/UpdatePost";
 import { Post } from "../screens/Post";
 import { NotFound } from "../screens/NotFound";

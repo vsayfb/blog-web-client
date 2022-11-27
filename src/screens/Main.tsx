@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getPosts } from "../lib/api/post";
 import { PostCard } from "../posts/components/PostCard";
-import { PostViewDto } from "../posts/types/post-view.dto";
+import { AllPostViewDto } from "../posts/types/all-post-view.dto";
 
 export default function Main() {
-  const [posts, setPosts] = useState<PostViewDto[]>([]);
+  const [posts, setPosts] = useState<AllPostViewDto>([]);
 
   async function getAll() {
     const { data } = await getPosts();

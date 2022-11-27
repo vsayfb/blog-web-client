@@ -5,6 +5,7 @@ import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import Spinner from "../../lib/components/Spinner";
 import { sendRequest } from "../../lib/sendRequest";
 import { PostCard } from "../../posts/components/PostCard";
+import { PostCardDto } from "../../posts/types/post-card.dto";
 import { NotFound } from "../../screens/NotFound";
 import { TagSVG } from "../svgs/TagSVG";
 import { TagCreatedBy } from "./TagCreatedBy";
@@ -21,7 +22,6 @@ type TagPostsDto = {
     username: string;
     image: string | null;
   };
-
   published: true;
   created_at: string;
   updated_at: string;
@@ -33,7 +33,7 @@ export const Tag = () => {
   const [tag, setTag] = useState<{
     id: string;
     name: string;
-    posts: TagPostsDto;
+    posts: PostCardDto[];
     author: AccountViewDto;
   } | null>(null);
 
@@ -87,7 +87,7 @@ export const Tag = () => {
           <TagCreatedBy account={tag.author} imageHeight={25} imageWidth={25} />
         </div>
 
-        <div className="mt-8 ">
+        <div className="mt-8 h-screen">
           {tag.posts.length ? (
             tag.posts.map((p) => (
               <PostCard post={{ ...p, tags: [] }} key={p.id} />

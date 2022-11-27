@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { calculateReadTime } from "../../lib/calculateReadTime";
 import { detectImage } from "../../lib/detectImage";
+import { ChatIconSVG } from "../../lib/svgs/ChatIconSVG";
+import { LikeSVG } from "../../lib/svgs/LikeSVG";
 import { RootState } from "../../store";
 import { TagBox } from "../../tags/components/TagBox";
-import { PostViewDto } from "../types/post-view.dto";
+import { PostCardDto } from "../types/post-card.dto";
 
-export const PostCard = ({ post }: { post: PostViewDto }) => {
+export const PostCard = ({ post }: { post: PostCardDto }) => {
   const { theme } = useSelector((state: RootState) => state.app);
 
   return (
@@ -49,11 +52,29 @@ export const PostCard = ({ post }: { post: PostViewDto }) => {
                 src={detectImage(post.author.image)}
                 alt=""
               />
-              <div className="inline-flex items-center space-x-2 text-sm text-zinc-900">
-                {post.author.username}
+              <div className="inline-flex items-center space-x-2 text-md font-bold text-zinc-900">
+                {post.author.display_name}
               </div>
             </div>
-            <span className="text-xs">3 min read</span>
+
+            <div className="flex items-center ">
+              {post.like_count !== undefined ? (
+                <div className="flex items-center mr-8">
+                  <LikeSVG w={17} h={17} />
+                  <b className="ml-2">{post.like_count}</b>
+                </div>
+              ) : null}
+
+              {post.comment_count !== undefined ? (
+                <div className="flex items-center mr-8">
+                  <ChatIconSVG w={17} h={17} />
+                  <b className="ml-2">{post.comment_count}</b>
+                </div>
+              ) : null}
+              <div>
+                <b className="">{calculateReadTime(post.content)}</b>
+              </div>
+            </div>
           </Link>
         </div>
       </div>

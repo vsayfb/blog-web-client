@@ -1,4 +1,4 @@
-export type PostViewDto = {
+export type AllPostViewDto = {
   title: string;
   url: string;
   id: string;
@@ -10,15 +10,10 @@ export type PostViewDto = {
     display_name: string;
     username: string;
     image: string;
-    created_at: string;
   };
   title_image: string | null;
-  bookmarked_by: boolean;
-  liked_by: boolean;
-  disliked_by: boolean;
-  bookmark_count: number;
   like_count: number;
-  dislike_count: number;
+  comment_count: number;
   created_at: string;
   updated_at: string;
-};
+}[];

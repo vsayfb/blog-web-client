@@ -18,10 +18,18 @@ export const PostTagsData = () => {
     e.preventDefault();
 
     if (postTagNames.length < 3) {
-      if (postTagNames.find((t) => t == tagValue)) {
+      if (tagValue.length < 2 || tagValue.length > 20) {
+        dispatch(
+          setError(
+            "Tag value must be longer than 1 and shorter than 21 characters."
+          )
+        );
+      } else if (postTagNames.find((t) => t == tagValue)) {
         dispatch(setError("The tag already exist. "));
       } else dispatch(setNewTag(tagValue));
-    } else dispatch(setError("The number of tags must be 3 or less. "));
+    } else {
+      dispatch(setError("The max tags length is 3. "));
+    }
 
     setTagValue("");
   }

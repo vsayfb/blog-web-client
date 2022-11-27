@@ -71,7 +71,7 @@ export const SettingsLeft = () => {
         <ProfileImage url={me.image} />
       )}
 
-      <h3 className="text-center text-2xl  ">{me.display_name}</h3>
+      <h3 className="text-center text-2xl mt-4 mb-4  ">{me.display_name}</h3>
 
       <div className="flex justify-center">
         <input

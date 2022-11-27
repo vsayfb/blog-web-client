@@ -4,7 +4,7 @@ import { Me } from "../auth/slices/authSlice";
 import { getPublicPost } from "../lib/api/post";
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
-import { PostElement } from "../lib/components/PostElement";
+import { PostElement } from "../posts/components/PostElement";
 import { Helmet } from "react-helmet";
 import { NotFound } from "./NotFound";
 import { PostViewDto } from "../posts/types/post-view.dto";
