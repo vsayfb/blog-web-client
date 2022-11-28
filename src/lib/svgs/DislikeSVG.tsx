@@ -1,8 +1,8 @@
-export const DislikeSVG = () => (
+export const DislikeSVG = ({ w, h }: { w?: number; h?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width={w || 24}
+    height={h || 24}
     fill="currentColor"
     className="bi bi-hand-thumbs-down"
     viewBox="0 0 16 16"

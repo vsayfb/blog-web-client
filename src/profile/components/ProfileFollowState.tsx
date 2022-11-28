@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { sendRequest } from "../../lib/sendRequest";
-import { setError } from "../../lib/slices/appSlice";
+import { setError, showFastSignUp } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import { decreaseFollowers, increaseFollowers } from "../slices/profileSlice";
 
@@ -20,12 +20,16 @@ export const ProfileFollowState = ({
 
   async function followProfile() {
     if (profile) {
-      try {
-        await sendRequest(`follow/${profile.username}`, "post", true);
+      if (!me.username) {
+        dispatch(showFastSignUp());
+      } else {
+        try {
+          await sendRequest(`follow/${profile.username}`, "post", true);
 
-        dispatch(increaseFollowers());
-      } catch (error: any) {
-        dispatch(setError(error.response.data.message));
+          dispatch(increaseFollowers());
+        } catch (error: any) {
+          dispatch(setError(error.response.data.message));
+        }
       }
     }
   }

@@ -9,6 +9,9 @@ export type CommentViewDto = {
     role: string;
   };
   content: string;
+  like_count: number;
+  dislike_count: number;
+  reply_count: number;
   created_at: string;
   updated_at: string;
 };

@@ -1,4 +1,4 @@
-import { PostEditor } from "../../lib/components/PostEditor";
+import { PostEditor } from "../components/PostEditor";
 import { SetStateAction, useState } from "react";
 import { MyButton } from "../../lib/components/Button";
 import { InputField } from "../../lib/components/InputField";

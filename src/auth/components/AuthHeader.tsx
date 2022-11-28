@@ -1,4 +1,12 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  hideFastSignIn,
+  hideFastSignUp,
+  showFastSignIn,
+  showFastSignUp,
+} from "../../lib/slices/appSlice";
+import { RootState } from "../../store";
 
 export enum AuthType {
   SignUp = "SingUp",
@@ -6,6 +14,12 @@ export enum AuthType {
 }
 
 export default function AuthHeader({ type }: { type: AuthType }) {
+  const { fastSignInVisibility, fastSignUpVisibility } = useSelector(
+    (state: RootState) => state.app
+  );
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <p
@@ -23,12 +37,34 @@ export default function AuthHeader({ type }: { type: AuthType }) {
         {type === AuthType.SingIn
           ? "Dont have account?"
           : "Already have an account?"}
-        <Link
-          to={type === AuthType.SingIn ? "/signUp" : "/signIn"}
-          className="hover:text-gray-500 ml-2 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"
-        >
-          {type === AuthType.SingIn ? "Sign up" : "Sign in"}
-        </Link>
+        {fastSignInVisibility ? (
+          <span
+            onClick={() => {
+              dispatch(hideFastSignIn());
+              dispatch(showFastSignUp());
+            }}
+            className="hover:text-gray-500 ml-2 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"
+          >
+            <span>{"Sign Up"}</span>
+          </span>
+        ) : fastSignUpVisibility ? (
+          <span
+            onClick={() => {
+              dispatch(hideFastSignUp());
+              dispatch(showFastSignIn());
+            }}
+            className="hover:text-gray-500 ml-2 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"
+          >
+            <span>{"Sign In"}</span>
+          </span>
+        ) : (
+          <Link
+            to={type === AuthType.SingIn ? "/signUp" : "/signIn"}
+            className="hover:text-gray-500 ml-2 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"
+          >
+            {type === AuthType.SingIn ? "Sign up" : "Sign in"}
+          </Link>
+        )}
       </p>
     </>
   );

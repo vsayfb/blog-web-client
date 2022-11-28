@@ -1,5 +1,5 @@
 import { Editor as TinyMCE } from "@tinymce/tinymce-react";
-import imagesUploadHandler from "../imagesUploadHandler";
+import imagesUploadHandler from "../../lib/imagesUploadHandler";
 
 export const PostEditor = ({
   content,
@@ -9,7 +9,7 @@ export const PostEditor = ({
   getEditorContent: (content: string) => void;
 }) => {
   return (
-    <div className="border border-black">
+    <div className="">
       <TinyMCE
         value={content}
         tinymceScriptSrc={

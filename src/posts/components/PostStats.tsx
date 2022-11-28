@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
-import { setError } from "../../lib/slices/appSlice";
+import { setError, showFastSignUp } from "../../lib/slices/appSlice";
 import { BookmarkFillSVG } from "../../lib/svgs/BookmarkFillSVG";
 import { BookmarkSVG } from "../../lib/svgs/BookmarkSVG";
 import { DislikeFillSVG } from "../../lib/svgs/DislikeFillSVG";
 import { DislikeSVG } from "../../lib/svgs/DislikeSVG";
 import { LikeFillSVG } from "../../lib/svgs/LikeFillSVG";
 import { LikeSVG } from "../../lib/svgs/LikeSVG";
+import { RootState } from "../../store";
 
 export type PostStatsType = {
   like_count: number;
@@ -36,6 +37,8 @@ export const PostStats = ({
 
   const dispatch = useDispatch();
 
+  const { me } = useSelector((state: RootState) => state.auth);
+
   const [liked, setLiked] = useState(liked_by);
   const [disliked, setDisliked] = useState(disliked_by);
   const [bookmarked, setBookmarked] = useState(bookmarked_by);
@@ -45,38 +48,46 @@ export const PostStats = ({
   const [bookmarkCount, setBookmarkCount] = useState(bookmark_count);
 
   async function likePost() {
-    if (!liked) {
-      try {
-        await sendRequest(`expressions/like/post/${postID}`, "post", true);
-
-        setLiked(true);
-        setDisliked(false);
-        setLikeCount((pr) => ++pr);
-      } catch (error: any) {
-        dispatch(setError(error.response.data.message));
-      }
+    if (!me.username) {
+      dispatch(showFastSignUp());
     } else {
-      await removeExpression();
-      setLiked(false);
-      setLikeCount((pr) => --pr);
+      if (!liked) {
+        try {
+          await sendRequest(`expressions/like/post/${postID}`, "post", true);
+
+          setLiked(true);
+          setDisliked(false);
+          setLikeCount((pr) => ++pr);
+        } catch (error: any) {
+          dispatch(setError(error.response.data.message));
+        }
+      } else {
+        await removeExpression();
+        setLiked(false);
+        setLikeCount((pr) => --pr);
+      }
     }
   }
 
   async function dislikePost() {
-    if (!disliked) {
-      try {
-        await sendRequest(`expressions/dislike/post/${postID}`, "post", true);
-
-        setDisliked(true);
-        setLiked(false);
-        setDislikeCount((pr) => ++pr);
-      } catch (error: any) {
-        dispatch(setError(error.response.data.message));
-      }
+    if (!me.username) {
+      dispatch(showFastSignUp());
     } else {
-      await removeExpression();
-      setDisliked(false);
-      setDislikeCount((pr) => --pr);
+      if (!disliked) {
+        try {
+          await sendRequest(`expressions/dislike/post/${postID}`, "post", true);
+
+          setDisliked(true);
+          setLiked(false);
+          setDislikeCount((pr) => ++pr);
+        } catch (error: any) {
+          dispatch(setError(error.response.data.message));
+        }
+      } else {
+        await removeExpression();
+        setDisliked(false);
+        setDislikeCount((pr) => --pr);
+      }
     }
   }
 
@@ -89,14 +100,18 @@ export const PostStats = ({
   }
 
   async function saveBookmark() {
-    try {
-      await sendRequest(`bookmarks/${postID}`, "post", true);
+    if (!me.username) {
+      dispatch(showFastSignUp());
+    } else {
+      try {
+        await sendRequest(`bookmarks/${postID}`, "post", true);
 
-      setBookmarked(true);
+        setBookmarked(true);
 
-      setBookmarkCount((p) => ++p);
-    } catch (error: any) {
-      dispatch(setError(error.response.data.message));
+        setBookmarkCount((p) => ++p);
+      } catch (error: any) {
+        dispatch(setError(error.response.data.message));
+      }
     }
   }
 

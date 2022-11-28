@@ -15,6 +15,8 @@ const initialState: {
   notificationsSocket?: Socket;
   error: { message: string; createdAt: number };
   warn: { message: string; createdAt: number };
+  fastSignUpVisibility: boolean;
+  fastSignInVisibility: boolean;
 } = {
   loading: false,
   theme: "light",
@@ -30,6 +32,8 @@ const initialState: {
     message: "",
     createdAt: Date.now(),
   },
+  fastSignUpVisibility: false,
+  fastSignInVisibility: false,
 };
 
 const appSlice = createSlice({
@@ -63,6 +67,18 @@ const appSlice = createSlice({
         createdAt: Date.now(),
       };
     },
+    showFastSignUp: (state) => {
+      state.fastSignUpVisibility = true;
+    },
+    hideFastSignUp: (state) => {
+      state.fastSignUpVisibility = false;
+    },
+    showFastSignIn: (state) => {
+      state.fastSignInVisibility = true;
+    },
+    hideFastSignIn: (state) => {
+      state.fastSignInVisibility = false;
+    },
     resetError: (state) => {
       state.error = { message: "", createdAt: Date.now() };
     },
@@ -79,6 +95,10 @@ export const {
   setWarn,
   resetWarn,
   setNotificationSocket,
+  showFastSignIn,
+  showFastSignUp,
+  hideFastSignIn,
+  hideFastSignUp,
 } = appSlice.actions;
 
 export default appSlice.reducer;

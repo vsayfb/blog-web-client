@@ -1,17 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
+import { ChatIconSVG } from "../../lib/svgs/ChatIconSVG";
+import { FontSVG } from "../../lib/svgs/FontSVG";
 import { RootState } from "../../store";
 import { resetComments, setComments } from "../slices/commentsSlice";
 import { CommentViewDto } from "../types/comment-view.dto";
 import { CommentCard } from "./CommentCard";
+import { CommentReplies } from "./CommentReplies";
 import { WriteComment } from "./WriteComment";
 
 export const CommentArea = ({ postID }: { postID: string }) => {
   const { comments } = useSelector((state: RootState) => state.comments);
 
   const { colors, theme } = useSelector((root: RootState) => root.app);
+
+  const [commentEditorVisibility, setCommentEditorVisibility] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,18 +42,30 @@ export const CommentArea = ({ postID }: { postID: string }) => {
 
   return (
     <div>
-      <h3
-        className={`mb-4 mt-12 text-lg font-semibold ${
-          theme === "dark" ? "text-" + colors.zinc50 : "text-" + colors.zinc900
-        }`}
-      >
-        Comments
-      </h3>
+      <CommentReplies />
+
+      <div className="flex mt-12 mb-4 items-center ">
+        <div>
+          <ChatIconSVG />
+        </div>
+
+        <div className="ml-2">
+          <h3
+            className={` font-semibold ${
+              theme === "dark"
+                ? "text-" + colors.zinc50
+                : "text-" + colors.zinc900
+            }`}
+          >
+            Comments
+          </h3>
+        </div>
+      </div>
 
       <WriteComment postID={postID} colors={colors} theme={theme} />
 
       {comments.map((c: CommentViewDto) => (
-        <CommentCard comment={c} colors={colors} theme={theme} />
+        <CommentCard comment={c} />
       ))}
     </div>
   );

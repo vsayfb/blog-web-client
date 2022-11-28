@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect } from "react";
 import { MyButton } from "../../lib/components/Button";
-import { PostEditor } from "../../lib/components/PostEditor";
+import { PostEditor } from "../components/PostEditor";
 import { InputField } from "../../lib/components/InputField";
 import { updatePost } from "../../lib/api/post";
 import { TitleImage } from "../write/TitleImage";

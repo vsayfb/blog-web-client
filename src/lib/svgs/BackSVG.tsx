@@ -1,9 +1,9 @@
-export const BackSVG = () => {
+export const BackSVG = ({ w, h }: { w?: number; h?: number }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={w || 24}
+      height={h || 24}
       fill="currentColor"
       className="bi bi-arrow-left-circle"
       viewBox="0 0 16 16"

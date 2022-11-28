@@ -13,13 +13,14 @@ import { getMe } from "./auth/slices/authSlice";
 import { FullScreenLoadingIcon } from "./lib/components/FullScreenLoadingIcon";
 import { WarnAlert } from "./lib/components/WarnAlert";
 import { Footer } from "./lib/components/Footer";
+import { FastSignUp } from "./auth/components/FastSignUp";
+import { FastSignIn } from "./auth/components/FastSignIn";
 
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
 
-  const { loading, theme, colors } = useSelector(
-    (state: RootState) => state.app
-  );
+  const { loading, theme, colors, fastSignInVisibility, fastSignUpVisibility } =
+    useSelector((state: RootState) => state.app);
 
   const { notificationAreaVisibility, newNotification } = useSelector(
     (state: RootState) => state.notifications
@@ -40,6 +41,12 @@ function App() {
       }
     >
       <Sockets />
+
+      {/* {showFastSignIn ? <showFastSignIn /> : null} */}
+
+      {fastSignUpVisibility ? <FastSignUp /> : null}
+
+      {fastSignInVisibility ? <FastSignIn /> : null}
 
       {notificationAreaVisibility ? <NotificationsArea /> : null}
 
