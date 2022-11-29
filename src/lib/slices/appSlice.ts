@@ -1,17 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Socket, io } from "socket.io-client";
 
-export type AppColors = {
-  zinc900: string;
-  zinc50: string;
-  orange200: string;
-  blue400: string;
-};
-
 const initialState: {
   loading: boolean;
-  theme: "dark" | "light";
-  colors: AppColors;
   notificationsSocket?: Socket;
   error: { message: string; createdAt: number };
   warn: { message: string; createdAt: number };
@@ -19,13 +10,6 @@ const initialState: {
   fastSignInVisibility: boolean;
 } = {
   loading: false,
-  theme: "light",
-  colors: {
-    zinc900: "zinc-900",
-    zinc50: "zinc-50",
-    orange200: "orange-200",
-    blue400: "zinc-900",
-  },
 
   error: { message: "", createdAt: Date.now() },
   warn: {

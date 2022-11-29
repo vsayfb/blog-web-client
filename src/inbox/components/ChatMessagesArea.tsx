@@ -1,7 +1,4 @@
-import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { AccountViewDto } from "../../accounts/types/account-view-dto";
-import { AppColors } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import { ChatMessageViewDto } from "../types/chat-message-view.dto";
 import { ChatMessage } from "./ChatMessage";

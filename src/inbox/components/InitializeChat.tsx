@@ -2,27 +2,20 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { sendRequest } from "../../lib/sendRequest";
-import { AppColors } from "../../lib/slices/appSlice";
 import {
   addNewChat,
   resetFoundUser,
   setOpenedChatID,
   setSearchingUsersForChat,
 } from "../slices/inboxSlice";
-import { ChatImageSvg } from "../svgs/ChatImageSvg";
 import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
 import { ChatViewDto } from "../types/chat-view-dto";
 import { ChatTitle } from "./ChatTitle";
-import { SendMessageToChat } from "./SendMessageToChat";
 
 export const InitiliazeChat = ({
   targetUser,
-  colors,
-  theme,
 }: {
   targetUser: AccountViewDto;
-  colors: AppColors;
-  theme: string;
 }) => {
   const dispatch = useDispatch();
 
@@ -55,18 +48,11 @@ export const InitiliazeChat = ({
   }
 
   return (
-    <div
-      className={`col-span-2 ${
-        theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
-      }`}
-      style={{ height: "500px" }}
-    >
+    <div className={`col-span-2`} style={{ height: "500px" }}>
       <div className="w-full">
         <ChatTitle
           image={targetUser.image || ""}
           title={targetUser.display_name}
-          colors={colors}
-          theme={theme}
         />
 
         {/* SPACE  */}

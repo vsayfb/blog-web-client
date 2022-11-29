@@ -1,24 +1,13 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Me } from "../../../auth/slices/authSlice";
-import { AppColors } from "../../../lib/slices/appSlice";
 import { DashboardSVG } from "../../../lib/svgs/DashboardSVG";
 import { InboxSVG } from "../../../lib/svgs/InboxSVG";
 import { NotitificationSVG } from "../../../lib/svgs/NotificationSVG";
 import { toggleNotificationAreaVisibility } from "../../../notifications/slices/notificationSlice";
 import { UserMenuArea } from "./UserMenuArea";
 
-export const NavbarRight = ({
-  me,
-  pending,
-  theme,
-  colors,
-}: {
-  me: Me;
-  pending: boolean;
-  theme: string;
-  colors: AppColors;
-}) => {
+export const NavbarRight = ({ me, pending }: { me: Me; pending: boolean }) => {
   const dispatch = useDispatch();
 
   const openNotificationArea = () => {

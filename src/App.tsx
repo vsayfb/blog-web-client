@@ -19,8 +19,9 @@ import { FastSignIn } from "./auth/components/FastSignIn";
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
 
-  const { loading, theme, colors, fastSignInVisibility, fastSignUpVisibility } =
-    useSelector((state: RootState) => state.app);
+  const { loading, fastSignInVisibility, fastSignUpVisibility } = useSelector(
+    (state: RootState) => state.app
+  );
 
   const { notificationAreaVisibility, newNotification } = useSelector(
     (state: RootState) => state.notifications
@@ -56,9 +57,9 @@ function App() {
         <NewNotification newNotification={newNotification} />
       ) : null} */}
 
-      <Navbar colors={colors} theme={theme} />
+      <Navbar />
 
-      {me.username ? <Inbox colors={colors} theme={theme} /> : null}
+      {me.username ? <Inbox /> : null}
 
       <ErrorAlert />
 

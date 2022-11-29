@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { sendRequest } from "../../lib/sendRequest";
-import { AppColors, setError } from "../../lib/slices/appSlice";
+import { setError } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import {
   addMessageToOpenedChat,
@@ -21,15 +21,7 @@ const socket = io(`${process.env.REACT_APP_HOST}/chats`, {
   auth: { token: localStorage.getItem("token") },
 });
 
-export const OpenedChat = ({
-  chatID,
-  colors,
-  theme,
-}: {
-  chatID: string;
-  colors: AppColors;
-  theme: string;
-}) => {
+export const OpenedChat = ({ chatID }: { chatID: string }) => {
   const dispatch = useDispatch();
 
   const { me } = useSelector((state: RootState) => state.auth);
@@ -88,17 +80,13 @@ export const OpenedChat = ({
     return (
       <>
         <div
-          className={`col-span-2 overflow-auto ${
-            theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
-          }`}
-          style={{ height: "500px" }}
+          className={`col-span-2 overflow-auto `}
+          style={{ maxHeight: "350px" }}
         >
           <div className="w-full">
             <ChatTitle
               image={detectImage(targetUser.image)}
               title={targetUser?.display_name}
-              colors={colors}
-              theme={theme}
             />
             <ChatMessagesArea messages={openedChat.messages} />
 

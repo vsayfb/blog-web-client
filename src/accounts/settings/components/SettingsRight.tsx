@@ -10,7 +10,7 @@ export const SettingsRight = () => {
       <div className="flex items-center ">
         <button
           className={`ml-4 px-5 py-1 border-b-2 ${
-            tab === "public" && "border-emerald-500"
+            tab === "public" && "border-zinc-900"
           } `}
           onClick={() => setTab("public")}
         >
@@ -18,7 +18,7 @@ export const SettingsRight = () => {
         </button>
         <button
           className={`ml-4 px-5 py-1 border-b-2  ${
-            tab === "security" && "border-emerald-500"
+            tab === "security" && "border-zinc-900"
           } `}
           onClick={() => setTab("security")}
         >

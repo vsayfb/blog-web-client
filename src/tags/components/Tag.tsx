@@ -77,13 +77,13 @@ export const Tag = () => {
 
         <div
           style={{ width: "250px" }}
-          className="sm:ml-12 mr-4 text-lg mt-12 flex items-center font-bold leading-sm uppercase px-3 py-1 bg-orange-200 text-orange-700"
+          className="sm:ml-12 mr-4 text-lg mt-12 flex items-center font-bold leading-sm uppercase px-3 py-1 bg-zinc-900 text-white rounded-md"
         >
           <TagSVG />
           <span className="ml-2">{tag.name}</span>
         </div>
 
-        <div className="sm:ml-12 mr-4 text-lg mt-12 inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mb-2 bg-orange-200 text-orange-700 ">
+        <div className="sm:ml-12 mr-4 text-lg mt-12 inline-flex items-center font-bold leading-sm uppercase pt-2 pb-2 rounded-md px-4 py-1 mb-2 bg-zinc-900 text-white ">
           <TagCreatedBy account={tag.author} imageHeight={25} imageWidth={25} />
         </div>
 

@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom";
-import { detectImage } from "../../lib/detectImage";
-import { AppColors } from "../../lib/slices/appSlice";
 import { CommentViewDto } from "../types/comment-view.dto";
 import { RemoveComment } from "./DeleteComment";
 import "prismjs/themes/prism-tomorrow.css";

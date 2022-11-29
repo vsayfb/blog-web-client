@@ -40,6 +40,10 @@ export const CommentsTab = ({ userID }: { userID: string }) => {
       });
   }, []);
 
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [comments]);
+
   if (!comments.length) {
     if (commentsLoading) {
       return (
@@ -56,7 +60,7 @@ export const CommentsTab = ({ userID }: { userID: string }) => {
       {comments.map((c) => (
         <div
           key={c.id}
-          className={`flex flex-col border-b border-emerald-500 pb-2`}
+          className={`flex flex-col border-b border-zinc-900 pb-2`}
         >
           <HashLink
             smooth={true}

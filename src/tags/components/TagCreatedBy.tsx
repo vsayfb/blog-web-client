@@ -11,7 +11,7 @@ export const TagCreatedBy = ({
   imageWidth?: number;
   imageHeight?: number;
 }) => (
-  <div className="text-sm text-zinc-900">
+  <div className="text-sm text-white bottom-2">
     <Link
       to={`/profile/${account.username}`}
       className="flex justify-between items-center"
@@ -21,8 +21,8 @@ export const TagCreatedBy = ({
         <img
           className="rounded-full"
           src={detectImage(account.image)}
-          width={imageWidth ? imageWidth : 16}
-          height={imageHeight ? imageHeight : 16}
+          width={imageWidth ? imageWidth : 30}
+          height={imageHeight ? imageHeight : 30}
           alt="profile_img"
         />
         <span className="ml-2">{account.display_name}</span>

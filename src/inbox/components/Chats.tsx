@@ -2,21 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detectImage } from "../../lib/detectImage";
 import { sendRequest } from "../../lib/sendRequest";
-import { AppColors, setError } from "../../lib/slices/appSlice";
+import { setError } from "../../lib/slices/appSlice";
 import { RootState } from "../../store";
 import { setChats, setOpenedChatID } from "../slices/inboxSlice";
 import { ChatViewDto } from "../types/chat-view-dto";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 
-export const Chats = ({
-  chats,
-  colors,
-  theme,
-}: {
-  chats: ChatViewDto[];
-  colors: AppColors;
-  theme: string;
-}) => {
+export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
   const { me } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
@@ -41,15 +33,7 @@ export const Chats = ({
 
   return (
     <ul className="overflow-auto">
-      <h2
-        className={`ml-2 mb-2  text-lg my-2 ${
-          theme === "dark"
-            ? "text-" + colors.orange200
-            : "text-" + colors.zinc900
-        }`}
-      >
-        Chats
-      </h2>
+      <h2 className={`ml-2 mb-2  text-lg my-2 `}>Chats</h2>
 
       {chats.map((c) => {
         const targetUser = c.members.find(
@@ -59,7 +43,7 @@ export const Chats = ({
         return (
           <li key={c.id} onClick={() => dispatch(setOpenedChatID(c.id))}>
             <a
-              className={`border-b px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none transition duration-150 ease-in-out`}
+              className={`border-b border-zinc-900 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none transition duration-150 ease-in-out`}
             >
               <img
                 className="h-10 w-10 rounded-full object-cover"

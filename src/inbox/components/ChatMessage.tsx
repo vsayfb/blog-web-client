@@ -1,7 +1,5 @@
-import { useSelector } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { detectImage } from "../../lib/detectImage";
-import { RootState } from "../../store";
 
 export const ChatMessage = ({
   position,
@@ -14,8 +12,6 @@ export const ChatMessage = ({
   created_at: string;
   sender?: AccountViewDto;
 }) => {
-  const { colors, theme } = useSelector((state: RootState) => state.app);
-
   if (position === "left" && sender) {
     return (
       <div className="w-full flex justify-start items-center">
@@ -28,18 +24,10 @@ export const ChatMessage = ({
         </span>
 
         <div
-          className="ml-4 rounded py-1 my-2 relative"
+          className="ml-4 rounded py-1 my-2 relative bg-zinc-900"
           style={{ minWidth: "100px", maxWidth: "300px" }}
         >
-          <div
-            className={`${
-              theme === "dark"
-                ? "text-" + colors.zinc50
-                : "text-" + colors.zinc900
-            }`}
-          >
-            {content}
-          </div>
+          <div className={`text-left text-white px-2`}>{content}</div>
           {/* <div className="text-xs px-2 text-right">{created_at}</div> */}
         </div>
       </div>
@@ -49,18 +37,10 @@ export const ChatMessage = ({
   return (
     <div className="w-full flex justify-end">
       <div
-        className={`"ml-4 ${
-          theme === "dark" ? "bg-" + colors.orange200 : "bg-" + colors.blue400
-        }  rounded py-1 my-2  relative"`}
+        className={"ml-4  rounded py-1 my-2  relative bg-slate-200"}
         style={{ minWidth: "100px", maxWidth: "300px" }}
       >
-        <div
-          className={`text-left px-2 ${
-            theme === "dark" ? "text-" + "black" : "text-" + "white"
-          }`}
-        >
-          {content}
-        </div>
+        <div className={`text-left px-2 text-zinc-900`}>{content}</div>
         {/* <div className="text-xs px-2 text-right">{created_at}</div> */}
       </div>
     </div>

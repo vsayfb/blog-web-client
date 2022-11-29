@@ -1,20 +1,9 @@
 import { Link } from "react-router-dom";
 import { AppLogo } from "../../../lib/components/AppLogo";
 import { Me } from "../../../auth/slices/authSlice";
-import { AppColors } from "../../../lib/slices/appSlice";
 import { TagSVG } from "../../../tags/svgs/TagSVG";
 
-export const NavbarLeft = ({
-  me,
-  pending,
-  theme,
-  colors,
-}: {
-  me: Me;
-  pending: boolean;
-  theme: string;
-  colors: AppColors;
-}) => {
+export const NavbarLeft = ({ me, pending }: { me: Me; pending: boolean }) => {
   return (
     <div className="flex items-center">
       <Link to="/" className="flex-shrink-0">
@@ -33,9 +22,7 @@ export const NavbarLeft = ({
           <div className="ml-10 flex items-baseline space-x-4">
             <Link
               to="write"
-              className={`${
-                theme === "dark" ? "" : "bg-" + colors.blue400 + " text-white"
-              }    px-3 py-2 rounded text-sm font-medium`}
+              className={`  px-3 py-2 rounded text-sm font-medium bg-zinc-900 text-white`}
             >
               Write
             </Link>

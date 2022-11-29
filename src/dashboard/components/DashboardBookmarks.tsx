@@ -47,7 +47,7 @@ export const DashboardBookmarks = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden rounded-5xl mt-18">
+    <div className="overflow-hidden rounded-5xl mt-20">
       <div className="overflow-x-auto">
         <div className="inline-block min-w-full overflow-hidden">
           {!bookmarks.length ? (

@@ -22,7 +22,7 @@ export const ProfileRight = ({
       <div className="flex items-center ">
         <button
           className={`ml-4 px-5 py-1 border-b-2 ${
-            openedTab === "posts" && "border-emerald-500"
+            openedTab === "posts" && "border-zinc-900"
           } `}
           onClick={() => setOpenedTab("posts")}
         >
@@ -30,7 +30,7 @@ export const ProfileRight = ({
         </button>
         <button
           className={`ml-4 px-5 py-1 border-b-2  ${
-            openedTab === "comments" && "border-emerald-500"
+            openedTab === "comments" && "border-zinc-900"
           } `}
           onClick={() => setOpenedTab("comments")}
         >

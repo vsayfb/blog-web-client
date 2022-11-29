@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { sendRequest } from "../../lib/sendRequest";
-import { AppColors, setError } from "../../lib/slices/appSlice";
+import { setError } from "../../lib/slices/appSlice";
 import { SearchBarSvg } from "../../lib/svgs/SearchBarSvg";
 import { RootState } from "../../store";
 import {
@@ -12,13 +12,7 @@ import {
   setSearchingUsersForChat,
 } from "../slices/inboxSlice";
 
-export const SearchForChat = ({
-  colors,
-  theme,
-}: {
-  colors: AppColors;
-  theme: string;
-}) => {
+export const SearchForChat = ({}: {}) => {
   const { chats } = useSelector((state: RootState) => state.inbox);
   const { me } = useSelector((state: RootState) => state.auth);
 
@@ -69,23 +63,13 @@ export const SearchForChat = ({
 
   return (
     <div className="my-3 mx-3 ">
-      <div
-        className={`relative ${
-          theme === "dark"
-            ? "text-" + colors.orange200 + " focus-within:text-gray-400"
-            : "text-" + colors.zinc900 + " focus-within:text-gray-400"
-        } `}
-      >
+      <div className={`relative  `}>
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
           <SearchBarSvg />
         </span>
         <input
           placeholder="Find a user to chat"
-          className={`py-2 pl-10 block w-full rounded ${
-            theme === "dark"
-              ? "bg-" + colors.zinc900 + " focus:text-" + colors.orange200
-              : "bg-" + colors.blue400 + " focus:text-" + colors.zinc50
-          }   outline-none `}
+          className={`py-2 pl-10 block w-full rounded    outline-none `}
           type="search"
           name="search"
           required

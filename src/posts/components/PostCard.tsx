@@ -9,8 +9,6 @@ import { TagBox } from "../../tags/components/TagBox";
 import { PostCardDto } from "../types/post-card.dto";
 
 export const PostCard = ({ post }: { post: PostCardDto }) => {
-  const { theme } = useSelector((state: RootState) => state.app);
-
   return (
     <div className=" dark:text-gray-50 mt-6 mb-6 text-zinc-900">
       <div className="container grid grid-cols-12 mx-auto ">

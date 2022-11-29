@@ -27,7 +27,7 @@ export const Tags = () => {
   if (!tags.length) {
     if (tagsLoading)
       return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center  pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center  pb-16 h-screen">
           <Spinner h={70} w={70} />
         </div>
       );
@@ -46,11 +46,11 @@ export const Tags = () => {
   }
 
   return (
-    <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12 ">
+    <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 ">
       {tags.map((t) => (
         <Link
           to={`/tag/${t.name}`}
-          className="mr-20 mt-12 text-lg inline-block font-bold leading-sm  px-3 py-1 bg-orange-200 text-orange-700"
+          className="mr-20 mt-12 text-lg inline-block font-bold leading-sm  px-3 py-1 bg-zinc-900 text-white rounded-md  pt-4 pb-4 "
         >
           <div className="inline-flex items-center uppercase">
             <TagSVG />

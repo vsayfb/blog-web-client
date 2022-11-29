@@ -31,7 +31,7 @@ export const NotificationsArea = () => {
     return (
       <div>
         <div
-          className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 absolute z-20   top-16 rounded-md"
+          className=" absolute z-20   top-16 rounded-md"
           style={{ right: "11%" }}
         >
           <h4>There are no notifications to show.</h4>
@@ -43,11 +43,11 @@ export const NotificationsArea = () => {
     <div className="relative">
       {true ? (
         <div
-          className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 absolute z-20 rounded-md  top-16"
+          className=" absolute z-20 rounded-md  top-16"
           style={{ right: "11%" }}
         >
           <div
-            className=" bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700  shadow-lg overflow-hidden z-20"
+            className="   shadow-lg overflow-hidden z-20"
             style={{ width: "24rem" }}
           >
             {

@@ -42,7 +42,7 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
 
   return (
     <form
-      className="w-full py-3 px-3 flex items-center justify-between border-t "
+      className="w-full py-3 px-3 flex items-center justify-between border-t border-zinc-900 "
       onSubmit={sendMessage}
     >
       {/* <ChatImageSvg /> */}

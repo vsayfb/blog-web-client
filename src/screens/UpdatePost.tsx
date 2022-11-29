@@ -30,7 +30,7 @@ export const UpdatePost = () => {
   if (!savedPost) return null;
 
   return (
-    <div className="mr-20 ml-20 pt-16 pb-16 bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 ">
+    <div className="mr-20 ml-20 pt-16 pb-16 ">
       <Helmet>
         <title>Update {savedPost.title}</title>
       </Helmet>

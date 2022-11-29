@@ -1,30 +1,17 @@
-import { AppColors } from "../../lib/slices/appSlice";
 import { InboxState } from "../slices/inboxSlice";
 import { Chats } from "./Chats";
 import { FoundForChatList } from "./FoundForChatList";
 import { SearchForChat } from "./SearchForChat";
 
-export const InboxLeft = ({
-  inbox,
-  colors,
-  theme,
-}: {
-  inbox: InboxState;
-  colors: AppColors;
-  theme: string;
-}) => {
+export const InboxLeft = ({ inbox }: { inbox: InboxState }) => {
   return (
     <div>
-      <SearchForChat colors={colors} theme={theme} />
+      <SearchForChat />
 
       {inbox.searchingUsersForChat ? (
-        <FoundForChatList
-          accounts={inbox.foundForChat}
-          colors={colors}
-          theme={theme}
-        />
+        <FoundForChatList accounts={inbox.foundForChat} />
       ) : (
-        <Chats chats={inbox.chats} colors={colors} theme={theme} />
+        <Chats chats={inbox.chats} />
       )}
     </div>
   );

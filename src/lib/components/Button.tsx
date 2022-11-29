@@ -15,16 +15,9 @@ export const MyButton = ({
   role?: React.AriaRole | undefined;
   disabled?: boolean;
 }) => {
-  const { theme, colors } = useSelector((state: RootState) => state.app);
-
-  const buttonBg = "bg-" + (theme === "dark" ? colors.zinc50 : colors.zinc900);
-
-  const buttonTextColor =
-    "text-" + (theme === "dark" ? colors.zinc900 : "white");
-
   const BUTTON_CLASS = `
     text-sm font-semibold focus:outline-none 
-    ${buttonBg} ${buttonTextColor} rounded py-4 w-full flex justify-center items-center`;
+    bg-zinc-900 text-white rounded py-4 w-full flex justify-center items-center`;
 
   return (
     <button

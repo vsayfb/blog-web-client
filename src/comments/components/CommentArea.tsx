@@ -14,10 +14,6 @@ import { WriteComment } from "./WriteComment";
 export const CommentArea = ({ postID }: { postID: string }) => {
   const { comments } = useSelector((state: RootState) => state.comments);
 
-  const { colors, theme } = useSelector((root: RootState) => root.app);
-
-  const [commentEditorVisibility, setCommentEditorVisibility] = useState(false);
-
   const dispatch = useDispatch();
 
   async function getPostComments() {
@@ -50,19 +46,11 @@ export const CommentArea = ({ postID }: { postID: string }) => {
         </div>
 
         <div className="ml-2">
-          <h3
-            className={` font-semibold ${
-              theme === "dark"
-                ? "text-" + colors.zinc50
-                : "text-" + colors.zinc900
-            }`}
-          >
-            Comments
-          </h3>
+          <h3 className={` font-semibold `}>Comments</h3>
         </div>
       </div>
 
-      <WriteComment postID={postID} colors={colors} theme={theme} />
+      <WriteComment postID={postID} />
 
       {comments.map((c: CommentViewDto) => (
         <CommentCard comment={c} />

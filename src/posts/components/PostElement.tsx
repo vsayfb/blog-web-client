@@ -12,8 +12,6 @@ import { calculateReadTime } from "../../lib/calculateReadTime";
 import { BookSVG } from "../../lib/svgs/BookSVG";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
-  const { colors, theme } = useSelector((root: RootState) => root.app);
-
   const {
     bookmark_count,
     like_count,
@@ -24,11 +22,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
   } = post;
 
   return (
-    <div
-      className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 ${
-        theme === "dark" ? "bg-" + colors.zinc900 : "bg-" + colors.zinc50
-      }`}
-    >
+    <div className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden  `}>
       {post.published ? (
         <div className="p-4 fixed top-40">
           <PostStats
@@ -48,11 +42,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
       <div className="container px-4 max-w-3xl mx-auto">
         <div className=" text-center">
           <h2
-            className={`text-6xl md:text-7xl font-bold font-heading break-words ${
-              theme === "dark"
-                ? "text-" + colors.zinc50
-                : "text-" + colors.zinc900
-            }`}
+            className={`text-6xl md:text-7xl font-bold font-heading break-words `}
           >
             {post.title}
           </h2>
@@ -65,11 +55,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
             <div className="text-left">
               <Link
                 to={`/profile/${post.author.username}`}
-                className={`mb-1 text-2xl font-bold font-heading ${
-                  theme === "dark"
-                    ? "text-" + colors.zinc50
-                    : "text-" + colors.zinc900
-                }`}
+                className={`mb-1 text-2xl font-bold font-heading `}
               >
                 {post.author.display_name}
               </Link>
@@ -118,9 +104,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
         ) : null}
 
         <article
-          className={`${
-            theme === "dark" ? "light-content-tiny" : "dark-content-tiny"
-          }`}
+          className={"dark-content-tiny"}
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></article>
 

@@ -1,21 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
-import { AppColors, setError, showFastSignUp } from "../../lib/slices/appSlice";
+import { setError, showFastSignUp } from "../../lib/slices/appSlice";
 import { FontSVG } from "../../lib/svgs/FontSVG";
 import { RootState } from "../../store";
 import { addNewComment } from "../slices/commentsSlice";
 import { CommentEditor } from "./CommentEditor";
 
-export const WriteComment = ({
-  postID,
-  colors,
-  theme,
-}: {
-  postID: string;
-  colors: AppColors;
-  theme: string;
-}) => {
+export const WriteComment = ({ postID }: { postID: string }) => {
   const [commentValue, setCommentValue] = useState("");
   const { me } = useSelector((state: RootState) => state.auth);
 
@@ -59,13 +51,7 @@ export const WriteComment = ({
           <div className="mb-4 flex items-center">
             <FontSVG />
 
-            <div
-              className={`ml-2 rounded-md font-semibold ${
-                theme === "dark"
-                  ? "text-" + colors.zinc50
-                  : "text-" + colors.zinc900
-              }`}
-            >
+            <div className={`ml-2 rounded-md font-semibold `}>
               Write your comment
             </div>
           </div>

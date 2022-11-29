@@ -52,7 +52,7 @@ export const DashboardPosts = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r mt-8 from-yellow-200 via-yellow-400 to-yellow-700">
+    <div className=" mt-8 ">
       {deleteModalSubject ? (
         <DeleteModal
           section={
@@ -68,11 +68,7 @@ export const DashboardPosts = () => {
         </Helmet>
 
         <div className="container px-4 mx-auto overflow-hidden ">
-          <img
-            className="ml-11 w-1/2 sm:w-auto h-1 sm:h-auto"
-            src="uinel-assets/elements/dashboard-tables/line.svg"
-            alt=""
-          />
+          <img className="ml-11 w-1/2 sm:w-auto h-1 sm:h-auto" alt="" />
           <div className="mb-16 overflow-hidden rounded-5xl">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full overflow-hidden">

@@ -51,7 +51,7 @@ export const PostsTab = ({ userID }: { userID: string }) => {
       {posts.map((post) => (
         <div
           key={post.url}
-          className={`flex flex-col border-b border-emerald-500 pb-2`}
+          className={`flex flex-col border-b border-zinc-900 pb-2`}
         >
           <Link
             to={`/${post.url}`}
