@@ -1,11 +1,17 @@
 import axios from "axios";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  DispatchWithoutAction,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MyButton } from "../../lib/components/Button";
 import { InputField } from "../../lib/components/InputField";
 import { BackSVG } from "../../lib/svgs/BackSVG";
-import { setError } from "../../lib/slices/appSlice";
+import { hideFastSignIn, hideFastSignUp, setError } from "../../lib/slices/appSlice";
 import { CreateAccoundDto } from "../via/ViaLocal";
 import { isAvailableField } from "../../lib/api/account";
 
@@ -112,7 +118,10 @@ export const FirstStep = ({
       <div
         className="cursor-pointer"
         style={{ width: "24px" }}
-        onClick={() => navigate(0)}
+        onClick={() => {
+          dispatch(hideFastSignIn());
+          dispatch(hideFastSignUp());
+        }}
       >
         <BackSVG />
       </div>

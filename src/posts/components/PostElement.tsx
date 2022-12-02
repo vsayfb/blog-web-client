@@ -1,7 +1,7 @@
 import { detectImage } from "../../lib/detectImage";
 import { CreatedAtSVG } from "../../lib/svgs/CreatedAtSVG";
 import { TagBox } from "../../tags/components/TagBox";
-import { CommentArea } from "../../comments/components/CommentArea";
+import { PostComments } from "../../comments/components/PostComments";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { PostViewDto } from "../types/post-view.dto";
@@ -24,9 +24,10 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
   return (
     <div className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden  `}>
       {post.published ? (
-        <div className="p-4 fixed top-40">
+        <div className="p-4 absolute top-60">
           <PostStats
             postID={post.id}
+            postAuthorID={post.author.id}
             stats={{
               bookmark_count,
               like_count,
@@ -110,7 +111,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
 
         {post.published ? (
           <section id="comments">
-            <CommentArea postID={post.id} />
+            <PostComments postID={post.id} />
           </section>
         ) : null}
       </div>

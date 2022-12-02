@@ -9,7 +9,7 @@ import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
 import { ArrowBarLeftSVG } from "../../lib/svgs/ArrowBarLeftSVG";
 import { FontSVG } from "../../lib/svgs/FontSVG";
-import { addCommentIntoTree } from "../slices/commentsSlice";
+import { addCommentIntoTree, setBaseComment } from "../slices/commentsSlice";
 import { CommentViewDto } from "../types/comment-view.dto";
 import { CommentEditor } from "./CommentEditor";
 
@@ -27,7 +27,7 @@ export type CreatedReplyDto = {
   author: AccountViewDto;
 };
 
-export const ReplyToComment = ({
+export const ReplyToPostComment = ({
   comment,
   setReplyEditorVisibility,
 }: {
@@ -40,36 +40,13 @@ export const ReplyToComment = ({
 
   async function reply() {
     try {
-      const result: { data: CreatedReplyDto } = await sendRequest(
-        "comments/reply/" + comment.id,
-        "post",
-        true,
-        {
-          content: replyValue,
-        }
-      );
+      await sendRequest("comments/reply/" + comment.id, "post", true, {
+        content: replyValue,
+      });
 
-      const { parent, author, content, created_at, id, updated_at } =
-        result.data;
-
-      dispatch(
-        addCommentIntoTree({
-          parentID: parent.id,
-          comment: {
-            id,
-            content,
-            created_at,
-            updated_at,
-            author,
-          },
-        })
-      );
+      dispatch(setBaseComment(comment));
 
       setReplyEditorVisibility(false);
-
-      setTimeout(() => {
-        document.getElementById(comment.id)?.scrollIntoView();
-      }, 200);
     } catch (error: any) {
       dispatch(setError(error.response.data.message));
     }

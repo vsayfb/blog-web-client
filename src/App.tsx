@@ -16,6 +16,10 @@ import { Footer } from "./lib/components/Footer";
 import { FastSignUp } from "./auth/components/FastSignUp";
 import { FastSignIn } from "./auth/components/FastSignIn";
 
+export enum AppHashColors {
+  RED = "#ad0003",
+}
+
 function App() {
   const { me } = useSelector((state: RootState) => state.auth);
 

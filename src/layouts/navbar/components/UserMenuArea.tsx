@@ -21,7 +21,7 @@ export const UserMenuArea = ({ me }: { me: Me }) => {
           onClick={() => setUserMenuVisibility(!userMenuVisibility)}
           className="h-7 w-7 rounded-full cursor-pointer"
           src={detectImage(me.image)}
-          alt=""
+          alt="profile_img"
         />
       </div>
 
@@ -32,6 +32,7 @@ export const UserMenuArea = ({ me }: { me: Me }) => {
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="user-menu-button"
+          style={{ zIndex: "1000000" }}
           tabIndex={-1}
         >
           <Link

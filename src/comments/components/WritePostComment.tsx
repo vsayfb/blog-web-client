@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError, showFastSignUp } from "../../lib/slices/appSlice";
 import { FontSVG } from "../../lib/svgs/FontSVG";
+import { PostViewDto } from "../../posts/types/post-view.dto";
 import { RootState } from "../../store";
-import { addNewComment } from "../slices/commentsSlice";
+import { addNewCommentIntoPost, setBaseComment } from "../slices/commentsSlice";
 import { CommentEditor } from "./CommentEditor";
 
-export const WriteComment = ({ postID }: { postID: string }) => {
+export type CreatedCommentDto = {
+  id: string;
+  post: PostViewDto;
+  author: AccountViewDto;
+  content: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export const WritePostComment = ({ postID }: { postID: string }) => {
   const [commentValue, setCommentValue] = useState("");
   const { me } = useSelector((state: RootState) => state.auth);
 
@@ -18,7 +29,7 @@ export const WriteComment = ({ postID }: { postID: string }) => {
       dispatch(showFastSignUp());
     } else {
       try {
-        const { data } = await sendRequest(
+        const { data }: { data: CreatedCommentDto } = await sendRequest(
           `comments/post/${postID}`,
           "post",
           true,
@@ -27,9 +38,22 @@ export const WriteComment = ({ postID }: { postID: string }) => {
           }
         );
 
-        data.author = me;
+        const { id, author, content, created_at, updated_at } = data;
 
-        dispatch(addNewComment(data));
+        dispatch(
+          addNewCommentIntoPost({ id, author, content, created_at, updated_at })
+        );
+
+        // dispatch(
+        //   setBaseComment({
+        //     ...data,
+        //     dislike_count: 0,
+        //     like_count: 0,
+        //     disliked_by: false,
+        //     liked_by: false,
+        //     reply_count: 0,
+        //   })
+        // );
 
         setCommentValue("");
 

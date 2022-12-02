@@ -49,6 +49,7 @@ export const Tags = () => {
     <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 ">
       {tags.map((t) => (
         <Link
+          key={t.id}
           to={`/tag/${t.name}`}
           className="mr-20 mt-12 text-lg inline-block font-bold leading-sm  px-3 py-1 bg-zinc-900 text-white rounded-md  pt-4 pb-4 "
         >

@@ -11,6 +11,8 @@ export type CommentViewDto = {
   content: string;
   like_count: number;
   dislike_count: number;
+  liked_by: boolean;
+  disliked_by: boolean;
   reply_count: number;
   created_at: string;
   updated_at: string;

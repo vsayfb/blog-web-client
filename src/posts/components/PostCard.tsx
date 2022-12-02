@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { calculateReadTime } from "../../lib/calculateReadTime";
 import { detectImage } from "../../lib/detectImage";
 import { ChatIconSVG } from "../../lib/svgs/ChatIconSVG";
+import { LikeFillSVG } from "../../lib/svgs/LikeFillSVG";
 import { LikeSVG } from "../../lib/svgs/LikeSVG";
 import { RootState } from "../../store";
 import { TagBox } from "../../tags/components/TagBox";
@@ -58,7 +59,7 @@ export const PostCard = ({ post }: { post: PostCardDto }) => {
             <div className="flex items-center ">
               {post.like_count !== undefined ? (
                 <div className="flex items-center mr-8">
-                  <LikeSVG w={17} h={17} />
+                  <LikeSVG w={21} h={21} />
                   <b className="ml-2">{post.like_count}</b>
                 </div>
               ) : null}

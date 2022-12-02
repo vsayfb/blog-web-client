@@ -21,9 +21,11 @@ export type PostStatsType = {
 
 export const PostStats = ({
   postID,
+  postAuthorID,
   stats,
 }: {
   postID: string;
+  postAuthorID: string;
   stats: PostStatsType;
 }) => {
   const {
@@ -47,24 +49,34 @@ export const PostStats = ({
   const [dislikeCount, setDislikeCount] = useState(dislike_count);
   const [bookmarkCount, setBookmarkCount] = useState(bookmark_count);
 
+  async function dislikeExpression() {
+    await sendRequest(`expressions/dislike/post/${postID}`, "post", true);
+  }
+
+  async function likeExpression() {
+    await sendRequest(`expressions/like/post/${postID}`, "post", true);
+  }
+
   async function likePost() {
     if (!me.username) {
       dispatch(showFastSignUp());
     } else {
-      if (!liked) {
-        try {
-          await sendRequest(`expressions/like/post/${postID}`, "post", true);
-
-          setLiked(true);
-          setDisliked(false);
-          setLikeCount((pr) => ++pr);
-        } catch (error: any) {
-          dispatch(setError(error.response.data.message));
-        }
-      } else {
+      if (liked) {
         await removeExpression();
+        setLikeCount((p) => --p);
         setLiked(false);
-        setLikeCount((pr) => --pr);
+      } else if (disliked) {
+        await removeExpression();
+        setDislikeCount((p) => --p);
+        setDisliked(false);
+
+        await likeExpression();
+        setLikeCount((p) => ++p);
+        setLiked(true);
+      } else {
+        await likeExpression();
+        setLikeCount((p) => ++p);
+        setLiked(true);
       }
     }
   }
@@ -73,20 +85,22 @@ export const PostStats = ({
     if (!me.username) {
       dispatch(showFastSignUp());
     } else {
-      if (!disliked) {
-        try {
-          await sendRequest(`expressions/dislike/post/${postID}`, "post", true);
-
-          setDisliked(true);
-          setLiked(false);
-          setDislikeCount((pr) => ++pr);
-        } catch (error: any) {
-          dispatch(setError(error.response.data.message));
-        }
-      } else {
+      if (disliked) {
         await removeExpression();
+        setDislikeCount((p) => --p);
         setDisliked(false);
-        setDislikeCount((pr) => --pr);
+      } else if (liked) {
+        await removeExpression();
+        setLikeCount((p) => --p);
+        setLiked(false);
+
+        await dislikeExpression();
+        setDislikeCount((p) => ++p);
+        setDisliked(true);
+      } else {
+        await dislikeExpression();
+        setDislikeCount((p) => ++p);
+        setDisliked(true);
       }
     }
   }
@@ -143,15 +157,28 @@ export const PostStats = ({
           <b className=" ml-1">{bookmarkCount}</b>
         </div>
         <div className="flex ml-4">
-          <div className="cursor-pointer" onClick={likePost}>
-            {liked ? <LikeFillSVG /> : <LikeSVG />}
-          </div>
+          {me.sub === postAuthorID ? (
+            <div>
+              <LikeSVG />
+            </div>
+          ) : (
+            <div className="cursor-pointer" onClick={likePost}>
+              {liked ? <LikeFillSVG /> : <LikeSVG />}
+            </div>
+          )}
+
           <b className=" ml-1">{likeCount}</b>
         </div>{" "}
         <div className="flex ml-4 ">
-          <div className="cursor-pointer" onClick={dislikePost}>
-            {disliked ? <DislikeFillSVG /> : <DislikeSVG />}
-          </div>
+          {me.sub === postAuthorID ? (
+            <div>
+              <DislikeSVG />
+            </div>
+          ) : (
+            <div className="cursor-pointer" onClick={dislikePost}>
+              {disliked ? <DislikeFillSVG /> : <DislikeSVG />}
+            </div>
+          )}
           <b className=" ml-1">{dislikeCount}</b>
         </div>
       </div>

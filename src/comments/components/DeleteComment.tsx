@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
-import { removeComment } from "../slices/commentsSlice";
+import { removeCommentFromTree } from "../slices/commentsSlice";
 
 export const RemoveComment = ({ commentID }: { commentID: string }) => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const RemoveComment = ({ commentID }: { commentID: string }) => {
     try {
       const result = await sendRequest(`comments/${commentID}`, "delete", true);
 
-      dispatch(removeComment(result.id));
+      dispatch(removeCommentFromTree(result.id));
     } catch (error: any) {
       dispatch(setError(error.message));
     }

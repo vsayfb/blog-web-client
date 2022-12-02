@@ -1,28 +1,19 @@
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { BlurArea } from "../../lib/components/BlurArea";
-import { detectImage } from "../../lib/detectImage";
 import { sendRequest } from "../../lib/sendRequest";
 import { BackSVG } from "../../lib/svgs/BackSVG";
 import { RootState } from "../../store";
 import {
-  addCommentToHistory,
   getPreviousComment,
+  setRepliesToCommentTree,
 } from "../slices/commentsSlice";
-import { CommentViewDto } from "../types/comment-view.dto";
-import { CommentAuthor } from "./CommentAuthor";
-import { CommentBody } from "./CommentBody";
-import { CommentCard } from "./CommentCard";
-import { CommentStats } from "./CommentStats";
+import { CommentTreeCard } from "./CommentTreeCard";
 
 export const CommentReplies = () => {
   const dispatch = useDispatch();
 
-  const { comment } = useSelector((state: RootState) => state.comments.replies);
-
-  const [replies, setReplies] = useState<CommentViewDto[]>([]);
+  const { commentTree } = useSelector((state: RootState) => state.comments);
 
   async function getReplies(commentID: string) {
     const result = await sendRequest(
@@ -31,57 +22,49 @@ export const CommentReplies = () => {
       true
     );
 
-    return result;
+    return result.data;
   }
 
   useEffect(() => {
-    if (comment) {
-      getReplies(comment.id).then((r) => {
-        setReplies(r.data);
+    if (commentTree?.baseComment?.id) {
+      getReplies(commentTree.baseComment.id).then((r) => {
+        dispatch(setRepliesToCommentTree(r));
       });
     }
-  }, [comment]);
+  }, [commentTree.baseComment?.id]);
 
   function showPreviousComment() {
     dispatch(getPreviousComment());
   }
 
-  if (comment) {
+  if (commentTree?.baseComment) {
     return (
       <BlurArea>
         <>
-          <div className="ml-6 cursor-pointer" onClick={showPreviousComment}>
-            <BackSVG w={30} h={30} />
+          <div
+            className="ml-6 cursor-pointer"
+            style={{ height: "28px" }}
+            onClick={showPreviousComment}
+          >
+            <BackSVG w={30} />
           </div>
 
-          <div className="w-full flex justify-center ">
-            <div className="" style={{ width: "80%" }}>
-              <div className="flex ">
-                <div className="pr-4" style={{ width: "90px" }}>
-                  <CommentAuthor author={comment.author} />
-
-                  <div className="text-xs text-center text-zinc-900 ml-2 mt-2">
-                    {moment(comment.created_at).fromNow()}
-                  </div>
-
-                  <div className="flex justify-evenly pt-2 pb-2">
-                    <CommentStats
-                      commentID={comment.id}
-                      dislike_count={comment.dislike_count}
-                      like_count={comment.like_count}
-                    />
-                  </div>
-                </div>
-
-                <div className="relative flex-1 px-4 py-2  border-b border-zinc-900 pb-2 sm:px-6 sm:py-4 ">
-                  <CommentBody content={comment.content} />
-                </div>
-              </div>
-
-              {replies.map((r) => (
-                <CommentCard comment={r} />
-              ))}
+          <div className="w-full ">
+            <div className="border-b border-emerald-500">
+              <CommentTreeCard
+                key={commentTree.baseComment.id}
+                comment={commentTree.baseComment}
+                openCommentReplies={false}
+              />
             </div>
+
+            {commentTree.commentReplies.length ? (
+              commentTree.commentReplies?.map((r) => (
+                <CommentTreeCard key={r.id} comment={r} />
+              ))
+            ) : (
+              <h3 className="mt-12">There are no replies to this comment.</h3>
+            )}
           </div>
         </>
       </BlurArea>
