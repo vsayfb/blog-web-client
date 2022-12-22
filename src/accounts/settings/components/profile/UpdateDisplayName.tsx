@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMe, setUpdatedMe } from "../../../auth/slices/authSlice";
-import { InputField } from "../../../lib/components/InputField";
-import { RootState } from "../../../store";
+import { setMe, setUpdatedMe } from "../../../../auth/slices/authSlice";
+import { InputField } from "../../../../lib/components/InputField";
+import { RootState } from "../../../../store";
 
 export const UpdateDisplayName = () => {
   const { me } = useSelector((state: RootState) => state.auth);

@@ -7,26 +7,28 @@ import {
   useState,
 } from "react";
 import { useDispatch } from "react-redux";
-import { MyButton } from "../../lib/components/Button";
-import { InputField } from "../../lib/components/InputField";
-import { BackSVG } from "../../lib/svgs/BackSVG";
-import { setError, setWarn } from "../../lib/slices/appSlice";
-import { CreateAccoundDto } from "../via/ViaLocal";
-import { beginAccountVerification } from "../../lib/api/account";
+import { MyButton } from "../../../lib/components/Button";
+import { InputField } from "../../../lib/components/InputField";
+import { BackSVG } from "../../../lib/svgs/BackSVG";
+import { setError, setWarn } from "../../../lib/slices/appSlice";
+import { CreateAccoundDto } from "../../via/ViaEmail";
+import { beginAccountVerification } from "../../../lib/api/account";
 
 export const SecondStep = ({
-  setStep,
-  email,
+  via,
+  emailOrPhone,
   displayName,
   username,
   password,
+  setStep,
   setAccountDto,
 }: {
-  setStep: Dispatch<SetStateAction<number>>;
-  email: string;
+  via: "email" | "phone";
+  emailOrPhone: string;
   displayName: string;
   username: string;
   password: string;
+  setStep: Dispatch<SetStateAction<number>>;
   setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
 }) => {
   const dispatch = useDispatch();
@@ -74,15 +76,14 @@ export const SecondStep = ({
       setLoading(true);
 
       try {
-        await beginAccountVerification(email, username);
+        await beginAccountVerification(emailOrPhone, username, via);
 
         setStep(3);
       } catch (error: any) {
-        if (error.response.data.statusCode === 400) {
-          dispatch(setWarn(error.response.data.message));
+        if (error.response.data.message.indexOf("sent") >= 0) {
           setStep(3);
         } else {
-          dispatch(setError(error.response.data.message));
+          dispatch(setWarn(error.response.data.message));
         }
       } finally {
         setLoading(false);

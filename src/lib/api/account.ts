@@ -3,7 +3,7 @@ import { sendRequest } from "../sendRequest";
 export const BASE_PARAM = "accounts/";
 
 export async function getMyCredentials(): Promise<any> {
-  return await sendRequest(BASE_PARAM + "me", "get", true);
+  return await sendRequest("auth/" + "me", "get", true);
 }
 
 export async function uploadProfileImage(
@@ -23,15 +23,30 @@ export async function isAvailableField(
 ): Promise<boolean> {
   const query = "is_available_" + field + "?" + field + "=" + value;
 
-  return await sendRequest(BASE_PARAM + query, "get", false);
+  const { data } = await sendRequest(BASE_PARAM + query, "get", false);
+
+  return data;
 }
 
 export async function beginAccountVerification(
-  email: string,
-  username: string
+  emailOrPhone: string,
+  username: string,
+  via: "email" | "phone"
 ): Promise<{ message: string }> {
-  return await sendRequest("auth/begin_email_verification", "post", false, {
-    email,
-    username,
-  });
+  if (via === "email") {
+    return await sendRequest("auth/begin_email_verification_for_register/", "post", false, {
+      email: emailOrPhone,
+      username,
+    });
+  }
+
+  return await sendRequest(
+    "auth//begin_mobile_phone_verification_for_register/",
+    "post",
+    false,
+    {
+      phone: emailOrPhone,
+      username,
+    }
+  );
 }

@@ -41,15 +41,15 @@ export const NavbarRight = ({ me, pending }: { me: Me; pending: boolean }) => {
     <div className="md:block ">
       <div className="ml-4 flex items-center  md:ml-6">
         <Link to={"/dashboard"} className="mr-4 cursor-pointer">
-          <DashboardSVG fill={"#000000"} />
+          <DashboardSVG  />
         </Link>
 
         <div className="cursor-pointer" onClick={openNotificationArea}>
-          <NotitificationSVG fill={"#000000"} />
+          <NotitificationSVG  />
         </div>
 
         <div className="cursor-pointer">
-          <InboxSVG fill={"#000000"} />
+          <InboxSVG  />
         </div>
 
         <div>

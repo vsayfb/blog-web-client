@@ -29,7 +29,7 @@ export const FollowedYouNotification = ({
         </p>
 
         <small className="text-zinc-900">
-          {moment(notification.createdAt).fromNow()}
+          {moment(notification.created_at).fromNow()}
         </small>
       </div>
     </div>

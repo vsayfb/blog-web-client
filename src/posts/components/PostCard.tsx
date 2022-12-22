@@ -11,7 +11,7 @@ import { PostCardDto } from "../types/post-card.dto";
 
 export const PostCard = ({ post }: { post: PostCardDto }) => {
   return (
-    <div className=" dark:text-gray-50 mt-6 mb-6 text-zinc-900">
+    <div className=" dark:text-gray-50 mt-6 mb-6 ">
       <div className="container grid grid-cols-12 mx-auto ">
         {post.title_image ? (
           <div
@@ -37,13 +37,13 @@ export const PostCard = ({ post }: { post: PostCardDto }) => {
 
           <Link
             to={`/${post.url}`}
-            className="inline-flex items-center pt-2 pb-6 space-x-2 text-sm text-zinc-900"
+            className="inline-flex items-center pt-2 pb-6 space-x-2 text-sm "
           >
             <h1 className="text-3xl font-semibold">{post.title}</h1>
           </Link>
           <Link
             to={`/profile/${post.author.username}`}
-            className="flex items-center justify-between pt-2 text-zinc-900"
+            className="flex items-center justify-between pt-2 "
           >
             <div className="flex space-x-2">
               <img
@@ -51,7 +51,7 @@ export const PostCard = ({ post }: { post: PostCardDto }) => {
                 src={detectImage(post.author.image)}
                 alt=""
               />
-              <div className="inline-flex items-center space-x-2 text-md font-bold text-zinc-900">
+              <div className="inline-flex items-center space-x-2 text-md font-bold ">
                 {post.author.display_name}
               </div>
             </div>

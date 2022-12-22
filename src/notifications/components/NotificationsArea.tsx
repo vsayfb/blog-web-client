@@ -4,8 +4,11 @@ import { sendRequest } from "../../lib/sendRequest";
 
 import { RootState } from "../../store";
 import { NotificationT, setNotifications } from "../slices/notificationSlice";
+import { CommentExpressionNotification } from "./CommentExpressionNotification";
 import { CommentNotification } from "./CommentNotification";
 import { FollowedYouNotification } from "./FollowedYouNotification";
+import { PostExpressionNotification } from "./PostExpressionNotification";
+import { ReplyNotification } from "./RepliedNotification";
 
 export const NotificationsArea = () => {
   const { notifications } = useSelector(
@@ -53,16 +56,48 @@ export const NotificationsArea = () => {
             {
               notifications.length ? (
                 notifications.map((noti) => {
-                  if (noti.action === "commented on your post") {
-                    return (
-                      <CommentNotification notification={noti} key={noti.id} />
-                    );
-                  } else if (noti.action === "followed you") {
+                  if (noti.action === "followed you") {
                     return (
                       <FollowedYouNotification
                         notification={noti}
                         key={noti.id}
                       />
+                    );
+                  } else if (noti.action === "commented on your post") {
+                    return (
+                      <CommentNotification notification={noti} key={noti.id} />
+                    );
+                  } else if (noti.action === "liked your post") {
+                    return (
+                      <PostExpressionNotification
+                        notification={noti}
+                        key={noti.id}
+                      />
+                    );
+                  } else if (noti.action === "disliked your post") {
+                    return (
+                      <PostExpressionNotification
+                        notification={noti}
+                        key={noti.id}
+                      />
+                    );
+                  } else if (noti.action === "liked your comment") {
+                    return (
+                      <CommentExpressionNotification
+                        notification={noti}
+                        key={noti.id}
+                      />
+                    );
+                  } else if (noti.action === "disliked your comment") {
+                    return (
+                      <CommentExpressionNotification
+                        notification={noti}
+                        key={noti.id}
+                      />
+                    );
+                  } else if (noti.action === "replied your comment") {
+                    return (
+                      <ReplyNotification notification={noti} key={noti.id} />
                     );
                   } else return null;
                 })

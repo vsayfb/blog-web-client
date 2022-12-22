@@ -1,24 +1,17 @@
 import { useEffect, useReducer, useState } from "react";
-import { SecondStep } from "../local/SecondStep";
-import { FirstStep } from "../local/FirstStep";
-import { ThirdStep } from "../local/ThirdStep";
 import { UploadProfileImage } from "../../lib/components/UploadProfileImage";
 import { useNavigate } from "react-router-dom";
 import { NextSVG } from "../../lib/svgs/NextSVG";
+import { CreateAccoundDto } from "./ViaEmail";
+import { FirstStep } from "../local/register/FirstStep";
+import { SecondStep } from "../local/register/SecondStep";
+import { ThirdStep } from "../local/register/ThirdStep";
 
-export type CreateAccoundDto = {
-  email: string | null;
-  username: string | null;
-  display_name: string | null;
-  password: string | null;
-  verification_code: string | null;
-  image: string | null;
-};
-
-export default function ViaLocal() {
+export default function ViaMobilPhone() {
   const [step, setStep] = useState(1);
 
   const [accountDto, setAccountDto] = useState<CreateAccoundDto>({
+    phone: null,
     email: null,
     username: null,
     display_name: null,
@@ -33,15 +26,17 @@ export default function ViaLocal() {
     <>
       {step === 1 ? (
         <FirstStep
+          via="phone"
           setStep={setStep}
           setAccountDto={setAccountDto}
-          email={accountDto.email || ""}
+          emailOrPhone={accountDto.phone || ""}
           username={accountDto.username || ""}
         />
       ) : step === 2 ? (
         <SecondStep
+          via={"phone"}
           setStep={setStep}
-          email={accountDto.email || ""}
+          emailOrPhone={accountDto.phone || ""}
           displayName={accountDto.display_name || ""}
           username={accountDto.username || ""}
           password={accountDto.password || ""}
@@ -49,6 +44,7 @@ export default function ViaLocal() {
         />
       ) : step === 3 ? (
         <ThirdStep
+          via={"phone"}
           setAccountDto={setAccountDto}
           accountDto={accountDto}
           setStep={setStep}

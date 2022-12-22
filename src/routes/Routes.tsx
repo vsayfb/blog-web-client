@@ -14,12 +14,13 @@ import { Profile } from "../profile/components/Profile";
 import { Settings } from "../accounts/settings/components/Settings";
 import { Tags } from "../tags/components/Tags";
 import { Tag } from "../tags/components/Tag";
+import SignInScreen from "../screens/SignIn";
 
 export const AppRoutes = ({ me }: { me: Me }) => {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="signIn" element={<SignIn />} />
+      <Route path="signIn" element={<SignInScreen />} />
       <Route path="signUp" element={<SignUp />} />
 
       <Route

@@ -1,16 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
-import { CommentNotification } from "../components/CommentNotification";
 
-type NotificationAction = "commented on your post" | "followed you";
+type NotificationAction =
+  | "commented on your post"
+  | "liked your post"
+  | "disliked your post"
+  | "followed you"
+  | "replied your comment"
+  | "liked your comment"
+  | "disliked your comment";
 
 export type NotificationT = {
   id: string;
   action: NotificationAction;
   sender: AccountViewDto;
   seen: boolean;
-  createdAt: string;
-  comment: CommentNotification | null;
+  created_at: string;
+  object: "follow" | "comment" | "reply";
 };
 
 const initialState: {

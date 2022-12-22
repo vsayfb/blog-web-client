@@ -1,3 +1,5 @@
+import { Subscriptions } from "../../subscriptions/Subscriptions";
+
 export type ProfileViewDto = {
   data: {
     id: string;
@@ -8,6 +10,7 @@ export type ProfileViewDto = {
     followers_count: number;
     following_count: number;
     following_by: boolean;
+    subscriptions: Subscriptions;
   };
   message: string;
 };

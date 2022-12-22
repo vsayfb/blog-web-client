@@ -1,10 +1,10 @@
-export const DashboardSVG = ({ fill }: { fill: string }) => {
+export const DashboardSVG = ({ fill }: { fill?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      fill={fill}
+      fill={fill || "currentColor"}
       className="bi bi-fingerprint "
       viewBox="0 0 16 16"
     >

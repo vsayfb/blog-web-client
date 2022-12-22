@@ -105,7 +105,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
         ) : null}
 
         <article
-          className={"dark-content-tiny"}
+          className={"light-content-tiny"}
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></article>
 

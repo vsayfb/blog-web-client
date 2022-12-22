@@ -3,8 +3,10 @@ import { HashLink } from "react-router-hash-link";
 import { detectImage } from "../../lib/detectImage";
 import moment from "moment";
 import { NotificationT } from "../slices/notificationSlice";
+import { CommentViewDto } from "../../comments/types/comment-view.dto";
+import { AccountViewDto } from "../../accounts/types/account-view-dto";
 
-export type CommentNotification = NotificationT & {
+export type ReplyNotification = NotificationT & {
   post: {
     id: string;
     title: string;
@@ -18,17 +20,21 @@ export type CommentNotification = NotificationT & {
   comment: {
     id: string;
     content: string;
-    created_at: string;
+    author: AccountViewDto;
+    craeted_at: string;
+    updated_at: string;
+  };
+  reply: {
+    id: string;
+    content: string;
+    author: AccountViewDto;
+    craeted_at: string;
     updated_at: string;
   };
 };
 
-export const CommentNotification = ({
-  notification,
-}: {
-  notification: any;
-}) => {
-  const noti: CommentNotification = notification;
+export const ReplyNotification = ({ notification }: { notification: any }) => {
+  const noti: ReplyNotification = notification;
 
   return (
     <div key={noti.id} className="py-2 ">

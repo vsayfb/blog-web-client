@@ -52,7 +52,7 @@ export const StepTwo = ({
       </div>
 
       <div>
-        <p className="focus:outline-none text-2xl font-extrabold leading-6 text-zinc-900 mb-8 mt-4">
+        <p className="focus:outline-none text-2xl font-extrabold leading-6  mb-8 mt-4">
           Add tags to your post
         </p>
       </div>

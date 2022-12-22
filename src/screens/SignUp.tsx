@@ -4,34 +4,65 @@ import Auth from "../auth/components/Auth";
 import AuthHeader, { AuthType } from "../auth/components/AuthHeader";
 import { AuthMiddle } from "../auth/components/AuthMiddle";
 import ViaGoogle from "../auth/via/ViaGoogle";
-import ViaLocal from "../auth/via/ViaLocal";
+import ViaEmail from "../auth/via/ViaEmail";
 import { MyButton } from "../lib/components/Button";
+import ViaMobilPhone from "../auth/via/ViaMobilPhone";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { hideSignUpInitStep } from "../lib/slices/appSlice";
 
 export default function SignUp() {
-  const [viaLocal, setViaLocal] = useState(false);
+  const { signUpInitStep } = useSelector((state: RootState) => state.app);
 
-  return (
-    <Auth>
-      <div>
-        <Helmet>
-          <title>Sign Up</title>
-        </Helmet>
+  const dispatch = useDispatch();
 
-        {!viaLocal ? (
-          <>
-            <AuthHeader type={AuthType.SignUp} />
-            <ViaGoogle type="register" />
-            <AuthMiddle />
+  const [viaEmail, setViaEmail] = useState(false);
 
-            <MyButton
-              onClickEvent={() => setViaLocal(true)}
-              buttonText="CONTINUE WITH EMAIL"
-            />
-          </>
-        ) : (
-          <ViaLocal />
-        )}
-      </div>
-    </Auth>
-  );
+  const [viaMobilPhone, setViaMobilPhone] = useState(false);
+  
+
+  if (signUpInitStep) {
+    return (
+      <Auth>
+        <div>
+          <Helmet>
+            <title>Sign Up</title>
+          </Helmet>
+
+          <AuthHeader type={AuthType.SignUp} />
+          <ViaGoogle type="register" />
+          <AuthMiddle />
+
+          <MyButton
+            onClickEvent={() => {
+              dispatch(hideSignUpInitStep());
+              setViaEmail(true);
+            }}
+            buttonText="CONTINUE WITH EMAIL"
+          />
+
+          <MyButton
+            classProperties="mt-4"
+            onClickEvent={() => {
+              dispatch(hideSignUpInitStep());
+              setViaMobilPhone(true);
+            }}
+            buttonText="CONTINUE WITH PHONE"
+          />
+        </div>
+      </Auth>
+    );
+  } else {
+    return (
+      <Auth>
+        <div>
+          <Helmet>
+            <title>Sign Up</title>
+          </Helmet>
+
+          {viaEmail ? <ViaEmail /> : viaMobilPhone ? <ViaMobilPhone /> : null}
+        </div>
+      </Auth>
+    );
+  }
 }

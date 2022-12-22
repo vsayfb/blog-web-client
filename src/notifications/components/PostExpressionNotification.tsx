@@ -4,7 +4,7 @@ import { detectImage } from "../../lib/detectImage";
 import moment from "moment";
 import { NotificationT } from "../slices/notificationSlice";
 
-export type CommentNotification = NotificationT & {
+export type PostExpression = NotificationT & {
   post: {
     id: string;
     title: string;
@@ -15,20 +15,14 @@ export type CommentNotification = NotificationT & {
     created_at: string;
     updated_at: string;
   };
-  comment: {
-    id: string;
-    content: string;
-    created_at: string;
-    updated_at: string;
-  };
 };
 
-export const CommentNotification = ({
+export const PostExpressionNotification = ({
   notification,
 }: {
   notification: any;
 }) => {
-  const noti: CommentNotification = notification;
+  const noti: PostExpression = notification;
 
   return (
     <div key={noti.id} className="py-2 ">
@@ -44,7 +38,7 @@ export const CommentNotification = ({
           </Link>
           <HashLink
             smooth={true}
-            elementId={`${noti.comment.id}`}
+            elementId={`${noti.post.id}`}
             to={`${noti.post.url}`}
             className="ml-2 text-black underline "
           >

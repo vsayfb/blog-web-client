@@ -8,22 +8,29 @@ import {
 } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { MyButton } from "../../lib/components/Button";
-import { InputField } from "../../lib/components/InputField";
-import { BackSVG } from "../../lib/svgs/BackSVG";
-import { hideFastSignIn, hideFastSignUp, setError } from "../../lib/slices/appSlice";
-import { CreateAccoundDto } from "../via/ViaLocal";
-import { isAvailableField } from "../../lib/api/account";
+import { MyButton } from "../../../lib/components/Button";
+import { InputField } from "../../../lib/components/InputField";
+import { BackSVG } from "../../../lib/svgs/BackSVG";
+import {
+  hideFastSignIn,
+  hideFastSignUp,
+  setError,
+  showSignUpInitStep,
+} from "../../../lib/slices/appSlice";
+import { CreateAccoundDto } from "../../via/ViaEmail";
+import { isAvailableField } from "../../../lib/api/account";
 
 export const FirstStep = ({
-  setStep,
-  email,
+  via,
+  emailOrPhone,
   username,
+  setStep,
   setAccountDto,
 }: {
-  setStep: Dispatch<SetStateAction<number>>;
-  email: string;
+  via: "phone" | "email";
+  emailOrPhone: string;
   username: string;
+  setStep: Dispatch<SetStateAction<number>>;
   setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
 }) => {
   const [areaProps, setAreaProps] = useState({
@@ -87,12 +94,14 @@ export const FirstStep = ({
   }
 
   useEffect(() => {
-    const timeoutID = setTimeout(() => {
-      if (email.length) checkTakenFields("email", email);
-    }, 600);
+    if (via === "email") {
+      const timeoutID = setTimeout(() => {
+        if (emailOrPhone.length) checkTakenFields("email", emailOrPhone);
+      }, 600);
 
-    return () => clearTimeout(timeoutID);
-  }, [email]);
+      return () => clearTimeout(timeoutID);
+    }
+  }, [emailOrPhone]);
 
   useEffect(() => {
     const timeoutID = setTimeout(() => {
@@ -103,7 +112,7 @@ export const FirstStep = ({
   }, [username]);
 
   function nextStep() {
-    if (!username.length || !email.length) {
+    if (!username.length || !emailOrPhone.length) {
       dispatch(setError("Please fill the form."));
     } else if (areaProps.email.error || areaProps.username.error) {
       const error = areaProps.email.error ? " email" : " username";
@@ -121,6 +130,7 @@ export const FirstStep = ({
         onClick={() => {
           dispatch(hideFastSignIn());
           dispatch(hideFastSignUp());
+          dispatch(showSignUpInitStep());
         }}
       >
         <BackSVG />
@@ -131,11 +141,17 @@ export const FirstStep = ({
 
       <div>
         <InputField
-          type="email"
-          labelText={areaProps.email.labelText}
-          value={email}
+          type={via === "email" ? "email" : "tel"}
+          labelText={
+            via === "email" ? areaProps.email.labelText : "Mobile phone"
+          }
+          value={emailOrPhone}
           onChangeEvent={(e) =>
-            setAccountDto((prev) => ({ ...prev, email: e.target.value }))
+            setAccountDto((prev) => {
+              if (via === "email") return { ...prev, email: e.target.value };
+
+              return { ...prev, phone: e.target.value };
+            })
           }
           labelAttributes={areaProps.email.labelColor}
           inputAttributes={areaProps.email.border}

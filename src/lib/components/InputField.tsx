@@ -16,12 +16,12 @@ export const InputField = ({
   inputAttributes?: string;
 }) => {
   const INPUT_CLASS =
-    "border-b  text-xs font-medium outline-none leading-none text-gray-800 py-3 w-full pl-3 mt-2";
+    "border-b border-zinc-400  text-xs font-medium outline-none leading-none text-amber-500 py-3 w-full pl-3 mt-2";
 
   return (
     <>
       <label
-        className={`text-sm font-medium leading-none text-gray-800 ${labelAttributes}`}
+        className={`text-sm font-medium leading-none text-amber-500 ${labelAttributes}`}
       >
         {labelText}
       </label>

@@ -11,7 +11,7 @@ export const TagCreatedBy = ({
   imageWidth?: number;
   imageHeight?: number;
 }) => (
-  <div className="text-sm text-white bottom-2">
+  <div className="text-sm  bottom-2">
     <Link
       to={`/profile/${account.username}`}
       className="flex justify-between items-center"

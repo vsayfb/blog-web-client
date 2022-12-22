@@ -17,7 +17,7 @@ export const MyButton = ({
 }) => {
   const BUTTON_CLASS = `
     text-sm font-semibold focus:outline-none 
-    bg-zinc-900 text-white rounded py-4 w-full flex justify-center items-center`;
+    bg-amber-500 text-white rounded py-4 w-full flex justify-center items-center`;
 
   return (
     <button
@@ -29,7 +29,7 @@ export const MyButton = ({
           ? `${BUTTON_CLASS} ${classProperties} bg-zinc-400`
           : `${BUTTON_CLASS} ${classProperties} `
       }
-      disabled={disabled ? true : false}
+      disabled={disabled}
     >
       {disabled ? <Spinner w={22} h={22} /> : buttonText}
     </button>

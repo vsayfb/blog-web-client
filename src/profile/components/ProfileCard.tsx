@@ -1,3 +1,4 @@
+import { Subscriptions } from "../../subscriptions/Subscriptions";
 import { ProfileViewDto } from "../types/profile-view.dto";
 import { ProfileFollowState } from "./ProfileFollowState";
 import { ProfileImage } from "./ProfileImage";
@@ -20,6 +21,13 @@ export const ProfileCard = ({
             following={profile.following_count}
             followers={profile.followers_count}
           />
+
+          {profile.following_by ? (
+            <Subscriptions
+              accountID={profile.id}
+              subscriptions={profile.subscriptions}
+            />
+          ) : null}
         </div>
       </div>
     </div>

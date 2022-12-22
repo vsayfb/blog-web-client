@@ -7,6 +7,8 @@ import {
 } from "../slices/notificationSlice";
 import { CommentNotification } from "./CommentNotification";
 import { FollowedYouNotification } from "./FollowedYouNotification";
+import { PostExpressionNotification } from "./PostExpressionNotification";
+import { ReplyNotification } from "./RepliedNotification";
 
 export const NewNotification = ({
   newNotification,
@@ -17,14 +19,22 @@ export const NewNotification = ({
 
   function handleNotification() {
     switch (newNotification.action) {
-      case "followed you":
-        return <FollowedYouNotification notification={newNotification} />;
+      // case "followed you":
+      //   return <FollowedYouNotification notification={newNotification} />;
 
-      case "commented on your post":
-        return <CommentNotification notification={newNotification} />;
+      // case "commented on your post":
+      //   return <CommentNotification notification={newNotification} />;
+
+      // case "replied your comment":
+      //   return <ReplyNotification notification={newNotification} />;
 
       default:
-        return null;
+        return (
+          <PostExpressionNotification
+            notification={newNotification}
+            key={newNotification.id}
+          />
+        );
     }
   }
 

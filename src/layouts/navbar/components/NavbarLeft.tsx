@@ -12,7 +12,7 @@ export const NavbarLeft = ({ me, pending }: { me: Me; pending: boolean }) => {
 
       <Link className="flex justify-center items-center ml-7" to={"/tags"}>
         <TagSVG />
-        <span className="text-sm text-black ml-1">Tags</span>
+        <span className="text-sm text-amber-500 ml-1">Tags</span>
       </Link>
 
       {pending ? (
@@ -22,7 +22,7 @@ export const NavbarLeft = ({ me, pending }: { me: Me; pending: boolean }) => {
           <div className="ml-10 flex items-baseline space-x-4">
             <Link
               to="write"
-              className={`  px-3 py-2 rounded text-sm font-medium bg-zinc-900 text-white`}
+              className={`  px-3 py-2 rounded text-sm font-medium bg-amber-500 text-slate-900`}
             >
               Write
             </Link>

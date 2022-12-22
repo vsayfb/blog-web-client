@@ -1,18 +1,20 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { InputField } from "../../lib/components/InputField";
-import { setError, setLoading } from "../../lib/slices/appSlice";
-import { setLocalStorageToken } from "../../lib/setLocalStorageToken";
-import { setMe } from "../slices/authSlice";
-import { CreateAccoundDto } from "../via/ViaLocal";
-import { register } from "../../lib/api/auth";
-import { MyButton } from "../../lib/components/Button";
+import { register } from "../../../lib/api/auth";
+import { MyButton } from "../../../lib/components/Button";
+import { InputField } from "../../../lib/components/InputField";
+import { setLocalStorageToken } from "../../../lib/setLocalStorageToken";
+import { setError } from "../../../lib/slices/appSlice";
+import { setMe } from "../../slices/authSlice";
+import { CreateAccoundDto } from "../../via/ViaEmail";
 
 export const ThirdStep = ({
+  via,
   setStep,
   setAccountDto,
   accountDto,
 }: {
+  via: "phone" | "email";
   setStep: Dispatch<SetStateAction<number>>;
   setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
   accountDto: CreateAccoundDto;
@@ -28,7 +30,7 @@ export const ThirdStep = ({
   async function registerAccount() {
     if (accountDto.verification_code?.length) {
       try {
-        const { data } = await register(accountDto);
+        const { data } = await register(accountDto, via);
 
         setVerified(true);
 
@@ -49,7 +51,7 @@ export const ThirdStep = ({
   return (
     <div>
       <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800 mb-2 mt-2">
-        We sent a code to your email.
+        {`A code sent to your ${via}.`}
       </p>
 
       <InputField

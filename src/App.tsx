@@ -18,9 +18,10 @@ import { FastSignIn } from "./auth/components/FastSignIn";
 
 export enum AppHashColors {
   RED = "#ad0003",
+  EMERALD = "#10b981",
 }
 
-function App() {
+export function App() {
   const { me } = useSelector((state: RootState) => state.auth);
 
   const { loading, fastSignInVisibility, fastSignUpVisibility } = useSelector(
@@ -47,19 +48,15 @@ function App() {
     >
       <Sockets />
 
-      {/* {showFastSignIn ? <showFastSignIn /> : null} */}
-
       {fastSignUpVisibility ? <FastSignUp /> : null}
 
       {fastSignInVisibility ? <FastSignIn /> : null}
 
       {notificationAreaVisibility ? <NotificationsArea /> : null}
 
-      {/* do not show the new notification in client for now */}
-
-      {/* {newNotification ? (
+      {newNotification ? (
         <NewNotification newNotification={newNotification} />
-      ) : null} */}
+      ) : null}
 
       <Navbar />
 

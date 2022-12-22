@@ -23,11 +23,7 @@ export const Profile = () => {
   const dispatch = useDispatch();
 
   async function getProfile(): Promise<ProfileViewDto | null> {
-    const result = await sendRequest(
-      `accounts/profile/${username}`,
-      "get",
-      true
-    );
+    const result = await sendRequest(`profiles/${username}`, "get", true);
 
     return result.data.id ? result : null;
   }

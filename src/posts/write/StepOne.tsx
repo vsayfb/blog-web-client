@@ -79,7 +79,7 @@ export const StepOne = ({
         />
       ) : null}
 
-      <p className="focus:outline-none text-2xl font-extrabold leading-6 text-zinc-900 mb-8 mt-4">
+      <p className="focus:outline-none text-2xl font-extrabold leading-6  mb-8 mt-4">
         Write your post
       </p>
 
