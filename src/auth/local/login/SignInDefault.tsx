@@ -1,14 +1,15 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { localLogin } from "../../../lib/api/auth";
 import { MyButton } from "../../../lib/components/Button";
 import { InputField } from "../../../lib/components/InputField";
 import { setLocalStorageToken } from "../../../lib/setLocalStorageToken";
 import { setError, setWarn } from "../../../lib/slices/appSlice";
+import { setTfaData, setTfaEnabled } from "../../slices/authSlice";
 
 export const SignInDefault = ({
   loginDto,
   setLoginDto,
-  setTFAEnabled,
 }: {
   loginDto: { username: string; password: string };
   setLoginDto: React.Dispatch<
@@ -17,25 +18,29 @@ export const SignInDefault = ({
       password: string;
     }>
   >;
-  setTFAEnabled: React.Dispatch<
-    React.SetStateAction<{
-      message: string;
-      following_link: string;
-      error?: string;
-    } | null>
-  >;
 }) => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   async function makeLoginRequest() {
     try {
       const result = await localLogin(loginDto.username, loginDto.password);
 
+      console.log(result);
+
       if (result.following_link) {
-        setTFAEnabled({
-          following_link: result.following_link,
-          message: result.message,
-        });
+        dispatch(setTfaEnabled(true));
+
+        dispatch(
+          setTfaData({
+            verification_token: result.following_link.substring(1),
+            via:
+              result.message.indexOf("email") >= 0 ? "email" : "mobile phone",
+          })
+        );
+
+        navigate("/two_factor_auth");
       } else {
         setLocalStorageToken(result.data?.access_token as string);
 
@@ -43,10 +48,9 @@ export const SignInDefault = ({
       }
     } catch (error: any) {
       if (error.response?.data.message.indexOf("sent") >= 0) {
-        setTFAEnabled((p) => {
-          if (p) return { ...p, error: error.response.data.message };
-          return p;
-        });
+        setTfaEnabled(true);
+
+        navigate("/two_factor_auth");
       } else {
         dispatch(setError("Invalid credentials."));
       }

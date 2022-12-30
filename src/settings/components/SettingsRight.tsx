@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Account } from "./account/Account";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { sendRequest } from "../../lib/sendRequest";
+import { setAccount } from "../slices/settingsSlice";
+import { Account, AccountDto } from "./account/Account";
 import { UpdatePublicProfile } from "./profile/UpdatePublicProfile";
 import { Security } from "./security/Security";
 
@@ -7,6 +10,16 @@ export const SettingsRight = () => {
   const [tab, setTab] = useState<"public" | "account" | "security" | "social">(
     "public"
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    sendRequest("accounts/me", "get", true).then(
+      (result: { data: AccountDto }) => {
+        dispatch(setAccount(result.data));
+      }
+    );
+  }, []);
 
   return (
     <div className="relative col-span-12  space-y-6 sm:col-span-9">

@@ -28,7 +28,7 @@ export async function sendRequest(
       data?: any;
       config?: AxiosRequestConfig<any> | undefined;
     } = {
-      url: BASE_URL + path,
+      url: BASE_URL + (path.indexOf("/") === 0 ? path.substring(1) : path),
       data,
       config: { headers },
     };

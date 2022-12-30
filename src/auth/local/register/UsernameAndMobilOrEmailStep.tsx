@@ -1,12 +1,5 @@
-import axios from "axios";
-import {
-  Dispatch,
-  DispatchWithoutAction,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MyButton } from "../../../lib/components/Button";
 import { InputField } from "../../../lib/components/InputField";
@@ -17,22 +10,14 @@ import {
   setError,
   showSignUpInitStep,
 } from "../../../lib/slices/appSlice";
-import { CreateAccoundDto } from "../../via/ViaEmail";
 import { isAvailableField } from "../../../lib/api/account";
+import {
+  nextLocalRegisterStep,
+  setLocalRegisterData,
+} from "../../slices/authSlice";
+import { RootState } from "../../../store";
 
-export const FirstStep = ({
-  via,
-  emailOrPhone,
-  username,
-  setStep,
-  setAccountDto,
-}: {
-  via: "phone" | "email";
-  emailOrPhone: string;
-  username: string;
-  setStep: Dispatch<SetStateAction<number>>;
-  setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
-}) => {
+export const UsernameAndMobilOrEmailStep = ({ via }: { via: "phone" | "email" }) => {
   const [areaProps, setAreaProps] = useState({
     username: {
       border: "",
@@ -48,6 +33,8 @@ export const FirstStep = ({
     },
   });
 
+  const { localRegisterData } = useSelector((state: RootState) => state.auth);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -56,10 +43,7 @@ export const FirstStep = ({
     try {
       const available = await isAvailableField(field, value);
 
-      setAccountDto((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
+      dispatch(setLocalRegisterData({ [field]: value }));
 
       const props = {
         border: available
@@ -96,29 +80,38 @@ export const FirstStep = ({
   useEffect(() => {
     if (via === "email") {
       const timeoutID = setTimeout(() => {
-        if (emailOrPhone.length) checkTakenFields("email", emailOrPhone);
+        if (localRegisterData.email?.length)
+          checkTakenFields("email", localRegisterData.email);
       }, 600);
 
       return () => clearTimeout(timeoutID);
     }
-  }, [emailOrPhone]);
+  }, [
+    via === "phone" ? localRegisterData.mobile_phone : localRegisterData.email,
+  ]);
 
   useEffect(() => {
     const timeoutID = setTimeout(() => {
-      if (username.length) checkTakenFields("username", username);
+      if (localRegisterData.username.length)
+        checkTakenFields("username", localRegisterData.username);
     }, 600);
 
     return () => clearTimeout(timeoutID);
-  }, [username]);
+  }, [localRegisterData.username]);
 
   function nextStep() {
-    if (!username.length || !emailOrPhone.length) {
+    const emailOrPhone =
+      via === "email"
+        ? localRegisterData.email
+        : localRegisterData.mobile_phone;
+
+    if (!localRegisterData.username.length || !emailOrPhone?.length) {
       dispatch(setError("Please fill the form."));
     } else if (areaProps.email.error || areaProps.username.error) {
       const error = areaProps.email.error ? " email" : " username";
       dispatch(setError("Please fill the" + error + " field."));
     } else {
-      setStep(2);
+      dispatch(nextLocalRegisterStep());
     }
   }
 
@@ -145,14 +138,19 @@ export const FirstStep = ({
           labelText={
             via === "email" ? areaProps.email.labelText : "Mobile phone"
           }
-          value={emailOrPhone}
-          onChangeEvent={(e) =>
-            setAccountDto((prev) => {
-              if (via === "email") return { ...prev, email: e.target.value };
-
-              return { ...prev, phone: e.target.value };
-            })
+          value={
+            via === "email"
+              ? localRegisterData.email || ""
+              : localRegisterData.mobile_phone || ""
           }
+          onChangeEvent={(e) => {
+            const value: any = {};
+
+            if (via === "email") value.email = e.target.value;
+            else value.mobile_phone = e.target.value;
+
+            dispatch(setLocalRegisterData(value));
+          }}
           labelAttributes={areaProps.email.labelColor}
           inputAttributes={areaProps.email.border}
         />
@@ -162,9 +160,9 @@ export const FirstStep = ({
         <InputField
           type="text"
           labelText={areaProps.username.labelText}
-          value={username}
+          value={localRegisterData.username}
           onChangeEvent={(e) =>
-            setAccountDto((prev) => ({ ...prev, username: e.target.value }))
+            dispatch(setLocalRegisterData({ username: e.target.value }))
           }
           labelAttributes={areaProps.username.labelColor}
           inputAttributes={areaProps.username.border}

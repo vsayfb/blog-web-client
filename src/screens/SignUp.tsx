@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Auth from "../auth/components/Auth";
 import AuthHeader, { AuthType } from "../auth/components/AuthHeader";
 import { AuthMiddle } from "../auth/components/AuthMiddle";
-import ViaGoogle from "../auth/via/ViaGoogle";
+import ViaGoogle from "../auth/google/ViaGoogle";
 import ViaEmail from "../auth/via/ViaEmail";
 import { MyButton } from "../lib/components/Button";
 import ViaMobilPhone from "../auth/via/ViaMobilPhone";
@@ -19,7 +19,6 @@ export default function SignUp() {
   const [viaEmail, setViaEmail] = useState(false);
 
   const [viaMobilPhone, setViaMobilPhone] = useState(false);
-  
 
   if (signUpInitStep) {
     return (

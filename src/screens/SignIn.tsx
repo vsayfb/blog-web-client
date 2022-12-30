@@ -4,16 +4,10 @@ import Auth from "../auth/components/Auth";
 import AuthHeader, { AuthType } from "../auth/components/AuthHeader";
 import { AuthMiddle } from "../auth/components/AuthMiddle";
 import { SignInDefault } from "../auth/local/login/SignInDefault";
-import { TFAStep } from "../auth/local/login/TFAStep";
-import ViaGoogle from "../auth/via/ViaGoogle";
+import ViaGoogle from "../auth/google/ViaGoogle";
 
 export default function SignInScreen() {
   const [loginDto, setLoginDto] = useState({ username: "", password: "" });
-  const [TFAEnabled, setTFAEnabled] = useState<{
-    following_link: string;
-    message: string;
-    error?: string;
-  } | null>(null);
 
   return (
     <Auth>
@@ -22,24 +16,14 @@ export default function SignInScreen() {
           <title>Sign In</title>
         </Helmet>
 
-        {TFAEnabled ? (
-          <TFAStep loginDto={loginDto} tfaResponse={TFAEnabled} />
-        ) : (
-          <>
-            <AuthHeader type={AuthType.SingIn} />
-            <ViaGoogle type="login" />
+        <AuthHeader type={AuthType.SingIn} />
+        <ViaGoogle type="login" />
 
-            <div className="mt-2">
-              <AuthMiddle />
-            </div>
+        <div className="mt-2">
+          <AuthMiddle />
+        </div>
 
-            <SignInDefault
-              loginDto={loginDto}
-              setLoginDto={setLoginDto}
-              setTFAEnabled={setTFAEnabled}
-            />
-          </>
-        )}
+        <SignInDefault loginDto={loginDto} setLoginDto={setLoginDto} />
       </>
     </Auth>
   );

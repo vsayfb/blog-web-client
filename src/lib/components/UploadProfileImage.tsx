@@ -7,9 +7,13 @@ import { ProfileImage } from "../../profile/components/ProfileImage";
 import { MyButton } from "./Button";
 import { useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
+import { NextSVG } from "../svgs/NextSVG";
+import { useNavigate } from "react-router-dom";
 
 export const UploadProfileImage = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const { me } = useSelector((state: RootState) => state.auth);
 
@@ -24,7 +28,7 @@ export const UploadProfileImage = () => {
 
     formData.append("image", image);
 
-    return await uploadProfileImage(formData);
+    return await uploadProfileImage(formData, me.sub);
   };
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export const UploadProfileImage = () => {
 
       uploadImage(imageFile)
         .then((res) => {
-          dispatch(setMe({ image: res.data }));
+          dispatch(setMe({ image: res.data.image }));
         })
         .catch((reason: any) => {
           dispatch(setError(reason.response.data.message[0]));
@@ -57,7 +61,7 @@ export const UploadProfileImage = () => {
   };
 
   return (
-    <>
+    <div className="mt-20 mb-20">
       <h3 className="text-3xl text-center mt-4 mb-4 ">
         {me.display_name || "Walter White"}
       </h3>
@@ -86,6 +90,12 @@ export const UploadProfileImage = () => {
           />
         </div>
       </div>
-    </>
+
+      <div className="mt-6 flex justify-center ">
+        <span className="cursor-pointer" onClick={() => navigate("/")}>
+          <NextSVG w="40" h="40" />
+        </span>
+      </div>
+    </div>
   );
 };

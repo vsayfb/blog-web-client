@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMe, setUpdatedMe } from "../../../../auth/slices/authSlice";
-import { InputField } from "../../../../lib/components/InputField";
-import { sendRequest } from "../../../../lib/sendRequest";
-import { RootState } from "../../../../store";
+import { setMe, setUpdatedMe } from "../../../auth/slices/authSlice";
+import { InputField } from "../../../lib/components/InputField";
+import { sendRequest } from "../../../lib/sendRequest";
+import { RootState } from "../../../store";
 
 export const UpdateUsername = () => {
   const { me } = useSelector((state: RootState) => state.auth);

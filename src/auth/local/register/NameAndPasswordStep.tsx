@@ -1,37 +1,22 @@
-import axios from "axios";
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { MyButton } from "../../../lib/components/Button";
 import { InputField } from "../../../lib/components/InputField";
 import { BackSVG } from "../../../lib/svgs/BackSVG";
 import { setError, setWarn } from "../../../lib/slices/appSlice";
-import { CreateAccoundDto } from "../../via/ViaEmail";
-import { beginAccountVerification } from "../../../lib/api/account";
+import { beginRegister } from "../../../lib/api/account";
+import { RootState } from "../../../store";
+import {
+  backLocalRegisterStep,
+  nextLocalRegisterStep,
+  setLocalRegisterData,
+  setLocalRegisterVerificationCode,
+} from "../../slices/authSlice";
 
-export const SecondStep = ({
-  via,
-  emailOrPhone,
-  displayName,
-  username,
-  password,
-  setStep,
-  setAccountDto,
-}: {
-  via: "email" | "phone";
-  emailOrPhone: string;
-  displayName: string;
-  username: string;
-  password: string;
-  setStep: Dispatch<SetStateAction<number>>;
-  setAccountDto: Dispatch<SetStateAction<CreateAccoundDto>>;
-}) => {
+export const NameAndPasswordStep = ({ via }: { via: "email" | "phone" }) => {
   const dispatch = useDispatch();
+
+  const { localRegisterData } = useSelector((state: RootState) => state.auth);
 
   const [loading, setLoading] = useState(false);
 
@@ -44,8 +29,11 @@ export const SecondStep = ({
   const [passwordSuccess, setPasswordSuccess] = useState(false);
 
   useEffect(() => {
-    if (displayName.length) {
-      if (displayName.length < 2 || displayName.length > 16) {
+    if (localRegisterData.displayName.length) {
+      if (
+        localRegisterData.displayName.length < 2 ||
+        localRegisterData.displayName.length > 16
+      ) {
         setDisplayNameError(true);
         setDisplayNameSuccess(false);
       } else {
@@ -53,11 +41,11 @@ export const SecondStep = ({
         setDisplayNameSuccess(true);
       }
     }
-  }, [displayName]);
+  }, [localRegisterData.displayName]);
 
   useEffect(() => {
-    if (password.length) {
-      if (password.length < 7) {
+    if (localRegisterData.password.length) {
+      if (localRegisterData.password.length < 7) {
         setPasswordError(true);
         setPasswordSuccess(false);
       } else {
@@ -65,10 +53,11 @@ export const SecondStep = ({
         setPasswordSuccess(true);
       }
     }
-  }, [password]);
+  }, [localRegisterData.password]);
 
   async function nextStep() {
-    const valuesGiven = displayName.length && password.length;
+    const valuesGiven =
+      localRegisterData.displayName.length && localRegisterData.password.length;
 
     const valuesAccepted = !displayNameError && !passwordError;
 
@@ -76,12 +65,22 @@ export const SecondStep = ({
       setLoading(true);
 
       try {
-        await beginAccountVerification(emailOrPhone, username, via);
+        const result = await beginRegister(localRegisterData, via);
 
-        setStep(3);
+        dispatch(
+          setLocalRegisterVerificationCode({
+            token: result.following_url,
+            code: "",
+          })
+        );
+
+        dispatch(nextLocalRegisterStep());
       } catch (error: any) {
-        if (error.response.data.message.indexOf("sent") >= 0) {
-          setStep(3);
+        if (
+          error.response.data.message.indexOf("sent") >= 0 ||
+          error.response.data.message.indexOf("taken") >= 0
+        ) {
+          dispatch(nextLocalRegisterStep());
         } else {
           dispatch(setWarn(error.response.data.message));
         }
@@ -100,7 +99,7 @@ export const SecondStep = ({
       <div
         className="cursor-pointer"
         style={{ width: "24px" }}
-        onClick={() => setStep(1)}
+        onClick={() => dispatch(backLocalRegisterStep())}
       >
         <BackSVG />
       </div>
@@ -126,12 +125,13 @@ export const SecondStep = ({
           }`}
           type={"text"}
           onChangeEvent={(e) => {
-            setAccountDto((prev) => ({
-              ...prev,
-              display_name: e.target.value.toString(),
-            }));
+            dispatch(
+              setLocalRegisterData({
+                displayName: e.target.value,
+              })
+            );
           }}
-          value={displayName}
+          value={localRegisterData.displayName}
         />
       </div>
 
@@ -152,12 +152,13 @@ export const SecondStep = ({
           }`}
           type={"password"}
           onChangeEvent={(e) =>
-            setAccountDto((prev) => ({
-              ...prev,
-              password: e.target.value.toString(),
-            }))
+            dispatch(
+              setLocalRegisterData({
+                password: e.target.value.toString(),
+              })
+            )
           }
-          value={password}
+          value={localRegisterData.password}
         />
       </div>
 

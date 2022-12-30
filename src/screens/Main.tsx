@@ -39,7 +39,7 @@ export default function Main() {
 
   return (
     <div>
-      <main className="bg-slate-900">
+      <main>
         <section className="">
           <div className="px-6 mx-auto">
             <div className="flex flex-wrap -mx-4">

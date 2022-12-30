@@ -1,3 +1,4 @@
+import { LocalRegisterDto } from "../../auth/slices/authSlice";
 import { sendRequest } from "../sendRequest";
 
 export const BASE_PARAM = "accounts/";
@@ -7,14 +8,21 @@ export async function getMyCredentials(): Promise<any> {
 }
 
 export async function uploadProfileImage(
-  formData: FormData
-): Promise<{ data: string }> {
-  return await sendRequest(
-    BASE_PARAM + "upload_profile_image",
+  formData: FormData,
+  userID: string
+): Promise<{
+  data: {
+    image: string;
+  };
+}> {
+  const result: { data: { image: string } } = await sendRequest(
+    "profiles/update_image/account/" + userID,
     "patch",
     true,
     formData
   );
+
+  return result;
 }
 
 export async function isAvailableField(
@@ -28,25 +36,30 @@ export async function isAvailableField(
   return data;
 }
 
-export async function beginAccountVerification(
-  emailOrPhone: string,
-  username: string,
+export async function beginRegister(
+  data: LocalRegisterDto,
   via: "email" | "phone"
-): Promise<{ message: string }> {
+): Promise<{ following_url: string; message: string }> {
+  const { password, displayName, username } = data;
+
   if (via === "email") {
-    return await sendRequest("auth/begin_email_verification_for_register/", "post", false, {
-      email: emailOrPhone,
+    return await sendRequest("local/auth/register_with_email/", "post", false, {
+      display_name: displayName,
+      email: data.email,
       username,
+      password,
     });
   }
 
   return await sendRequest(
-    "auth//begin_mobile_phone_verification_for_register/",
+    "local/auth/register_with_mobile_phone/",
     "post",
     false,
     {
-      phone: emailOrPhone,
+      display_name: displayName,
+      mobile_phone: data.mobile_phone,
       username,
+      password,
     }
   );
 }

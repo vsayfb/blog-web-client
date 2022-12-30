@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import Spinner from "./Spinner";
 
 export const MyButton = ({
@@ -8,16 +6,18 @@ export const MyButton = ({
   classProperties = "",
   role = "button",
   disabled,
+  showSpinnerWhenDisabled = true,
 }: {
   onClickEvent: React.MouseEventHandler<HTMLButtonElement> | undefined;
   buttonText: string;
   classProperties?: string;
   role?: React.AriaRole | undefined;
   disabled?: boolean;
+  showSpinnerWhenDisabled?: boolean;
 }) => {
   const BUTTON_CLASS = `
     text-sm font-semibold focus:outline-none 
-    bg-amber-500 text-white rounded py-4 w-full flex justify-center items-center`;
+    bg-zinc-900 text-white rounded py-4 w-full flex justify-center items-center`;
 
   return (
     <button
@@ -31,7 +31,11 @@ export const MyButton = ({
       }
       disabled={disabled}
     >
-      {disabled ? <Spinner w={22} h={22} /> : buttonText}
+      {disabled && showSpinnerWhenDisabled ? (
+        <Spinner w={22} h={22} />
+      ) : (
+        buttonText
+      )}
     </button>
   );
 };

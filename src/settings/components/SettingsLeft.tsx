@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMe } from "../../../auth/slices/authSlice";
-import { MyButton } from "../../../lib/components/Button";
-import Spinner from "../../../lib/components/Spinner";
-import { sendRequest } from "../../../lib/sendRequest";
-import { setError } from "../../../lib/slices/appSlice";
-import { ProfileImage } from "../../../profile/components/ProfileImage";
-import { RootState } from "../../../store";
+import { setMe } from "../../auth/slices/authSlice";
+import { MyButton } from "../../lib/components/Button";
+import Spinner from "../../lib/components/Spinner";
+import { sendRequest } from "../../lib/sendRequest";
+import { setError } from "../../lib/slices/appSlice";
+import { ProfileImage } from "../../profile/components/ProfileImage";
+import { RootState } from "../../store";
 
 export const SettingsLeft = () => {
   const dispatch = useDispatch();
@@ -31,17 +31,21 @@ export const SettingsLeft = () => {
     inputFile.current.click();
   }
 
-  async function uploadProfileImage(image: File) {
+  async function uploadProfileImage(
+    image: File
+  ): Promise<{ data: { image: string } }> {
     const formData = new FormData();
 
     formData.set("image", image);
 
-    return sendRequest(
-      "accounts/upload_profile_image",
+    const result: { data: { image: string } } = await sendRequest(
+      "profiles/update_image/account/" + me.sub,
       "patch",
       true,
       formData
     );
+
+    return result;
   }
 
   useEffect(() => {
@@ -50,7 +54,7 @@ export const SettingsLeft = () => {
 
       uploadProfileImage(file)
         .then((res) => {
-          dispatch(setMe({ image: res.data }));
+          dispatch(setMe({ image: res.data.image }));
         })
         .catch((reason) => {
           dispatch(setError(reason.response.data.message[0]));

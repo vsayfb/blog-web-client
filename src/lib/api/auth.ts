@@ -1,13 +1,11 @@
-import { CreateAccoundDto } from "../../auth/via/ViaEmail";
 import { sendRequest } from "../sendRequest";
-import { Auth } from "../../auth/types/auth-view.dto";
-import { GoogleResponseData } from "../../auth/via/ViaGoogle";
+import { GoogleResponseData } from "../../auth/google/ViaGoogle";
 import { AccountViewDto } from "../../accounts/types/account-view-dto";
 
 export const BASE_PARAM = "auth/";
 
 export async function localLogin(
-  usernameOrEmail: string,
+  usernameOrEmailOrMobilePhone: string,
   password: string
 ): Promise<{
   data?: { account: AccountViewDto; access_token: string };
@@ -18,8 +16,8 @@ export async function localLogin(
     data?: { account: AccountViewDto; access_token: string };
     following_link?: string;
     message: string;
-  } = await sendRequest(BASE_PARAM + "login", "post", false, {
-    username: usernameOrEmail,
+  } = await sendRequest("local/auth/login", "post", false, {
+    username: usernameOrEmailOrMobilePhone,
     password,
   });
 
@@ -28,9 +26,17 @@ export async function localLogin(
 
 export async function googleLogin(
   access_token: string
-): Promise<GoogleResponseData> {
-  return await sendRequest(
-    BASE_PARAM + "google/login",
+): Promise<{
+  data?: { account: AccountViewDto; access_token: string } | undefined;
+  following_link?: string | undefined;
+  message: string;
+}> {
+  const result: {
+    data?: GoogleResponseData["data"];
+    following_link?: string;
+    message: string;
+  } = await sendRequest(
+    "google/auth/login",
     "post",
     false,
     {},
@@ -38,41 +44,25 @@ export async function googleLogin(
       Authorization: access_token,
     }
   );
+
+  return result;
 }
 
 export async function googleRegister(
-  access_token: string
+  google_access_token: string
 ): Promise<GoogleResponseData> {
-  return await sendRequest(BASE_PARAM + "google/register", "post", false, {
-    access_token,
+  return await sendRequest("google/auth/register", "post", false, {
+    google_access_token,
   });
 }
 
 type RegisterDto = GoogleResponseData;
 
 export async function register(
-  dto: CreateAccoundDto,
-  via: "phone" | "email"
+  verificationToken: string,
+  verificationCode: string
 ): Promise<RegisterDto> {
-  if (via === "email") {
-    //@ts-ignore
-    delete dto.phone;
-
-    return await sendRequest(
-      BASE_PARAM + "register_with_email",
-      "post",
-      false,
-      dto
-    );
-  }
-
-  //@ts-ignore
-  delete dto.email;
-
-  return await sendRequest(
-    BASE_PARAM + "register_with_mobile_phone",
-    "post",
-    false,
-    dto
-  );
+  return await sendRequest(verificationToken.substring(1), "post", false, {
+    verification_code: verificationCode,
+  });
 }

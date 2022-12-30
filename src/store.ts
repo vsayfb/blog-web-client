@@ -7,6 +7,7 @@ import commentsSlice from "./comments/slices/commentsSlice";
 import inboxSlice from "./inbox/slices/inboxSlice";
 import profileSlice from "./profile/slices/profileSlice";
 import notificationSlice from "./notifications/slices/notificationSlice";
+import settingsSlice from "./settings/slices/settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     inbox: inboxSlice,
     profile: profileSlice,
     notifications: notificationSlice,
+    settings: settingsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

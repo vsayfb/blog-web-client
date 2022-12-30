@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Main from "../screens/Main";
 import { ProtectedRoute } from "../lib/components/ProtectedRoute";
 import { Me } from "../auth/slices/authSlice";
-import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import { PublicPost } from "../screens/PublicPost";
 import { WritePost } from "../screens/WritePost";
@@ -11,10 +10,13 @@ import { UpdatePost } from "../screens/UpdatePost";
 import { Post } from "../screens/Post";
 import { NotFound } from "../screens/NotFound";
 import { Profile } from "../profile/components/Profile";
-import { Settings } from "../accounts/settings/components/Settings";
+import { Settings } from "../settings/components/Settings";
 import { Tags } from "../tags/components/Tags";
 import { Tag } from "../tags/components/Tag";
 import SignInScreen from "../screens/SignIn";
+import { SetPassword } from "../auth/google/SetPassword";
+import { UploadProfileImage } from "../lib/components/UploadProfileImage";
+import { TFAScreen } from "../auth/local/login/TFAScreen";
 
 export const AppRoutes = ({ me }: { me: Me }) => {
   return (
@@ -75,6 +77,9 @@ export const AppRoutes = ({ me }: { me: Me }) => {
       />
 
       <Route path=":url" element={<PublicPost me={me} />} />
+      <Route path="setPassword" element={<SetPassword />} />
+      <Route path="uploadProfileImage" element={<UploadProfileImage />} />
+      <Route path="two_factor_auth" element={<TFAScreen />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
