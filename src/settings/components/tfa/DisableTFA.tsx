@@ -12,14 +12,19 @@ import { setTFA } from "../../slices/settingsSlice";
 export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
   const [loading, setLoading] = useState(false);
   const [codeInputVisibility, setCodeInputVisibility] = useState(false);
+
+  const [passwordWrong, setPasswordWrong] = useState(false);
+  const [codeWrong, setCodeWrong] = useState(false);
+
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState({
+    verification_code: "",
+    verification_token: "",
+  });
 
   const [codeSentTo, setCodeSentTo] = useState<"email" | "mobile phone">(
     "email"
   );
-
-  const [followingURL, setFollowingURL] = useState("");
 
   const dispatch = useDispatch();
 
@@ -27,7 +32,7 @@ export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
     setLoading(true);
 
     try {
-      const result: { following_url: string; message: string } =
+      const result: { following_link: string; message: string } =
         await sendRequest(`accounts/2fa/disable_current`, "post", true, {
           password,
         });
@@ -36,14 +41,19 @@ export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
         result.message.indexOf("email") >= 0 ? "email" : "mobile phone"
       );
 
-      setFollowingURL(result.following_url.substring(1));
+      setCode((p) => ({ ...p, verification_token: result.following_link }));
 
       setCodeInputVisibility(true);
     } catch (error: any) {
       if (error.response.data.message.indexOf("sent") >= 0) {
         setCodeInputVisibility(true);
+
+        setCode((p) => ({
+          ...p,
+          verification_token: error.response.data.following_link,
+        }));
       } else {
-        dispatch(setError("Password was wrong."));
+        setPasswordWrong(true);
       }
     } finally {
       setLoading(false);
@@ -54,15 +64,19 @@ export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
     setLoading(true);
 
     try {
-      await sendRequest(followingURL, "delete", true, {
-        verification_code: code,
+      await sendRequest(code.verification_token, "post", true, {
+        verification_code: code.verification_code,
       });
 
       setCodeInputVisibility(false);
+      setCode({ verification_code: "", verification_token: "" });
+      setPassword("");
+      setPasswordWrong(false);
+      setCodeWrong(false);
 
       dispatch(setTFA(null));
     } catch (error: any) {
-      dispatch(setError("Verification code was wrong."));
+      setCodeWrong(true);
     } finally {
       setLoading(false);
     }
@@ -80,16 +94,19 @@ export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
             </div>
           </div>
 
-          <div>
+          <div className="mt-2">
             <small>{`A verification code sent to your ${codeSentTo}`}.</small>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-2">
             <InputField
-              labelText="Verification code"
-              value={code}
-              onChangeEvent={(e) => setCode(e.target.value)}
+              value={code.verification_code}
+              onChangeEvent={(e) => {
+                setCode((p) => ({ ...p, verification_code: e.target.value }));
+              }}
+              labelAttributes={codeWrong ? "border-red-500" : ""}
               type="text"
+              placeholderText="Enter code here"
             />
           </div>
 
@@ -125,7 +142,15 @@ export const DisableTFA = ({ tfa }: { tfa: TwoFactorAuthDto["data"] }) => {
             <InputField
               labelText="Password"
               value={password}
-              onChangeEvent={(e) => setPassword(e.target.value)}
+              onChangeEvent={(e) => {
+                if (e.target.value.length < 7 || e.target.value.length > 16) {
+                  setPasswordWrong(true);
+                } else {
+                  setPasswordWrong(false);
+                }
+                setPassword(e.target.value);
+              }}
+              inputAttributes={passwordWrong ? "border-red-500" : ""}
               type="password"
             />
           </div>

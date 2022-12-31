@@ -41,10 +41,14 @@ export const OpenedChat = ({ chatID }: { chatID: string }) => {
       setIsConnected(false);
     });
 
-    socket.on("joined", (msg: string) => {});
+    socket.on("joined", (msg: string) => {
+      console.log(msg);
+    });
 
     socket.on("message", (message: ChatMessageViewDto) => {
-      if (chatID === message.chatID) {
+      console.log(message);
+
+      if (chatID === message.chat_id) {
         dispatch(addMessageToOpenedChat(message));
       }
     });

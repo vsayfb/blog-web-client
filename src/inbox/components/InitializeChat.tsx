@@ -31,12 +31,11 @@ export const InitiliazeChat = ({
     e.preventDefault();
 
     const { data }: { data: ChatViewDto } = await sendRequest(
-      "chats/",
+      `chats/with_account/${targetUser.id}`,
       "post",
       true,
       {
-        toID: targetUser.id,
-        firstMessage,
+        first_message: firstMessage,
       }
     );
 

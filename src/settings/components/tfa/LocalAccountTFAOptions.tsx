@@ -1,9 +1,13 @@
+import { SetStateAction } from "react";
+
 export const LocalAccountTfaOptions = ({
   enableWithEmail,
   enableWithMobilePhone,
+  setEnableVia,
 }: {
   enableWithEmail: boolean;
   enableWithMobilePhone: boolean;
+  setEnableVia: React.Dispatch<SetStateAction<"email" | "mobile_phone">>;
 }) => {
   if (enableWithEmail && enableWithMobilePhone) {
     return (
@@ -17,10 +21,9 @@ export const LocalAccountTfaOptions = ({
         <select
           id="tfa_options"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onChange={(e) => setEnableVia(e.target.value as any)}
         >
-          <option defaultValue={"email"} selected>
-            Email
-          </option>
+          <option value={"email"}>Email</option>
           <option value="mobile_phone">Mobile phone</option>
         </select>
       </>
@@ -37,6 +40,7 @@ export const LocalAccountTfaOptions = ({
         <select
           id="tfa_options"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onChange={(e) => setEnableVia(e.target.value as any)}
         >
           <option value={enableWithEmail ? "email" : "mobile_phone"} selected>
             {enableWithEmail ? "Email" : "Mobile Phone"}

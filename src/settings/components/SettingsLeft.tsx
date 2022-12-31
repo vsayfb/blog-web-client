@@ -7,6 +7,7 @@ import { sendRequest } from "../../lib/sendRequest";
 import { setError } from "../../lib/slices/appSlice";
 import { ProfileImage } from "../../profile/components/ProfileImage";
 import { RootState } from "../../store";
+import { UpdatedProfileDto } from "./profile/UpdatePublicProfile";
 
 export const SettingsLeft = () => {
   const dispatch = useDispatch();
@@ -31,14 +32,12 @@ export const SettingsLeft = () => {
     inputFile.current.click();
   }
 
-  async function uploadProfileImage(
-    image: File
-  ): Promise<{ data: { image: string } }> {
+  async function uploadProfileImage(image: File) {
     const formData = new FormData();
 
     formData.set("image", image);
 
-    const result: { data: { image: string } } = await sendRequest(
+    const result: UpdatedProfileDto = await sendRequest(
       "profiles/update_image/account/" + me.sub,
       "patch",
       true,
@@ -53,8 +52,8 @@ export const SettingsLeft = () => {
       setImageUploading(true);
 
       uploadProfileImage(file)
-        .then((res) => {
-          dispatch(setMe({ image: res.data.image }));
+        .then((res: UpdatedProfileDto) => {
+          dispatch(setMe({ image: res.data.account.image }));
         })
         .catch((reason) => {
           dispatch(setError(reason.response.data.message[0]));

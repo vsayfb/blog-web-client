@@ -1,4 +1,5 @@
 import { LocalRegisterDto } from "../../auth/slices/authSlice";
+import { UpdatedProfileDto } from "../../settings/components/profile/UpdatePublicProfile";
 import { sendRequest } from "../sendRequest";
 
 export const BASE_PARAM = "accounts/";
@@ -10,12 +11,8 @@ export async function getMyCredentials(): Promise<any> {
 export async function uploadProfileImage(
   formData: FormData,
   userID: string
-): Promise<{
-  data: {
-    image: string;
-  };
-}> {
-  const result: { data: { image: string } } = await sendRequest(
+): Promise<UpdatedProfileDto> {
+  const result: UpdatedProfileDto = await sendRequest(
     "profiles/update_image/account/" + userID,
     "patch",
     true,

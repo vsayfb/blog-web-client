@@ -5,6 +5,7 @@ export type ChatViewDto = {
   id: string;
   created_at: string;
   updated_at: string;
+  last_message: { content: string; id: string };
   messages: ChatMessageViewDto[];
   members: AccountViewDto[];
 };

@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../../lib/components/Spinner";
 import { sendRequest } from "../../../lib/sendRequest";
 import { RootState } from "../../../store";
 import { setTFA } from "../../slices/settingsSlice";
 import { DisableTFA } from "./DisableTFA";
-import { EnableTfaForGoogleAccount } from "./EnableTfaForGoogleAccount";
-import { EnableTfaForLocalAccount } from "./EnableTfaForLocalAccount";
+import { EnableTFA } from "./EnableTFA";
 
 export type TwoFactorAuthDto = {
   data: {
@@ -41,19 +39,11 @@ export const TwoFactorAuth = () => {
       <h4 className="text-orange-400">Protect your account</h4>
 
       <div className="mt-4">
-        {account.via === "local" ? (
-          tfa === null ? (
-            <EnableTfaForLocalAccount account={account} />
-          ) : (
-            <DisableTFA tfa={tfa} />
-          )
-        ) : account.via === "google" ? (
-          tfa === null ? (
-            <EnableTfaForGoogleAccount account={account} />
-          ) : (
-            <DisableTFA tfa={tfa} />
-          )
-        ) : null}
+        {tfa === null ? (
+          <EnableTFA account={account} />
+        ) : (
+          <DisableTFA tfa={tfa} />
+        )}
       </div>
     </div>
   );

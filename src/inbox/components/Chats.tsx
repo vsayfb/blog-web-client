@@ -33,7 +33,7 @@ export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
 
   return (
     <ul className="overflow-auto">
-      <h2 className={`ml-2 mb-2  text-lg my-2 `}>Chats</h2>
+      <h2 className={`ml-2 mb-2 text-lg my-2`}>Chats</h2>
 
       {chats.map((c) => {
         const targetUser = c.members.find(
@@ -59,7 +59,9 @@ export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
                     {new Date(c.updated_at).toLocaleDateString()}
                   </span>
                 </div>
-                {/* <span className="block ml-2 text-sm ">I am the danger!</span> */}
+                <span className="block ml-4 text-sm" key={c.last_message.id}>
+                  {c.last_message.content}
+                </span>
               </div>
             </a>
           </li>

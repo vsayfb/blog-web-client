@@ -1,4 +1,18 @@
-export const GoogleAccountTfaOptions = ({}: {}) => {
+import { SetStateAction, useEffect } from "react";
+
+export const GoogleAccountTfaOptions = ({
+  enableWithMobilePhone,
+  setEnableVia,
+}: {
+  enableWithMobilePhone: boolean;
+  setEnableVia: React.Dispatch<SetStateAction<"email" | "mobile_phone">>;
+}) => {
+  useEffect(() => {
+    if (enableWithMobilePhone) setEnableVia("mobile_phone");
+  }, []);
+
+  if (!enableWithMobilePhone) return null;
+
   return (
     <>
       <label
@@ -11,10 +25,9 @@ export const GoogleAccountTfaOptions = ({}: {}) => {
         id="tfa_options"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
-        <option defaultValue={"mobile_phone"} selected>
+        <option value={"mobile_phone"} selected>
           Mobile Phone
         </option>
-        <option value="mobile_phone">Mobile phone</option>
       </select>
     </>
   );

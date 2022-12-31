@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
 import { NextSVG } from "../svgs/NextSVG";
 import { useNavigate } from "react-router-dom";
+import { setLocalStorageToken } from "../setLocalStorageToken";
+import { UpdatedProfileDto } from "../../settings/components/profile/UpdatePublicProfile";
 
 export const UploadProfileImage = () => {
   const dispatch = useDispatch();
@@ -36,8 +38,10 @@ export const UploadProfileImage = () => {
       setImageUploading(true);
 
       uploadImage(imageFile)
-        .then((res) => {
-          dispatch(setMe({ image: res.data.image }));
+        .then((res: UpdatedProfileDto) => {
+          dispatch(setMe({ image: res.data.account.image }));
+
+          setLocalStorageToken(res.data.access_token);
         })
         .catch((reason: any) => {
           dispatch(setError(reason.response.data.message[0]));
