@@ -51,21 +51,21 @@ export const PostCard = ({ post }: { post: PostCardDto }) => {
                 src={detectImage(post.author.image)}
                 alt=""
               />
-              <div className="inline-flex items-center space-x-2 text-md font-bold ">
+              <div className="inline-flex items-center text-zinc-900 space-x-2 text-md font-bold ">
                 {post.author.display_name}
               </div>
             </div>
 
             <div className="flex items-center ">
               {post.like_count !== undefined ? (
-                <div className="flex items-center mr-8">
+                <div className="flex items-center mr-8 text-zinc-900">
                   <LikeSVG w={21} h={21} />
                   <b className="ml-2">{post.like_count}</b>
                 </div>
               ) : null}
 
               {post.comment_count !== undefined ? (
-                <div className="flex items-center mr-8">
+                <div className="flex items-center mr-8 text-zinc-900">
                   <ChatIconSVG w={17} h={17} />
                   <b className="ml-2">{post.comment_count}</b>
                 </div>

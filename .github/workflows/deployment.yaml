@@ -17,7 +17,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd client
-            git pull
+            git fetch origin master
+            git reset --hard FETCH_HEAD
             sudo npm i
             sudo npx tailwindcss -i ./src/index.css -o ./src/build.css
             sudo npm run build

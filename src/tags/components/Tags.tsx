@@ -51,7 +51,7 @@ export const Tags = () => {
         <Link
           key={t.id}
           to={`/tag/${t.name}`}
-          className="mr-20 mt-12 text-lg inline-block font-bold leading-sm  px-3 py-1 rounded-md  pt-4 pb-4 "
+          className="mr-20 mt-12 text-lg inline-block font-bold leading-sm  px-3 py-1 rounded-md  pt-4 pb-4 bg-amber-500 text-black rounded-md "
         >
           <div className="inline-flex items-center uppercase">
             <TagSVG />

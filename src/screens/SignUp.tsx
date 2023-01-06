@@ -40,7 +40,7 @@ export default function SignUp() {
             buttonText="CONTINUE WITH EMAIL"
           />
 
-          {process.env.MOBILE_FACTOR_ENABLED && (
+          {process.env.MOBILE_FACTOR_ENABLED ? (
             <MyButton
               classProperties="mt-4"
               onClickEvent={() => {
@@ -49,7 +49,7 @@ export default function SignUp() {
               }}
               buttonText="CONTINUE WITH PHONE"
             />
-          )}
+          ) : null}
         </div>
       </Auth>
     );
