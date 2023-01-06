@@ -47,7 +47,7 @@ export default function SignUp() {
                 dispatch(hideSignUpInitStep());
                 setViaMobilPhone(true);
               }}
-              buttonText="CONTINUE WITH PHONE"
+              buttonText="CONTINUE WITH MOBILE PHONE"
             />
           ) : null}
         </div>
