@@ -40,14 +40,16 @@ export default function SignUp() {
             buttonText="CONTINUE WITH EMAIL"
           />
 
-          <MyButton
-            classProperties="mt-4"
-            onClickEvent={() => {
-              dispatch(hideSignUpInitStep());
-              setViaMobilPhone(true);
-            }}
-            buttonText="CONTINUE WITH PHONE"
-          />
+          {process.env.MOBILE_FACTOR_ENABLED && (
+            <MyButton
+              classProperties="mt-4"
+              onClickEvent={() => {
+                dispatch(hideSignUpInitStep());
+                setViaMobilPhone(true);
+              }}
+              buttonText="CONTINUE WITH PHONE"
+            />
+          )}
         </div>
       </Auth>
     );

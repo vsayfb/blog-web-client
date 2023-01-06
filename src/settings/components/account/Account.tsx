@@ -21,19 +21,15 @@ export type AccountDto = AccountViewDto & {
 };
 
 export const Account = () => {
-  const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
-
   const { account } = useSelector((state: RootState) => state.settings);
 
   if (account) {
     if (account.via === "google") {
-      return (
+      return process.env.MOBILE_FACTOR_ENABLED ? (
         <div className="mt-4">
           <AccountMobilePhone account={account} />
         </div>
-      );
+      ) : null;
     }
 
     return (
@@ -42,9 +38,11 @@ export const Account = () => {
           <AccountEmail account={account} />
         </div>
 
-        <div className="mt-12">
-          <AccountMobilePhone account={account} />
-        </div>
+        {process.env.MOBILE_FACTOR_ENABLED ? (
+          <div className="mt-12">
+            <AccountMobilePhone account={account} />
+          </div>
+        ) : null}
       </div>
     );
   }

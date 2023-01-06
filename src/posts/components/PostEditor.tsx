@@ -1,5 +1,7 @@
 import { Editor as TinyMCE } from "@tinymce/tinymce-react";
 import imagesUploadHandler from "../../lib/imagesUploadHandler";
+import Prism from "prismjs";
+import { useEffect } from "react";
 
 export const PostEditor = ({
   content,

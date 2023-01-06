@@ -104,10 +104,7 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
           </div>
         ) : null}
 
-        <article
-          className={"light-content-tiny"}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        ></article>
+        <article dangerouslySetInnerHTML={{ __html: post.content }}></article>
 
         {post.published ? (
           <section id="comments">

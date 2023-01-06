@@ -15,16 +15,18 @@
     @apply text-3xl;
     @apply font-bold;
     @apply text-zinc-900;
+    @apply mt-1 mb-1;
   }
   h2 {
     @apply text-2xl;
     @apply font-bold;
     @apply text-zinc-900;
+    @apply mt-1 mb-1;
   }
   h3 {
     @apply text-2xl;
     @apply font-bold;
-    @apply text-zinc-900;
+    @apply mt-1 mb-1;
   }
   h4 {
     @apply text-xl;
@@ -42,6 +44,11 @@
   pre {
     @apply overflow-y-auto;
     @apply rounded-md;
+  }
+
+  ul,
+  ol {
+    list-style: revert;
   }
 }
 
