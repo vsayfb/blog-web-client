@@ -16,9 +16,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-          cd client
-          git pull
-          sudo npm i
-          sudo npx tailwindcss -i ./src/index.css -o ./src/build.css
-          sudo npm run build
+           cd client
+           git pull
+           sudo npm i
+           sudo npx tailwindcss -i ./src/index.css -o ./src/build.css
+           sudo npm run build
 
