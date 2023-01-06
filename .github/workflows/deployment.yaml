@@ -2,7 +2,7 @@ name: Deployment process
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     name: Build process
