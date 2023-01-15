@@ -10,7 +10,7 @@ export type ProfileViewDto = {
     followers_count: number;
     following_count: number;
     following_by: boolean;
-    subscriptions: Subscriptions;
+    subscriptions_by: Subscriptions;
   };
   message: string;
 };

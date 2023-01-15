@@ -7,9 +7,15 @@ import { UpdateSVG } from "../../lib/svgs/UpdateSVG";
 import { TagBox } from "../../tags/components/TagBox";
 import { Helmet } from "react-helmet";
 import { PostViewDto } from "../../posts/types/post-view.dto";
+import { TagViewDto } from "../../tags/types/tag-view.dto";
+
+export type DashboardPost = PostViewDto & {
+  tags: TagViewDto[];
+  published: boolean;
+};
 
 export const DashboardPosts = () => {
-  const [myPosts, setMyPosts] = useState<PostViewDto[]>([]);
+  const [myPosts, setMyPosts] = useState<DashboardPost[]>([]);
 
   const [deleteModalAnswer, setDeleteModalAnswer] = useState<boolean>();
 

@@ -154,7 +154,7 @@ export const PostStats = ({
           >
             {bookmarked ? <BookmarkFillSVG /> : <BookmarkSVG />}
           </div>
-          <b className=" ml-1">{bookmarkCount}</b>
+          <b className=" ml-1 text-black">{bookmarkCount}</b>
         </div>
         <div className="flex ml-4">
           {me.sub === postAuthorID ? (
@@ -167,7 +167,7 @@ export const PostStats = ({
             </div>
           )}
 
-          <b className=" ml-1">{likeCount}</b>
+          <b className=" ml-1 text-black">{likeCount}</b>
         </div>{" "}
         <div className="flex ml-4 ">
           {me.sub === postAuthorID ? (
@@ -179,7 +179,7 @@ export const PostStats = ({
               {disliked ? <DislikeFillSVG /> : <DislikeSVG />}
             </div>
           )}
-          <b className=" ml-1">{dislikeCount}</b>
+          <b className=" ml-1 text-black">{dislikeCount}</b>
         </div>
       </div>
     </>

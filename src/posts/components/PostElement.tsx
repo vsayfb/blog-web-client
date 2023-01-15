@@ -2,43 +2,80 @@ import { detectImage } from "../../lib/detectImage";
 import { CreatedAtSVG } from "../../lib/svgs/CreatedAtSVG";
 import { TagBox } from "../../tags/components/TagBox";
 import { PostComments } from "../../comments/components/PostComments";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { PostViewDto } from "../types/post-view.dto";
 import { Link } from "react-router-dom";
 import { PostStats } from "./PostStats";
 import moment from "moment";
 import { calculateReadTime } from "../../lib/calculateReadTime";
 import { BookSVG } from "../../lib/svgs/BookSVG";
+import { useEffect, useState } from "react";
+import { sendRequest } from "../../lib/sendRequest";
+import { TagViewDto } from "../../tags/types/tag-view.dto";
+import Spinner from "../../lib/components/Spinner";
 
 export const PostElement = ({ post }: { post: PostViewDto }) => {
-  const {
-    bookmark_count,
-    like_count,
-    dislike_count,
-    bookmarked_by,
-    liked_by,
-    disliked_by,
-  } = post;
+  const { bookmarked_by, liked_by, disliked_by } = post;
+
+  const [tags, setTags] = useState<TagViewDto[]>([]);
+
+  const [stats, setStats] = useState<{
+    bookmark_count: number;
+    like_count: number;
+    dislike_count: number;
+  }>({ bookmark_count: 0, like_count: 0, dislike_count: 0 });
+
+  const [tagsLoading, setTagsLoading] = useState(true);
+
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  useEffect(() => {
+    sendRequest("tags/post/" + post.id, "get", false).then((value) => {
+      setTags(value.data);
+
+      setTagsLoading(false);
+    });
+  }, [post.id]);
+
+  useEffect(() => {
+    if (tags) {
+      sendRequest("bookmarks/post/count/" + post.id, "get", false).then(
+        (value: { data: number }) => {
+          setStats((p) => ({ ...p, bookmark_count: value.data }));
+
+          sendRequest("expressions/count/post/" + post.id, "get", false).then(
+            (value: {
+              data: { like_count: number; dislike_count: number };
+            }) => {
+              setStats((p) => ({ ...p, ...value.data }));
+
+              setStatsLoading(false);
+            }
+          );
+        }
+      );
+    }
+  }, [tags]);
 
   return (
     <div className={`relative pt-20 md:pt-40 pb-20  overflow-x-hidden  `}>
-      {post.published ? (
+      {!statsLoading ? (
         <div className="p-4 absolute top-60">
           <PostStats
             postID={post.id}
             postAuthorID={post.author.id}
             stats={{
-              bookmark_count,
-              like_count,
-              dislike_count,
+              ...stats,
               bookmarked_by,
               liked_by,
               disliked_by,
             }}
           />
         </div>
-      ) : null}
+      ) : (
+        <div className="p-4 absolute top-60">
+          <Spinner />
+        </div>
+      )}
 
       <div className="container px-4 max-w-3xl mx-auto">
         <div className=" text-center">
@@ -67,13 +104,17 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
           </div>
 
           <div className="mb-16">
-            {post.tags.length ? (
+            {!tagsLoading ? (
               <div className="mt-6 ">
-                {post.tags.map((tag) => (
+                {tags.map((tag) => (
                   <TagBox key={tag.id} name={tag.name} size="px-8" />
                 ))}
               </div>
-            ) : null}
+            ) : (
+              <div className="mt-6 flex justify-center">
+                <Spinner />
+              </div>
+            )}
 
             <div className="flex justify-center items-center mt-12">
               <div
@@ -106,11 +147,13 @@ export const PostElement = ({ post }: { post: PostViewDto }) => {
 
         <article dangerouslySetInnerHTML={{ __html: post.content }}></article>
 
-        {post.published ? (
-          <section id="comments">
+        <section id="comments">
+          {window.location.href.indexOf(
+            process.env.REACT_APP_HOST + "/post/"
+          ) == -1 ? (
             <PostComments postID={post.id} />
-          </section>
-        ) : null}
+          ) : null}
+        </section>
       </div>
     </div>
   );

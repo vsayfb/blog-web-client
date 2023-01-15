@@ -2,9 +2,7 @@ export type PostViewDto = {
   title: string;
   url: string;
   id: string;
-  published: boolean;
   content: string;
-  tags: { id: string; name: string; created_at: string; updated_at: string }[];
   author: {
     id: string;
     display_name: string;
@@ -16,9 +14,25 @@ export type PostViewDto = {
   bookmarked_by: boolean;
   liked_by: boolean;
   disliked_by: boolean;
-  bookmark_count: number;
-  like_count: number;
-  dislike_count: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type UpdatedPostDto = {
+  title: string;
+  url: string;
+  id: string;
+  published?: boolean;
+  content: string;
+  tags: { id: string; name: string; created_at: string; updated_at: string }[];
+  author: {
+    id: string;
+    display_name: string;
+    username: string;
+    image: string;
+    created_at: string;
+  };
+  title_image: string | null;
   created_at: string;
   updated_at: string;
 };

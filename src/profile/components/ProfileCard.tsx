@@ -8,6 +8,8 @@ export const ProfileCard = ({
 }: {
   profile: ProfileViewDto["data"];
 }) => {
+  console.log(profile);
+
   return (
     <div className="flex flex-col justify-center max-w-xs p-6 w-full shadow-md rounded-xl sm:px-12 ">
       <ProfileImage url={profile.image} />
@@ -25,7 +27,7 @@ export const ProfileCard = ({
           {profile.following_by ? (
             <Subscriptions
               accountID={profile.id}
-              subscriptions={profile.subscriptions}
+              subscriptions={profile.subscriptions_by}
             />
           ) : null}
         </div>

@@ -1,5 +1,6 @@
+import { DashboardPost } from "../../dashboard/components/DashboardPosts";
 import { AllPostViewDto } from "../../posts/types/all-post-view.dto";
-import { PostViewDto } from "../../posts/types/post-view.dto";
+import { PostViewDto, UpdatedPostDto } from "../../posts/types/post-view.dto";
 import { CreatePostDto } from "../../screens/WritePost";
 import { sendRequest } from "../sendRequest";
 
@@ -8,7 +9,7 @@ export const BASE_PARAM = "posts/";
 export async function getPublicPost(
   postUrl: string
 ): Promise<{ data: PostViewDto }> {
-  return await sendRequest(BASE_PARAM + postUrl, "get", true);
+  return await sendRequest(BASE_PARAM + "url/" + postUrl, "get", true);
 }
 
 export async function getPosts(): Promise<{ data: AllPostViewDto }> {
@@ -18,7 +19,7 @@ export async function getPosts(): Promise<{ data: AllPostViewDto }> {
 export async function uploadPost(
   data: CreatePostDto,
   published: boolean
-): Promise<{ data: PostViewDto }> {
+): Promise<{ data: UpdatedPostDto }> {
   const query = `${BASE_PARAM}${!published ? "?published=false" : ""}`;
 
   if (data.title_image) {
@@ -38,7 +39,7 @@ export async function uploadPost(
 export async function updatePost(
   id: string,
   data: any
-): Promise<{ data: PostViewDto }> {
+): Promise<{ data: UpdatedPostDto }> {
   return await sendRequest(BASE_PARAM + id, "put", true, data);
 }
 
@@ -57,7 +58,7 @@ export async function uploadTitleImageForPost(
   );
 }
 
-export async function getMyPosts(): Promise<{ data: PostViewDto[] }> {
+export async function getMyPosts(): Promise<{ data: DashboardPost[] }> {
   return await sendRequest(BASE_PARAM + "me", "get", true);
 }
 
@@ -77,8 +78,16 @@ export async function removePost(
   return await sendRequest(BASE_PARAM + id, "delete", true);
 }
 
-export async function getPost(id: string): Promise<{ data: PostViewDto }> {
-  const query = "id/" + id;
+export async function getPost(
+  id: string
+): Promise<{ data: PostViewDto & { tags: [] } }> {
+  const query = id;
 
-  return await sendRequest(BASE_PARAM + query, "get", true);
+  const res = await sendRequest(BASE_PARAM + query, "get", true);
+
+  const tags = await sendRequest("tags/post/" + id, "get", false);
+
+  res.data.tags = tags;
+
+  return res;
 }

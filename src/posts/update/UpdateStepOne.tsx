@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { MyButton } from "../../lib/components/Button";
 import { PostEditor } from "../components/PostEditor";
 import { InputField } from "../../lib/components/InputField";
@@ -7,21 +7,26 @@ import { TitleImage } from "../write/TitleImage";
 import { useDispatch } from "react-redux";
 import {
   addTitleImageToSavedPost,
-  SavedPost,
   setSavedPost,
   updateSavedPost,
 } from "../slices/postsSlice";
 import { sendRequest } from "../../lib/sendRequest";
 import { setError, setLoading } from "../../lib/slices/appSlice";
+import { UpdatedPostDto } from "../types/post-view.dto";
+import { YesOrNoModal } from "../../lib/modals/YesOrNoModal";
 
 export const UpdateStepOne = ({
   savedPost,
   setStep,
 }: {
-  savedPost: SavedPost;
+  savedPost: UpdatedPostDto;
   setStep: React.Dispatch<SetStateAction<number>>;
 }) => {
   const dispatch = useDispatch();
+
+  const [oldContent, setOldContent] = useState(savedPost);
+
+  const [yesOrNoVisibility, setYesOrNoVisibility] = useState(false);
 
   async function completeStep() {
     try {
@@ -33,7 +38,13 @@ export const UpdateStepOne = ({
 
       dispatch(setSavedPost(result.data));
 
-      setStep(2);
+      if (
+        oldContent.title === savedPost.title &&
+        oldContent.content === savedPost.content &&
+        oldContent.title_image === savedPost.title_image
+      ) {
+        setStep(2);
+      } else setYesOrNoVisibility(true);
     } catch (error) {}
   }
 
@@ -55,7 +66,7 @@ export const UpdateStepOne = ({
     if (savedPost?.title_image?.name) {
       dispatch(setLoading());
 
-      updatePostImage(savedPost.title_image as File)
+      updatePostImage(savedPost.title_image as unknown as File)
         .then((file) => {
           dispatch(addTitleImageToSavedPost(file.data));
         })
@@ -68,8 +79,22 @@ export const UpdateStepOne = ({
     }
   }, [savedPost.title_image]);
 
+  function nextStep() {
+    setStep(2);
+    setYesOrNoVisibility(false);
+  }
+
   return (
     <>
+      {yesOrNoVisibility ? (
+        <YesOrNoModal
+          title="Want to go next step?"
+          text="The post saved."
+          yesFunction={() => nextStep()}
+          noFunction={() => setYesOrNoVisibility(false)}
+        />
+      ) : null}
+
       <InputField
         labelText="New Title"
         onChangeEvent={(e) =>

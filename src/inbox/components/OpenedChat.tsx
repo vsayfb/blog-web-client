@@ -41,13 +41,9 @@ export const OpenedChat = ({ chatID }: { chatID: string }) => {
       setIsConnected(false);
     });
 
-    socket.on("joined", (msg: string) => {
-      console.log(msg);
-    });
+    socket.on("joined", (msg: string) => {});
 
     socket.on("message", (message: ChatMessageViewDto) => {
-      console.log(message);
-
       if (chatID === message.chat_id) {
         dispatch(addMessageToOpenedChat(message));
       }
@@ -90,7 +86,7 @@ export const OpenedChat = ({ chatID }: { chatID: string }) => {
           <div className="w-full">
             <ChatTitle
               image={detectImage(targetUser.image)}
-              title={targetUser?.display_name}
+              title={targetUser.display_name}
             />
             <ChatMessagesArea messages={openedChat.messages} />
 

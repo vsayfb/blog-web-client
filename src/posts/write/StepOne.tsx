@@ -10,7 +10,7 @@ import { TitleImage } from "./TitleImage";
 import { RootState } from "../../store";
 import { setSavedPost } from "../slices/postsSlice";
 import { YesOrNoModal } from "../../lib/modals/YesOrNoModal";
-import { PostViewDto } from "../types/post-view.dto";
+import { UpdatedPostDto, PostViewDto } from "../types/post-view.dto";
 import Spinner from "../../lib/components/Spinner";
 
 export const StepOne = ({
@@ -33,7 +33,7 @@ export const StepOne = ({
   async function completeStep() {
     setPostUploading(true);
     try {
-      let result: PostViewDto;
+      let result: UpdatedPostDto;
 
       if (!savedPost) {
         result = (await uploadPost(postData, false)).data;
@@ -47,7 +47,7 @@ export const StepOne = ({
           savedPost.content === postData.content &&
           savedPost.title_image === postData.title_image
         ) {
-          result = savedPost as PostViewDto;
+          result = savedPost;
           setStep(2);
         } else {
           result = (await updatePost(savedPost.id, postData)).data;
@@ -73,7 +73,7 @@ export const StepOne = ({
       {yesOrNoVisibility ? (
         <YesOrNoModal
           title="Want to go next step?"
-          text="The post saved as a draft."
+          text="The post saved."
           yesFunction={() => nextStep()}
           noFunction={() => setYesOrNoVisibility(false)}
         />

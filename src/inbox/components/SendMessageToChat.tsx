@@ -19,7 +19,7 @@ export const SendMessageToChat = ({ chatID }: { chatID: string }) => {
 
   async function sendMessageToChat() {
     try {
-      await sendRequest(`messages/to/${chatID}`, "post", true, {
+      await sendRequest(`messages/to/chat/${chatID}`, "post", true, {
         content,
       });
 

@@ -36,7 +36,7 @@ export const inboxSlice = createSlice({
       state.inboxVisibility = !state.inboxVisibility;
     },
     setOpenedChat: (state, action: { payload: ChatViewDto }) => {
-      state.openedChat = action.payload;
+      state.openedChat = { ...state.openedChat, ...action.payload };
     },
     resetOpenedChat: (state) => {
       state.openedChat = null;

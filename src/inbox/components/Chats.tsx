@@ -16,6 +16,8 @@ export const Chats = ({ chats }: { chats: ChatViewDto[] }) => {
   async function getChats() {
     const { data } = await sendRequest("chats/me", "get", true);
 
+    console.log(data);
+
     return data;
   }
 

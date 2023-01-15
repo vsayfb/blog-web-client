@@ -7,14 +7,15 @@ import { PostTagsData } from "../../tags/components/PostTagsData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { resetTags, setTags } from "../../tags/slices/tagsSlice";
-import { resetSavedPost, SavedPost } from "../slices/postsSlice";
+import { resetSavedPost } from "../slices/postsSlice";
 import { setError } from "../../lib/slices/appSlice";
+import { UpdatedPostDto } from "../types/post-view.dto";
 
 export const UpdateStepTwo = ({
   savedPost,
   setStep,
 }: {
-  savedPost: SavedPost;
+  savedPost: UpdatedPostDto;
   setStep: React.Dispatch<SetStateAction<number>>;
 }) => {
   const { postTagNames } = useSelector((state: RootState) => state.tags);
