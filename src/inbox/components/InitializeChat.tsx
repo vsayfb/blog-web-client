@@ -9,7 +9,7 @@ import {
   setSearchingUsersForChat,
 } from "../slices/inboxSlice";
 import { ChatSendMessageSvg } from "../svgs/ChatSendMessageSvg";
-import { ChatViewDto } from "../types/chat-view-dto";
+import { ChatViewDto, NewChatViewDto } from "../types/chat-view-dto";
 import { ChatTitle } from "./ChatTitle";
 
 export const InitiliazeChat = ({
@@ -30,7 +30,7 @@ export const InitiliazeChat = ({
   async function initializeChat(e: any) {
     e.preventDefault();
 
-    const { data }: { data: ChatViewDto } = await sendRequest(
+    const { data }: { data: NewChatViewDto } = await sendRequest(
       `chats/with_account/${targetUser.id}`,
       "post",
       true,
@@ -41,7 +41,12 @@ export const InitiliazeChat = ({
 
     dispatch(setOpenedChatID(data.id));
 
-    dispatch(addNewChat(data));
+    let lastMessage: ChatViewDto["last_message"] = {
+      content: data.messages[0].content,
+      id: data.messages[0].id,
+    };
+
+    dispatch(addNewChat({ ...data, last_message: lastMessage }));
 
     dispatch(setSearchingUsersForChat(false));
   }

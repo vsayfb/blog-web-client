@@ -9,3 +9,11 @@ export type ChatViewDto = {
   messages: ChatMessageViewDto[];
   members: AccountViewDto[];
 };
+
+export type NewChatViewDto = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  messages: ChatMessageViewDto[];
+  members: AccountViewDto[];
+};
