@@ -16,4 +16,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd client
-            docker compose up -d && docker compose logs -f
+            sudo git fetch origin master
+            sudo git reset --hard FETCH_HEAD
+            docker compose up -d
