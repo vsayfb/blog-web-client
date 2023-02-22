@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci 
+RUN npm i 
 
 RUN npx tailwindcss -i ./src/index.css -o ./src/build.css
 
