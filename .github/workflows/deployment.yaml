@@ -18,4 +18,4 @@ jobs:
             cd client
             sudo git fetch origin master
             sudo git reset --hard FETCH_HEAD
-            docker compose up -d
+            docker compose up -d && docker compose logs -f
