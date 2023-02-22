@@ -20,7 +20,7 @@ export async function uploadPost(
   data: CreatePostDto,
   published: boolean
 ): Promise<{ data: UpdatedPostDto }> {
-  const query = `${BASE_PARAM}${!published ? "?published=false" : ""}`;
+  const query = `${BASE_PARAM}${!published ? "?publish=false" : ""}`;
 
   if (data.title_image) {
     const formData = new FormData();

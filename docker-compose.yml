@@ -1,0 +1,11 @@
+services:
+  client:
+    build: .
+    ports:
+      - 80:80
+    networks:
+      - bpi_default
+
+networks:
+  bpi_default:
+    name: bpi_default
